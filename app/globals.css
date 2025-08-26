@@ -42,3 +42,13 @@ h2 {
   font-weight: 600;
   line-height: 3.66rem;
 }
+
+:root {
+  font-family: var(--font-roboto), sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-poppins), sans-serif;
+}

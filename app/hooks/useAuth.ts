@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useLoginMutation, useLogoutMutation } from '../services/authRegister';
+import { useLoginMutation, useLogoutMutation } from '../services/authService';
 
 export function useAuth() {
     const router = useRouter();

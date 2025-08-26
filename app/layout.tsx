@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
-import { Montserrat, Montserrat_Alternates } from "next/font/google";
+import { Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./clientLayout";
 
-const montserratSans = Montserrat({
-  variable: "--font-montserrat-sans",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const MontserratMono = Montserrat({
-  variable: "--font-montserrat-mono",
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
-  weight: "400"
-});
-
-const MontSerrratAlternates = Montserrat_Alternates({
-  variable: "--font-montserrat-alternates",
-  subsets: ["latin"],
-  weight: "400"
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -25,8 +20,8 @@ export const metadata: Metadata = {
   description: "Sua agenda na ponta dos dedos.",
   icons: {
     icon: "/favicon.ico",
-  }
-}
+  },
+};
 
 export default function RootLayout({
   children,
@@ -37,7 +32,7 @@ export default function RootLayout({
     <html lang="pt-br">
       <link rel="icon" href="/favicon.ico" />
       <body
-        className={`${montserratSans.variable} ${MontserratMono.variable} ${MontSerrratAlternates.variable} antialiased`}
+        className={`${poppins.variable} ${roboto.variable} antialiased`}
       >
         <ClientLayout>{children}</ClientLayout>
       </body>
