@@ -1,9 +1,13 @@
+import BoxLayout from "./components/boxLayout";
+import Header from "./components/header";
+import Sidebar from "./components/sidebar";
+import "./globals.css";
 
 export default function Home() {
   return (
-    <div className="scroll-hidden">
-      <h2>Bem vinda, Cicera Ribeiro</h2>
-     
-    </div>
+    <BoxLayout sidebar={<Sidebar />} header={<Header nome="Cícera" />}>
+      {/*Aqui vai o conteúdo da página.*/}
+      <h1>Atendimentos</h1>
+    </BoxLayout>
   );
 }

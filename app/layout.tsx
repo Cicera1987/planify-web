@@ -31,9 +31,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <link rel="icon" href="/favicon.ico" />
-      <body
-        className={`${poppins.variable} ${roboto.variable} antialiased`}
-      >
+      <body className={`${poppins.variable} ${roboto.variable} antialiased`}>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

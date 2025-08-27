@@ -1,0 +1,67 @@
+.DefaultButtonWrapper {
+  display: flex;
+  align-items: center;
+  width: 297px;
+  height: var(--space-44px);
+  cursor: pointer;
+}
+
+.DefaultButton {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-12px);
+  height: 100%;
+  border-radius: var(--space-8px);
+  font-size: var(--space-14px);
+  font-weight: var(--font-w-normal);
+  font-family: var(--font-roboto);
+  color: var(--black);
+  background-color: var(--white);
+  border: none;
+  gap: var(--space-12px);
+  flex: 1;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.DefaultButtonWrapper:hover .DefaultButton {
+  background-color: var(--background-color-green);
+  color: var(--black);
+}
+
+.DefaultButton-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--space-16px);
+}
+
+.DefaultButton-label {
+  flex: 1;
+  text-align: left;
+}
+
+.DefaultButton-element {
+  width: var(--space-12px);
+  height: var(--space-40px);
+  margin-right: var(--space-12px);
+  background-color: var(--white);
+  border-top-right-radius: var(--space-8px);
+  border-bottom-right-radius: var(--space-8px);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.DefaultButtonWrapper:hover .DefaultButton-element {
+  background-color: var(--background-color-blue-light);
+}
+
+.DefaultButton--active .DefaultButton {
+  background-color: var(--background-color-light);
+  color: var(--primary-3);
+}
+
+.DefaultButton--active .DefaultButton-element {
+  background-color: var(--background-color-blue);
+}
