@@ -57,11 +57,11 @@
   background-color: var(--background-color-blue-light);
 }
 
-.DefaultButton--active .DefaultButton {
-  background-color: var(--background-color-light);
+.DefaultButton--active {
+  background-color: var(--background-color-green);
   color: var(--primary-3);
 }
 
-.DefaultButton--active .DefaultButton-element {
-  background-color: var(--background-color-blue);
+.DefaultButton-element--active {
+  background-color: var(--background-color-blue-light);
 }

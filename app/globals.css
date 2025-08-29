@@ -3,6 +3,8 @@
 /* Variáveis de cores e fontes */
 :root {
   /* cores */
+  --background-primary: #3D348B;
+  --background-secondary: #C0E0FF;
   --primary-1: #c0e0ff;
   --primary-2: #198cff;
   --primary-3: #0063c7;
@@ -16,6 +18,7 @@
   --neutral-3: #939393;
   --neutral-4: #ededed;
   --neutral-5: #464255;
+  --neutral-6: #fbfbfb;
   --neutral-light: #cecece;
   --neutral-dark: #2d2d2d;
   --neutral-danger: #f33060;

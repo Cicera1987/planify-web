@@ -36,10 +36,10 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
-      query: (credentials) => ({
+      query: (useData) => ({
         url: "/auth/login",
         method: "POST",
-        body: credentials,
+        body: useData,
       }),
     }),
     logout: builder.mutation<void, {}>({
@@ -56,8 +56,8 @@ export const authApi = createApi({
       }),
     }),
     update: builder.mutation({
-      query: (userData) => ({
-        url: "/auth/{userId}",
+      query: ({ userId, ...userData }) => ({
+        url: `/auth/${userId}`,
         method: "PUT",
         body: userData,
       }),

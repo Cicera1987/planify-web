@@ -1,24 +1,24 @@
 import React, { ReactNode } from "react";
 import "./styles.css";
 
-interface DefaultButtonProps {
-  active?: boolean;
-  icon?: ReactNode;
-  label: string;
-  onClick?: () => void;
-}
-
 export default function Default({
   active,
   icon,
   label,
   onClick,
-}: DefaultButtonProps) {
+}: {
+  active?: boolean;
+  icon?: React.ReactNode;
+  label: string;
+  onClick?: () => void;
+}) {
   return (
     <div className="DefaultButtonWrapper">
       <span
-        className={`DefaultButton-element ${active ? "DefaultButton-element--active" : ""}`}
-      ></span>
+        className={`DefaultButton-element ${
+          active ? "DefaultButton-element--active" : ""
+        }`}
+      />
       <button
         onClick={onClick}
         className={`DefaultButton ${active ? "DefaultButton--active" : ""}`}

@@ -1,0 +1,19 @@
+.footer {
+  width: 100%;
+  height: 83px;
+  background: var(--color-white);
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    height: 83px;
+    padding: 0 12px;
+  }
+}

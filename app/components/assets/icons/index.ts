@@ -31,6 +31,9 @@ import InfoMenu from "./infoMenu";
 import InfoCalendar from "./infoCalendar";
 import InfoFavorite from "./infoFavorite";
 import InfoMessage from "./infoMessage";
+import InfoServices from "./infoServices";
+import InfoPackages from "./infoPackages";
+import InfoScheduling from "./infoScheduling";
 import Logo from "./logo";
 import Services from "./services";
 import Logout from "./logout";
@@ -73,6 +76,9 @@ const Icon = Object.assign(
     InfoCalendar,
     InfoFavorite,
     InfoMessage,
+    InfoServices,
+    InfoPackages,
+    InfoScheduling,
     Logo,
     Services,
     Logout,
