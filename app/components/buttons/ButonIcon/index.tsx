@@ -6,18 +6,37 @@ import "./styles.css";
 export default function ButtonIcon({
   label,
   icon,
+  image,
   onClick,
+  alt = "button icon",
+  width,
+  height,
+  className = "",
 }: {
   label?: string;
   icon?: ReactNode;
+  image?: string;
   onClick?: () => void;
+  alt?: string;
+  width?: number;
+  height?: number;
+  className?: string;
 }) {
   return (
-    <div className="button-container">
+    <div className={`button-container ${className}`}>
       <button className="ButtonIcon" onClick={onClick}>
         {icon}
+        {image && (
+          <img
+            className="button-image"
+            src={image}
+            alt={alt}
+            width={width}
+            height={height}
+          />
+        )}
       </button>
-      <span>{label}</span>
+      {label && <span>{label}</span>}
     </div>
   );
 }

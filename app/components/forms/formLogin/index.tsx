@@ -18,9 +18,17 @@ export interface LoginFormInputs {
   password: string;
 }
 
-export default function LoginForm({ onSubmit, showLinks = true }: LoginFormProps) {
+export default function LoginForm({
+  onSubmit,
+  showLinks = true,
+}: LoginFormProps) {
   const router = useRouter();
-  const { register,watch, handleSubmit, formState: { errors } } = useForm < LoginFormInputs > ();
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInputs>();
 
   return (
     <div className="login-page">
@@ -58,11 +66,7 @@ export default function LoginForm({ onSubmit, showLinks = true }: LoginFormProps
           </div>
         )}
 
-        <Button.ButtonVariant
-          text="Entrar"
-          variant="filled"
-          type="submit"
-        />
+        <Button.ButtonVariant text="Entrar" variant="filled" type="submit" />
       </form>
     </div>
   );

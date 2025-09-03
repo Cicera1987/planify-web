@@ -1,68 +1,68 @@
 .desktop-login {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
 }
 
 .background-dark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color:var(--background-primary);
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-primary);
+  z-index: 1;
 }
 
 .background-light {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20%;
-    height: 100vh;
-    background-color:var(--background-secondary);
-    border-top-left-radius: 30% 0%;
-    border-bottom-left-radius: 50% 100%;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding: 40px 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100vh;
+  background-color: var(--background-secondary);
+  border-top-left-radius: 30% 0%;
+  border-bottom-left-radius: 50% 100%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 40px 20px;
 }
 
 .light-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .logo {
-    width: 80px;
-    margin-bottom: 20px;
+  width: 80px;
+  margin-bottom: 20px;
 }
 
 .app-title {
-    font-size: 36px;
-    font-weight: bold;
-    color: var(--primary-3);
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--primary-3);
 }
 
 .form-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 547px;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 60px 32px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 547px;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 60px 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

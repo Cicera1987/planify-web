@@ -10,7 +10,7 @@ interface ButtonProps {
   icon?: ReactNode;
   variant?: ButtonVariant;
   type?: "button" | "submit" | "reset";
-  onClick?:MouseEventHandler < HTMLButtonElement >;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function ButtonVariant({
@@ -18,14 +18,11 @@ export default function ButtonVariant({
   icon,
   variant = "icon",
   onClick,
-  type = "button"
+  type = "button",
 }: ButtonProps) {
   return (
     <div className="button-container">
-      <button
-      type={type}
-      onClick={onClick} 
-      className={`Button ${variant}`}>
+      <button type={type} onClick={onClick} className={`Button ${variant}`}>
         {icon && <span className="Button-icon">{icon}</span>}
         {text && <span className="Button-text">{text}</span>}
       </button>

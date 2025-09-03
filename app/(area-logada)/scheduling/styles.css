@@ -1,0 +1,113 @@
+.scheduling-desktop {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--space-16px);
+  height: auto;
+}
+
+.main-container {
+  display: flex;
+  background: var(--white);
+  padding: var(--space-24px) var(--space-16px);
+  border-radius: var(--space-16px);
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12px);
+  width: 60%;
+  flex: 0 0 55%;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  flex: 0 0 40%;
+  gap: 16px;
+  overflow-y: auto;
+  max-height: 680px;
+  padding: var(--space-14px);
+}
+
+.cards-container::-webkit-scrollbar {
+  display: none;
+}
+
+/*Estilo do mobile */
+.scheduling-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16px, 16px);
+  padding: var(--space-16px, 16px);
+}
+
+.mobile-section-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: var(--space-8px, 8px);
+}
+
+.mobile-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16px, 16px);
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: var(--space-8px, 8px);
+}
+
+.mobile-cards-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mobile-cards-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-cards-container::-webkit-scrollbar-thumb {
+  background-color: var(--gray-300, #d1d5db);
+  border-radius: 4px;
+}
+
+.container-button-mobile {
+  display: flex;
+  gap: var(--space-8px, 8px);
+}
+
+.container-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8px, 8px);
+}
+
+.container-button-mobile > div,
+.container-mobile > div {
+  width: 100%;
+  height: 100px;
+  min-height: 100px;
+}
+
+.container-button-mobile img,
+.container-mobile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.container-button-mobile button,
+.container-mobile button {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}

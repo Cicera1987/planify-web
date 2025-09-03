@@ -1,10 +1,13 @@
 "use client";
 
-import { useDispatch } from "react-redux";
+import { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setCredentials,
+  logout as logoutAction,
+} from "../store/features/authSlice";
 import { useLoginMutation, useLogoutMutation } from "../services/authService";
-import { setCredentials } from "../store/features/authSlice";
 
 export function useAuth() {
   const router = useRouter();
@@ -28,26 +31,25 @@ export function useAuth() {
     }
   }, [dispatch]);
 
-
   const login = useCallback(
     async (email: string, password: string) => {
       setApiError(null);
       try {
         const response = await loginMutation({ email, password }).unwrap();
-        const tokenValue = response.token;
-
-        setToken(tokenValue);
+        const pureToken = response.token.replace(/^Bearer\s+/i, ""); // remove "Bearer" caso venha
+        setToken(pureToken);
         setIsAuthenticated(true);
-        localStorage.setItem("@planify/token", tokenValue);
-        dispatch(setCredentials(tokenValue));
-
+        localStorage.setItem("@planify/token", pureToken);
+        dispatch(setCredentials(pureToken));
         router.push("/scheduling");
       } catch (error: any) {
         console.error("Login falhou:", error);
-        setApiError(error?.data?.message || "Erro ao fazer login. Tente novamente.");
+        setApiError(
+          error?.data?.message || "Erro ao fazer login. Tente novamente.",
+        );
       }
     },
-    [loginMutation, dispatch, router]
+    [loginMutation, dispatch, router],
   );
 
   const logout = useCallback(async () => {
@@ -59,15 +61,9 @@ export function useAuth() {
     localStorage.removeItem("@planify/token");
     setToken(null);
     setIsAuthenticated(false);
-    dispatch(setCredentials(""));
+    dispatch(logoutAction());
     router.replace("/");
   }, [logoutMutation, dispatch, router]);
 
-  return {
-    token,
-    isAuthenticated,
-    apiError,
-    login,
-    logout,
-  };
+  return { token, isAuthenticated, apiError, login, logout };
 }

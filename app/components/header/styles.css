@@ -1,14 +1,20 @@
 .header {
   display: flex;
+  padding: var(--space-16px);
+  flex-direction: column;
+  gap: var(--space-24px);
+}
+
+.header-container {
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-12px);
 }
 
 .header-back-btn {
@@ -37,12 +43,15 @@
 .header-right {
   display: flex;
   align-items: center;
+  font-size: 16px;
+  color: var(--neutral-5);
+  border-left: 1px solid var(--neutral-light);
+  padding: 0 var(--space-16px);
   gap: 10px;
 }
 
 .header-hello {
-  font-size: 14px;
-  color: var(--neutral-5);
+  font-weight: var(--font-w-semibold);
 }
 
 .header-avatar {
@@ -51,4 +60,13 @@
   border-radius: 50%;
   border: 2px solid var(--color-white);
   object-fit: cover;
+}
+
+.children-header {
+  display: flex;
+  width: 100%;
+  padding: 0 var(--space-32px);
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
 }

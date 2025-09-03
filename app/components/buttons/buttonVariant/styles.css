@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-8px);
-  padding: var(--space-8px)var(--space-12px);
+  padding: var(--space-8px) var(--space-12px);
   font-size: 14px;
   font-weight: var(--font-w-medium);
   cursor: pointer;
@@ -34,7 +34,7 @@
 .Button.text {
   background: transparent;
   border: none;
-  span{
+  span {
     color: var(--primary-4);
   }
 }
@@ -42,8 +42,8 @@
 .Button.filled {
   background-color: var(--primary-3);
   border: 1px solid var(--primary-3);
-  
-  span{
+
+  span {
     color: var(--white);
   }
 }

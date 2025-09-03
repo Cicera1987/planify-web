@@ -1,10 +1,12 @@
 import Layout from "../layout/page";
+import SchedulingDesktop from "./schedulingDesktop";
+import SchedulingMobile from "./schedulingMobile";
 
 export default function Sheduling() {
   return (
     <Layout
-      desktopContent={<h1>Atendimentos (versão desktop)</h1>}
-      mobileContent={<h1>Atendimentos (versão mobile)</h1>}
+      desktopContent={<SchedulingDesktop />}
+      mobileContent={<SchedulingMobile />}
     />
   );
 }

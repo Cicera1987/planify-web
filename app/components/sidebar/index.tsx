@@ -6,7 +6,7 @@ import { useAuth } from "@/app/hooks/useAuth";
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuth()
+  const { logout } = useAuth();
 
   const routeButtons = [
     {
@@ -15,10 +15,12 @@ export default function Sidebar() {
       icon: <Icon.UseIcon />,
       label: "Ver Perfil",
     },
-    { id: "scheduling", 
-    path: "/scheduling", 
-    icon: <Icon.Scheduling />, 
-    label: "Agenda" },
+    {
+      id: "scheduling",
+      path: "/scheduling",
+      icon: <Icon.Scheduling />,
+      label: "Agenda",
+    },
     {
       id: "clients",
       path: "/clients",
@@ -64,17 +66,14 @@ export default function Sidebar() {
   ];
 
   const actionButtons = [
-    { id: "fac", 
-    path: "/help", 
-    icon: <Icon.Exclamation />, 
-    label: "Ajuda" 
-  },
-    { id: "logout", 
-    path: "#", 
-    icon: <Icon.ToGoOut />, 
-    label: "Sair", 
-    onClick: logout 
-  },
+    { id: "fac", path: "/help", icon: <Icon.Exclamation />, label: "Ajuda" },
+    {
+      id: "logout",
+      path: "#",
+      icon: <Icon.ToGoOut />,
+      label: "Sair",
+      onClick: logout,
+    },
   ];
 
   return (

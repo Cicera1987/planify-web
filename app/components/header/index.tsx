@@ -10,11 +10,13 @@ export default function Header({
   nome,
   fotoUrl,
   isMobile = false,
+  children,
 }: {
   label?: string;
   nome: string;
   fotoUrl?: string;
   isMobile?: boolean;
+  children?: React.ReactNode;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -30,24 +32,30 @@ export default function Header({
 
   return (
     <header className="header">
-      <div className="header-left">
-        {!isMobile && (
-          <>
-            <button onClick={() => router.back()} className="header-back-btn">
-              <Icon.ToGoBack />
-            </button>
-            <h1 className="header-title">{title}</h1>
-          </>
-        )}
+      <div className="header-container">
+        <div className="header-left">
+          {!isMobile && (
+            <>
+              <button onClick={() => router.back()} className="header-back-btn">
+                <Icon.ToGoBack />
+              </button>
+              <h1 className="header-title">{title}</h1>
+            </>
+          )}
+        </div>
+
+        <div className="header-right">
+          <span>Hello,</span>
+          <span className="header-hello">{nome}</span>
+          <img
+            src={fotoUrl ? fotoUrl : "/images/avatar.png"}
+            alt="Avatar"
+            className="header-avatar"
+          />
+        </div>
       </div>
-      <div className="header-right">
-        <span className="header-hello">Hello, {nome}</span>
-        <img
-          src={fotoUrl ? fotoUrl : "/images/avatar.png"}
-          alt="Avatar, ou imagem de perfil do usuário"
-          className="header-avatar"
-        />
-      </div>
+
+      {children && <div className="children-header">{children}</div>}
     </header>
   );
 }

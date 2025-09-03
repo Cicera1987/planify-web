@@ -3,8 +3,8 @@
 /* Variáveis de cores e fontes */
 :root {
   /* cores */
-  --background-primary: #3D348B;
-  --background-secondary: #C0E0FF;
+  --background-primary: #3d348b;
+  --background-secondary: #c0e0ff;
   --primary-1: #c0e0ff;
   --primary-2: #198cff;
   --primary-3: #0063c7;
@@ -95,7 +95,7 @@
 }
 
 body {
-  background: var(--background, #ededed);
+  background: var(--background, --neutral-4);
   color: var(--foreground, #000000);
   font-family: var(--font-roboto);
 }
@@ -118,6 +118,6 @@ h2 {
   line-height: var(--space-32px);
 }
 
-.hidden {
+.hidden::-webkit-scrollbar {
   display: none;
 }
