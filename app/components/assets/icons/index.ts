@@ -39,6 +39,8 @@ import Services from "./services";
 import Logout from "./logout";
 import PackagesServices from "./packagesServices";
 import Calendar from "./calendar";
+import Whatsapp from "./whatsapp";
+import Loading from "./loading";
 
 const Icon = Object.assign(
   {},
@@ -84,6 +86,8 @@ const Icon = Object.assign(
     Logout,
     PackagesServices,
     Calendar,
+    Whatsapp,
+    Loading,
   },
 );
 

@@ -21,7 +21,7 @@ export default function ButtonVariant({
   type = "button",
 }: ButtonProps) {
   return (
-    <div className="button-container">
+    <div>
       <button type={type} onClick={onClick} className={`Button ${variant}`}>
         {icon && <span className="Button-icon">{icon}</span>}
         {text && <span className="Button-text">{text}</span>}

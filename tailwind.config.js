@@ -35,6 +35,7 @@ module.exports = {
         warning: "#FFD211",
         black: "#000000",
         white: "#FFFFFF",
+        background: "#B5BDC7",
 
         background_color_light: rgba(224, 242, 254, 0.9),
         background_color_green: rgba(31, 244, 173, 0.2),

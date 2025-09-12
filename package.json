@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "local": "next build --turbopack && next start",
+    "staging": "next build --turbopack && next start",
+    "prod": "next build --turbopack && next start",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",

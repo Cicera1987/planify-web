@@ -1,0 +1,95 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px 36px;
+  height: 100vh;
+}
+
+.register-header {
+  background-color: var(--foreground);
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  position: relative;
+}
+
+.back-register-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.desktop-register {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.background-register-dark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background-color: var(--background-secondary);
+  border-top-right-radius: 30% 0%;
+  border-bottom-right-radius: 50% 100%;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  z-index: 2;
+}
+
+.background-register-light {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70%;
+  height: 100%;
+  background-color: var(--secondary-3);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: 100px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.light-register-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-register-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--white);
+}
+
+.form-register-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  background-color: var(--color-white);
+  padding: 32px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

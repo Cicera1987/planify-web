@@ -42,7 +42,7 @@ export default function LoginForm({
         />
 
         <Input.InputForm
-          label="Password"
+          label="Senha"
           placeholder="Digite sua senha"
           type="password"
           {...register("password", { required: "Senha obrigatória" })}

@@ -6,20 +6,31 @@ import ImageReporter from "@/app/components/assets/images/reporter.png";
 import ImageScheduling from "@/app/components/assets/images/scheduling.png";
 import ClientCard from "@/app/components/card";
 import "./styles.css";
-import { useGetActiveSchedulingsQuery } from "@/app/services/schedulingService";
-import avatar from "@/app/components/assets/images/avatar.png";
+import {
+  SchedulingPopupStatus,
+  useGetActiveSchedulingsQuery,
+  useUpdateSchedulingStatusMutation,
+} from "@/app/services/schedulingService";
+
 import Icon from "@/app/components/assets/icons";
+import { StatusPopup } from "@/app/components/popup/statusPopup";
+import { useScheduling } from "@/app/hooks/useScheduling";
+import { useSchedulingContext } from "@/app/context";
 
 export default function SchedulingDesktop() {
+  const { handleStatusChange, handleTogglePopup, schedulings } =
+    useScheduling();
+  const { search, openPopupId } = useSchedulingContext();
+
   const {
     data: activeSchedulings,
     isLoading,
     error,
   } = useGetActiveSchedulingsQuery();
 
-  function handlerTriggerClick() {
-    console.log("Trigger clicked");
-  }
+  const listToRender = search.trim()
+    ? (schedulings ?? [])
+    : (activeSchedulings ?? []);
 
   if (isLoading) return <p>Carregando...</p>;
   if (error) return <p>Erro ao carregar agendamentos</p>;
@@ -43,14 +54,21 @@ export default function SchedulingDesktop() {
         </div>
 
         <div className="cards-container">
-          {activeSchedulings?.map((scheduling) => (
+          {listToRender?.map((scheduling) => (
             <ClientCard
               key={scheduling.id}
-              image={scheduling.contact?.imageUrl || avatar.src}
-              name={scheduling.contact?.name}
-              email={scheduling.contact?.email}
-              whatsapp={scheduling.contact?.phone}
-              triggerIcon={<Icon.OptionsIcon />}
+              data={scheduling}
+              triggerIcon={
+                <StatusPopup
+                  trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}
+                  onSelect={(status: SchedulingPopupStatus) =>
+                    handleStatusChange(scheduling.id, status)
+                  }
+                  isOpen={openPopupId === scheduling.id}
+                  onClose={() => handleTogglePopup(scheduling.id)}
+                  scheduling={scheduling}
+                />
+              }
             />
           ))}
         </div>

@@ -95,7 +95,7 @@
 }
 
 body {
-  background: var(--background, --neutral-4);
+  background: var(--foreground);
   color: var(--foreground, #000000);
   font-family: var(--font-roboto);
 }

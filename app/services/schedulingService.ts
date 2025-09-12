@@ -1,3 +1,4 @@
+import { BASE_API } from "./api";
 export type SchedulingStatus =
   | "AGENDADO"
   | "CONFIRMADO"
@@ -19,16 +20,43 @@ export const SchedulingStatusLabels: Record<SchedulingStatus, string> = {
   REMARCADO: "Remarcado",
 };
 
-export interface Scheduling {
+export type SchedulingPopupStatus = Extract<
+  SchedulingStatus,
+  "CONFIRMADO" | "CONCLUIDO" | "CANCELADO"
+>;
+
+export const SchedulingPopupStatusLabels: Record<
+  SchedulingPopupStatus,
+  string
+> = {
+  CONFIRMADO: "Confirmado",
+  CONCLUIDO: "Concluído",
+  CANCELADO: "Cancelado",
+};
+
+interface CalendarDay {
   id: number;
-  contact: Contact;
-  serviceId: number[];
-  packageId?: number;
-  calendarTimeId: number;
-  status: SchedulingStatus;
-  createdAt: string;
+  userId: number;
+  localDate: string;
+  times: string[] | null;
 }
 
+interface CalendarTime {
+  id: number;
+  time: string;
+}
+
+export interface Scheduling {
+  id: number;
+  calendarDay: CalendarDay;
+  calendarTime: CalendarTime;
+  contact: Contact;
+  observation: string | null;
+  createdAt: string | null;
+  packageId: number | null;
+  serviceId: number[];
+  status: SchedulingStatus;
+}
 export interface SchedulingRequest {
   contactId: number;
   serviceId: number[];
@@ -38,13 +66,11 @@ export interface SchedulingRequest {
 }
 
 export interface SchedulingStatusRequest {
-  status: SchedulingStatus;
+  newStatus: SchedulingStatus;
 }
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Contact } from "./contactService";
-
-const BASE_API = process.env.NEXT_PUBLIC_BASE_API;
 
 export const schedulingApi = createApi({
   reducerPath: "schedulingApi",
@@ -56,12 +82,19 @@ export const schedulingApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Scheduling"],
   endpoints: (builder) => ({
     getActiveSchedulings: builder.query<Scheduling[], void>({
       query: () => "/scheduling/active",
+      providesTags: ["Scheduling"],
     }),
     getSchedulingHistory: builder.query<Scheduling[], void>({
       query: () => "/scheduling/history",
+      providesTags: ["Scheduling"],
+    }),
+    searchSchedulingsByContactName: builder.query<Scheduling[], string>({
+      query: (name) => `/scheduling/search?name=${encodeURIComponent(name)}`,
+      providesTags: ["Scheduling"],
     }),
     createScheduling: builder.mutation<Scheduling, SchedulingRequest>({
       query: (data) => ({
@@ -69,6 +102,7 @@ export const schedulingApi = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Scheduling"],
     }),
     updateSchedulingStatus: builder.mutation<
       Scheduling,
@@ -77,14 +111,17 @@ export const schedulingApi = createApi({
       query: ({ id, status }) => ({
         url: `/scheduling/${id}/status`,
         method: "PUT",
-        body: status,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ newStatus: status.newStatus }),
       }),
+      invalidatesTags: ["Scheduling"],
     }),
     deleteScheduling: builder.mutation<void, number>({
       query: (id) => ({
         url: `/scheduling/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Scheduling"],
     }),
   }),
 });
@@ -92,6 +129,7 @@ export const schedulingApi = createApi({
 export const {
   useGetActiveSchedulingsQuery,
   useGetSchedulingHistoryQuery,
+  useSearchSchedulingsByContactNameQuery,
   useCreateSchedulingMutation,
   useUpdateSchedulingStatusMutation,
   useDeleteSchedulingMutation,

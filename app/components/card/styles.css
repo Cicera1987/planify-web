@@ -4,7 +4,7 @@
   background-color: white;
   border-radius: var(--space-12px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: var(--space-12px);
+  padding: var(--space-12px) var(--space-16px);
   gap: var(--space-16px);
   width: 100%;
   max-width: 676px;
@@ -37,7 +37,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-right: var(--space-32px);
+  padding-right: var(--space-16px);
 }
 
 .client-trigger {
@@ -56,26 +56,65 @@
 }
 
 .client-name {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--primary-3);
+  font-size: 1rem;
   font-weight: var(--font-w-bold);
-  max-width: 100%;
+  color: var(--primary-3);
+  max-width: 289px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .client-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 0.75rem;
   color: var(--neutral-dark);
-  margin-top: 2px;
   font-weight: var(--font-w-semibold);
+  gap: var(--space-4px);
 }
 
 .client-text {
-  margin-top: var(--space-8px);
   font-size: 0.75rem;
   color: var(--neutral-dark);
   font-weight: var(--font-w-normal);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.client-email {
+  font-size: 0.75rem;
+  color: var(--neutral-dark);
+  font-weight: var(--font-w-normal);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: var(--space-4px);
+  white-space: wrap;
+}
+
+.header-name {
+  display: flex;
+  justify-content: space-between;
+  padding-right: var(--space-8px);
+  align-items: center;
+}
+
+.client-date {
+  font-size: 0.875rem;
+  font-weight: var(--font-w-semibold);
+  color: var(--primary-3);
+  margin-right: var(--space-8px);
+}
+
+.client-status {
+  margin-left: var(--space-8px);
+  padding: 2px 6px;
+  border-radius: var(--space-4px);
+  font-size: 0.7rem;
+  font-weight: var(--font-w-semibold);
+  text-transform: capitalize;
 }

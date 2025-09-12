@@ -11,7 +11,7 @@ interface DecodedToken {
 
 export function useCurrentUser() {
   const [userId, setUserId] = useState<string | null>(null);
-
+  const numericUserId = Number(userId);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("@planify/token");
@@ -22,8 +22,8 @@ export function useCurrentUser() {
     }
   }, []);
 
-  const { data, isLoading, error } = useGetUserByIdQuery(userId ?? "", {
-    skip: !userId,
+  const { data, isLoading, error } = useGetUserByIdQuery(numericUserId, {
+    skip: !numericUserId,
   });
 
   return { user: data, isLoading, error };

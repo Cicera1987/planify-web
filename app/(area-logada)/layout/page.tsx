@@ -11,6 +11,8 @@ import BoxMobile from "@/app/components/content/boxLayout/mobile";
 import BoxLayout from "@/app/components/content/boxLayout/desktop";
 import { useCurrentUser } from "@/app/hooks/useCurrentUser";
 import Input from "@/app/components/inputs";
+import { useScheduling } from "@/app/hooks/useScheduling";
+import { useSchedulingContext } from "@/app/context";
 
 export default function Layout({
   desktopContent,
@@ -20,10 +22,10 @@ export default function Layout({
   mobileContent: ReactNode;
 }) {
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const { user, isLoading } = useCurrentUser();
+  const { search, setSearch, token, setToken, mounted, setMounted } =
+    useSchedulingContext();
 
   useEffect(() => {
     setMounted(true);
@@ -42,7 +44,11 @@ export default function Layout({
       nome={isLoading ? "Carregando..." : (user?.username ?? "")}
       fotoUrl={user?.imageUrl ?? ""}
     >
-      <Input.SearchInput placeholder="Buscar pelo nome" />
+      <Input.SearchInput
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Buscar pelo nome"
+      />
       <h2>Próximos atendimentos</h2>
     </Header>
   );

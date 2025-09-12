@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Job } from "./jobService";
-
-const BASE_API = process.env.NEXT_PUBLIC_BASE_API;
+import { BASE_API } from "./api";
 
 export interface Package {
   id: number;

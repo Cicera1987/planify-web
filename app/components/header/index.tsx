@@ -6,7 +6,6 @@ import "./styles.css";
 import Icon from "../assets/icons";
 
 export default function Header({
-  label,
   nome,
   fotoUrl,
   isMobile = false,

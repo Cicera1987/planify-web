@@ -1,4 +1,3 @@
-export const FAC(){
-
-    return <div>FAC</div>
-}
+export const FAC = () => {
+  return <div>FAC</div>;
+};

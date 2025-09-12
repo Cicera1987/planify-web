@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-const BASE_API = process.env.NEXT_PUBLIC_BASE_API;
+import { BASE_API } from "./api";
 
 export interface LoginRequest {
   email: string;
   password: string;
 }
-
 export interface LoginResponse {
   token: string;
 }
@@ -20,6 +18,8 @@ export interface RegisterRequest {
   position?: "ADMIN" | "PROFESSIONAL" | "CLIENT";
   imageUrl?: string;
   active: boolean;
+  provider?: "CLOUDINARY" | "GOOGLE" | "WHATSAPP";
+  providerUserId?: string;
 }
 
 export const authApi = createApi({
@@ -29,17 +29,30 @@ export const authApi = createApi({
   }),
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
-      query: (useData) => ({
+      query: (userData) => ({
         url: "/auth/login",
         method: "POST",
-        body: useData,
+        body: userData,
       }),
     }),
-    logout: builder.mutation<void, {}>({
+    logout: builder.mutation<void, void>({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
       }),
+    }),
+    uploadImage: builder.mutation<string, File>({
+      query: (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        return {
+          url: "/upload",
+          method: "POST",
+          body: formData,
+          responseHandler: (response) => response.text(),
+        };
+      },
     }),
     register: builder.mutation<void, RegisterRequest>({
       query: (userData) => ({
@@ -63,4 +76,5 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useUpdateMutation,
+  useUploadImageMutation,
 } = authApi;

@@ -12,6 +12,7 @@ export default function ButtonIcon({
   width,
   height,
   className = "",
+  active,
 }: {
   label?: string;
   icon?: ReactNode;
@@ -21,6 +22,7 @@ export default function ButtonIcon({
   width?: number;
   height?: number;
   className?: string;
+  active?: boolean;
 }) {
   return (
     <div className={`button-container ${className}`}>

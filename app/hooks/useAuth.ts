@@ -36,12 +36,13 @@ export function useAuth() {
       setApiError(null);
       try {
         const response = await loginMutation({ email, password }).unwrap();
-        const pureToken = response.token.replace(/^Bearer\s+/i, ""); // remove "Bearer" caso venha
+        const pureToken = response.token.replace(/^Bearer\s+/i, "");
         setToken(pureToken);
         setIsAuthenticated(true);
         localStorage.setItem("@planify/token", pureToken);
         dispatch(setCredentials(pureToken));
         router.push("/scheduling");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.error("Login falhou:", error);
         setApiError(
@@ -54,7 +55,7 @@ export function useAuth() {
 
   const logout = useCallback(async () => {
     try {
-      await logoutMutation({}).unwrap();
+      await logoutMutation().unwrap();
     } catch (err) {
       console.warn("Erro no logout server-side", err);
     }

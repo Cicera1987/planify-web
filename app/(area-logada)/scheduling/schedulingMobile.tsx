@@ -5,22 +5,26 @@ import Clients from "@/app/components/assets/images/clients-mobile.png";
 import Reporter from "@/app/components/assets/images/reporter-mobile.png";
 import Scheduling from "@/app/components/assets/images/scheduling-mobile.png";
 import ClientCard from "@/app/components/card";
-import avatar from "@/app/components/assets/images/avatar.png";
 import "./styles.css";
 
-import { useGetActiveSchedulingsQuery } from "@/app/services/schedulingService";
+import {
+  SchedulingPopupStatus,
+  useGetActiveSchedulingsQuery,
+} from "@/app/services/schedulingService";
 import Icon from "@/app/components/assets/icons";
+import { useScheduling } from "@/app/hooks/useScheduling";
+import { StatusPopup } from "@/app/components/popup/statusPopup";
+import { useSchedulingContext } from "@/app/context";
 
 export default function SchedulingMobile() {
+  const { handleStatusChange, handleTogglePopup } = useScheduling();
+  const { openPopupId } = useSchedulingContext();
+
   const {
     data: activeSchedulings,
     isLoading,
     error,
   } = useGetActiveSchedulingsQuery();
-
-  function handlerTriggerClick() {
-    console.log("Trigger clicked");
-  }
 
   if (isLoading) return <p>Carregando...</p>;
   if (error) return <p>Erro ao carregar agendamentos</p>;
@@ -43,11 +47,18 @@ export default function SchedulingMobile() {
         {activeSchedulings?.map((scheduling) => (
           <ClientCard
             key={scheduling.id}
-            image={scheduling.contact.imageUrl || avatar.src}
-            name={scheduling.contact.name}
-            email={scheduling.contact.email}
-            whatsapp={scheduling.contact.phone}
-            triggerIcon={<Icon.OptionsIcon />}
+            data={scheduling}
+            triggerIcon={
+              <StatusPopup
+                trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}
+                onSelect={(status: SchedulingPopupStatus) =>
+                  handleStatusChange(scheduling.id, status)
+                }
+                isOpen={openPopupId === scheduling.id}
+                onClose={() => handleTogglePopup(scheduling.id)}
+                scheduling={scheduling}
+              />
+            }
           />
         ))}
       </div>
