@@ -52,6 +52,8 @@ type SchedulingContextType = {
   setToken: (value: string | null) => void;
   imageState: ImageState;
   setImageData: (data: Partial<ImageState>) => void;
+  userId?: number | null;
+  setUserId?: (value: number | null) => void;
 };
 
 const SchedulingContext = createContext<SchedulingContextType | undefined>(
@@ -63,6 +65,7 @@ export function SchedulingProvider({ children }: { children: ReactNode }) {
   const [openPopupId, setOpenPopupId] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);
 
   const [imageState, dispatch] = useReducer(imageReducer, {
     image: null,
@@ -88,6 +91,8 @@ export function SchedulingProvider({ children }: { children: ReactNode }) {
         setToken,
         imageState,
         setImageData,
+        userId,
+        setUserId,
       }}
     >
       {children}
@@ -114,6 +119,8 @@ export function useSchedulingContext() {
         providerUserId: null,
       },
       setImageData: () => {},
+      userId: null,
+      setUserId: () => {},
     }
   );
 }

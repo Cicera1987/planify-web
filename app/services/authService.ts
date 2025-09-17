@@ -9,10 +9,10 @@ export interface LoginResponse {
   token: string;
 }
 
-export interface RegisterRequest {
+export interface Register {
   username: string;
   phone: string;
-  password: string;
+  password?: string;
   speciality: string;
   email?: string;
   position?: "ADMIN" | "PROFESSIONAL" | "CLIENT";
@@ -27,6 +27,7 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_API,
   }),
+  tagTypes: ["Register"],
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
       query: (userData) => ({
@@ -54,7 +55,7 @@ export const authApi = createApi({
         };
       },
     }),
-    register: builder.mutation<void, RegisterRequest>({
+    register: builder.mutation<void, Register>({
       query: (userData) => ({
         url: "/auth/register",
         method: "POST",
@@ -64,9 +65,10 @@ export const authApi = createApi({
     update: builder.mutation({
       query: ({ userId, ...userData }) => ({
         url: `/auth/${userId}`,
-        method: "PUT",
+        method: "PATCH",
         body: userData,
       }),
+      invalidatesTags: ["Register"],
     }),
   }),
 });

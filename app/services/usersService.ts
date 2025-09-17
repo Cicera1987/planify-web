@@ -9,7 +9,6 @@ export interface PageResponse<T> {
   totalPages: number;
   apiVersion: string;
 }
-
 export interface User {
   id: number;
   username: string;
@@ -33,6 +32,7 @@ export const userApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     getAllUsers: builder.query<
       PageResponse<User>,
@@ -42,6 +42,7 @@ export const userApi = createApi({
     }),
     getUserById: builder.query<User, number>({
       query: (id) => `/users/${id}`,
+      providesTags: ["User"],
     }),
     searchUsers: builder.query<
       PageResponse<User>,

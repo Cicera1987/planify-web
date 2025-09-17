@@ -11,7 +11,7 @@ export default function Sidebar() {
   const routeButtons = [
     {
       id: "profile",
-      path: "/profile",
+      path: "/register",
       icon: <Icon.UseIcon />,
       label: "Ver Perfil",
     },

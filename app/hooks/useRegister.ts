@@ -1,28 +1,44 @@
 "use client";
 
-import type { RegisterFormInputs } from "../components/forms/formRegisterClient";
-import { useRouter } from "next/navigation";
-import {
-  type RegisterRequest,
-  useRegisterMutation,
-  useUploadImageMutation,
-} from "../services/authService";
+import { ChangeEvent, use, useMemo } from "react";
 import { toast } from "react-toastify";
+import { Register, useRegisterMutation, useUpdateMutation, useUploadImageMutation } from "../services/authService";
 import { useSchedulingContext } from "../context";
-import type { ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./useAuth";
+import jwtDecode from "jwt-decode";
+import { RegisterFormInputs } from "../components/forms/formRegisterClient";
+import { useGetUserByIdQuery, userApi } from "../services/usersService";
 
 export function useRegister() {
-  const [registerUser, { isLoading }] = useRegisterMutation();
-  const router = useRouter();
+  const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
+  const [updateUser, { isLoading: isUpdating }] = useUpdateMutation();
   const { setImageData, imageState } = useSchedulingContext();
   const [uploadImage] = useUploadImageMutation();
+  const { token, isAuthenticated } = useAuth();
+  const router = useRouter();
 
+
+  const isEditMode = isAuthenticated;
+
+  let userId: number | null = null;
+
+  if (token) {
+    try {
+      const decoded: any = jwtDecode(token);
+      userId = Number(decoded.jti);
+    } catch (err) {
+      console.error("Token inválido:", err);
+    }
+  }
+  const { data: user } = useGetUserByIdQuery(userId ?? 0, { skip: !userId });
+  
   async function handleRegister(data: RegisterFormInputs) {
     let imageUrl = "";
+
     if (imageState.file) {
       try {
         imageUrl = await uploadImage(imageState.file).unwrap();
-        console.log("Imagem enviada com sucesso:", imageUrl);
       } catch (err) {
         console.error("Erro ao enviar imagem:", err);
         toast.error("Falha ao enviar imagem");
@@ -32,22 +48,30 @@ export function useRegister() {
       imageUrl = imageState.image;
     }
 
-    const payload: RegisterRequest = {
+    const payload: Register = {
       username: data.username,
       phone: data.phone?.replace(/\D/g, "") || "",
-      password: data.password,
       speciality: data.speciality || "",
       email: data.email,
       active: true,
       ...(imageUrl && { imageUrl }),
       provider: imageState.provider || "CLOUDINARY",
       providerUserId: imageState.providerUserId || "",
+      ...(!isEditMode && { password: data.password }),
     };
 
     try {
-      await registerUser(payload).unwrap();
-      toast.success("Usuário cadastrado com sucesso");
-      router.push("/login");
+      if (isEditMode && userId != null) {
+        await updateUser({ userId: userId, ...payload }).unwrap();
+        toast.success("Cadastrado atualizado com sucesso");
+        router.push("/scheduling");
+        return;
+      } else {
+        await registerUser(payload).unwrap();
+        toast.success("Usuário cadastrado com sucesso");
+        router.push("/login");
+      }
+
       setImageData({
         image: "",
         file: undefined,
@@ -55,8 +79,10 @@ export function useRegister() {
         providerUserId: "",
       });
     } catch (err) {
-      console.error("Erro ao registrar:", err);
-      toast.error("Erro ao registrar usuário");
+      toast.error(
+        isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário"
+      );
+      console.error(err);
     }
   }
 
@@ -79,7 +105,7 @@ export function useRegister() {
   const handleExternalImage = (
     url: string,
     provider: "GOOGLE" | "WHATSAPP",
-    providerUserId: string,
+    providerUserId: string
   ) => {
     setImageData({
       image: url,
@@ -89,10 +115,27 @@ export function useRegister() {
     });
   };
 
+  const defaultValues = useMemo(() => {
+    if (isEditMode && user) {
+      return {
+        imageUrl: user.imageUrl || "",
+        username: user.username || "",
+        email: user.email || "",
+        confirmEmail: user.email || "",
+        phone: user.phone || "",
+        speciality: user.speciality || "",
+      };
+    }
+    return {};
+  }, [isEditMode, user]);
+
+
   return {
     handleRegister,
     handleLocalImageChange,
     handleExternalImage,
-    isLoading,
+    isLoading: isRegistering || isUpdating,
+    isEditMode,
+    defaultValues
   };
 }

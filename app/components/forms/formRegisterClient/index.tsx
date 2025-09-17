@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "./styles.css";
 import Input from "../../inputs";
@@ -14,9 +14,12 @@ interface RegisterFormProps {
   onSubmit: (data: RegisterFormInputs) => void;
   loading?: boolean;
   showLinks?: boolean;
+  defaultValues?: Partial<RegisterFormInputs>;
+  buttonText?: string;
 }
 
 export interface RegisterFormInputs {
+  imageUrl?: string;
   email: string;
   confirmEmail: string;
   password: string;
@@ -29,23 +32,41 @@ export interface RegisterFormInputs {
 export default function RegisterForm({
   onSubmit,
   loading = false,
+  defaultValues,
+  buttonText = "Cadastrar",
 }: RegisterFormProps) {
   const {
     register,
     watch,
+    setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormInputs>();
-  const { handleLocalImageChange } = useRegister();
-  const { imageState } = useSchedulingContext();
+    reset,
+  } = useForm<RegisterFormInputs>({ 
+    defaultValues 
+  }
+  );
+  const { handleLocalImageChange, isEditMode } = useRegister();
+  const { imageState,  } = useSchedulingContext();
+
+  useEffect(() => {
+    if (defaultValues) reset(defaultValues);
+  }, [defaultValues, reset]);
+
+  useEffect(() => {
+    const phone = watch("phone");
+    if (phone) {
+      setValue("phone", formatPhone(phone));
+    }
+  }, [watch("phone"), setValue]);
 
   return (
     <div className="register-page">
       <form onSubmit={handleSubmit(onSubmit)} className="register-form">
         <div className="image-preview-container">
-          {imageState.image ? (
+          {imageState.image || defaultValues?.imageUrl ? (
             <img
-              src={imageState.image}
+              src={imageState.image || defaultValues?.imageUrl}
               alt="Preview"
               className="image-preview"
             />
@@ -70,7 +91,6 @@ export default function RegisterForm({
           label="Telefone"
           placeholder="Informe seu número de telefone"
           {...register("phone", { required: "E-mail obrigatório" })}
-          value={formatPhone(watch("phone") || "")}
           type="tel"
           required
           error={errors.phone?.message}
@@ -92,24 +112,26 @@ export default function RegisterForm({
           required
           error={errors.confirmEmail?.message}
         />
-        <Input.InputForm
-          label="Senha"
-          placeholder="Digite sua senha"
-          type="password"
-          {...register("password", { required: "Senha obrigatória" })}
-          required
-          error={errors.password?.message}
-        />
-        <Input.InputForm
-          label="confirme novamente sua senha"
-          placeholder="Digite novamente sua senha"
-          type="password"
-          {...register("confirmPassword", {
-            required: "Confirmação de senha obrigatória",
-          })}
-          required
-          error={errors.confirmPassword?.message}
-        />
+        {!isEditMode && (
+          <>
+            <Input.InputForm
+              label="Senha"
+              placeholder="Digite sua senha"
+              type="password"
+              {...register("password", { required: "Senha obrigatória" })}
+              required
+              error={errors.password?.message}
+            />
+            <Input.InputForm
+              label="Confirme sua senha"
+              placeholder="Digite novamente sua senha"
+              type="password"
+              {...register("confirmPassword", { required: "Confirmação de senha obrigatória" })}
+              required
+              error={errors.confirmPassword?.message}
+            />
+          </>
+        )}
         <Input.InputForm
           label="Especialidade"
           type="text"
@@ -119,7 +141,7 @@ export default function RegisterForm({
           error={errors.speciality?.message}
         />
         <Button.ButtonVariant
-          text={loading ? "" : "Cadastrar"}
+          text={loading ? "" : buttonText}
           icon={loading ? <Icon.Loading /> : undefined}
           variant="filled"
           type="submit"
