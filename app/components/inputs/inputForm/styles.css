@@ -46,6 +46,6 @@
 
   .input-field {
     padding: var(--space-2px, 0.125rem);
-    font-size: var(--space-12px);
+    font-size: var(--space-16px);
   }
 }
