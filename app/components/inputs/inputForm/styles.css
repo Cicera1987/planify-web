@@ -6,8 +6,9 @@
 }
 
 .input-label {
-  font-size: 16px;
+  font-size: var(--space-16px);
   color: var(--black);
+  margin-bottom: var(--space-4px);
 }
 
 .input-field {
@@ -15,23 +16,36 @@
   border: none;
   border-bottom: 1px solid var(--neutral-light);
   padding: var(--space-4px);
-  font-size: 14px;
+  font-size: var(--space-14px, 14px);
   outline: none;
   transition: border-color 0.2s;
   color: var(--neutral-dark);
 }
 
 .input-field:focus {
-  border-bottom-color: var(--neutral-light);
+  border-bottom-color: var(--primary-2);
 }
+
 .input-field::placeholder {
   color: var(--neutral-light);
   font-style: italic;
-  font-size: 12px;
+  font-size: var(--space-12px);
 }
+
 .input-error {
   color: var(--error);
-  font-size: 12px;
+  font-size: var(--space-12px);
   margin-top: var(--space-4px);
   font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .input-wrapper {
+    max-width: 100%;
+  }
+
+  .input-field {
+    padding: var(--space-2px, 0.125rem);
+    font-size: var(--space-12px);
+  }
 }
