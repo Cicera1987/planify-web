@@ -8,19 +8,14 @@
   gap: var(--space-16px);
   width: 100%;
   max-width: 676px;
+  box-sizing: border-box;
 }
 
-@media (min-width: 370px) {
-  .client-card {
-    flex-direction: row;
-    max-width: 100%;
-  }
-}
 
 .client-image {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   flex-shrink: 0;
   border-radius: var(--space-8px);
   overflow: hidden;
@@ -29,6 +24,8 @@
 .client-img {
   object-fit: cover;
   border-radius: var(--space-8px);
+  width: 100%;
+  height: 100%;
 }
 
 .client-info {
@@ -38,6 +35,15 @@
   flex-direction: column;
   justify-content: space-between;
   padding-right: var(--space-16px);
+  min-width: 0;
+}
+.client-text,
+.client-name,
+.client-title,
+.client-email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .client-trigger {
@@ -117,4 +123,19 @@
   font-size: 0.7rem;
   font-weight: var(--font-w-semibold);
   text-transform: capitalize;
+}
+
+@media (max-width: 640px) {
+  .cards-container {
+    overflow-x: auto;
+    display: flex;
+    gap: var(--space-16px);
+  }
+}
+
+@media (min-width: 370px) {
+  .client-card {
+    flex-direction: row;
+    max-width: 100%;
+  }
 }
