@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import avatar from "@/app/components/assets/images/avatar.png";
 import "./styles.css";
 import { Scheduling } from "@/app/services/schedulingService";

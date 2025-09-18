@@ -12,7 +12,6 @@ export default function ButtonIcon({
   width,
   height,
   className = "",
-  active,
 }: {
   label?: string;
   icon?: ReactNode;

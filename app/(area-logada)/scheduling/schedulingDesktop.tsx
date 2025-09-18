@@ -9,7 +9,6 @@ import "./styles.css";
 import {
   SchedulingPopupStatus,
   useGetActiveSchedulingsQuery,
-  useUpdateSchedulingStatusMutation,
 } from "@/app/services/schedulingService";
 
 import Icon from "@/app/components/assets/icons";

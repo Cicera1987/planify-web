@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 import "./styles.css";
@@ -25,7 +25,6 @@ export default function LoginForm({
   const router = useRouter();
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { useIsMobile } from "@/app/hooks/useMobile";
@@ -11,7 +11,6 @@ import BoxMobile from "@/app/components/content/boxLayout/mobile";
 import BoxLayout from "@/app/components/content/boxLayout/desktop";
 import { useCurrentUser } from "@/app/hooks/useCurrentUser";
 import Input from "@/app/components/inputs";
-import { useScheduling } from "@/app/hooks/useScheduling";
 import { useSchedulingContext } from "@/app/context";
 
 export default function Layout({

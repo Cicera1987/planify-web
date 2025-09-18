@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Icon from "../assets/icons";
 import Button from "../buttons";

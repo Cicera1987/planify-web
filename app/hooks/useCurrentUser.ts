@@ -3,11 +3,7 @@
 import { useEffect, useState } from "react";
 import { useGetUserByIdQuery } from "../services/usersService";
 import jwtDecode from "jwt-decode";
-
-interface DecodedToken {
-  jti?: string;
-  sub?: string;
-}
+import { DecodedToken } from "../services/authService";
 
 export function useCurrentUser() {
   const [userId, setUserId] = useState<string | null>(null);

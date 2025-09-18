@@ -2,13 +2,13 @@
 
 import { ChangeEvent, use, useMemo } from "react";
 import { toast } from "react-toastify";
-import { Register, useRegisterMutation, useUpdateMutation, useUploadImageMutation } from "../services/authService";
+import { DecodedToken, Register, useRegisterMutation, useUpdateMutation, useUploadImageMutation } from "../services/authService";
 import { useSchedulingContext } from "../context";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./useAuth";
 import jwtDecode from "jwt-decode";
 import { RegisterFormInputs } from "../components/forms/formRegisterClient";
-import { useGetUserByIdQuery, userApi } from "../services/usersService";
+import { useGetUserByIdQuery} from "../services/usersService";
 
 export function useRegister() {
   const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
@@ -25,7 +25,7 @@ export function useRegister() {
 
   if (token) {
     try {
-      const decoded: any = jwtDecode(token);
+      const decoded: DecodedToken = jwtDecode(token);
       userId = Number(decoded.jti);
     } catch (err) {
       console.error("Token inválido:", err);
