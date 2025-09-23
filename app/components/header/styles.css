@@ -34,10 +34,11 @@
 }
 
 .header-title {
-  font-size: var(--space-24px);
+  font-size: var(--space-20px);
   font-family: var(--roboto);
   font-weight: var(--bold);
   color: var(--color-black);
+  padding: 0 var(--space-16px);
 }
 
 .header-right {

@@ -1,41 +1,9 @@
-.scheduling-desktop {
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--space-16px);
-  height: auto;
-}
-
 .main-container {
   display: flex;
   justify-content: space-between;
   background: var(--white);
   padding: var(--space-24px) var(--space-16px);
-  border-radius: var(--space-16px);
-}
-
-.buttons-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12px);
-  width: 60%;
-  flex: 0 0 55%;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-}
-
-.cards-container {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  flex: 0 0 40%;
-  gap: 16px;
-  overflow-y: auto;
-  max-height: 680px;
-  padding: var(--space-14px);
-}
-
-.cards-container::-webkit-scrollbar {
-  display: none;
+  border-radius: var(--space-8px);
 }
 
 /*Estilo do mobile */

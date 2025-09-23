@@ -1,31 +1,6 @@
-.box-layout {
-  display: grid;
-  grid-template-columns: 312px 1fr;
-  height: 100vh;
-  background: var(--neutral-4);
-}
-
-.box-sidebar {
-  background: var(--neutral-4);
-}
-
-.box-main {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.box-header {
-  background: var(--neutral-4);
-  flex-shrink: 0;
-}
-
 .box-content {
-  flex: 1;
-  padding: var(--space-24px);
-  overflow-y: auto;
+  background: var(--neutral-4);
 }
-
-.box-footer {
-  flex-shrink: 0;
+.box-main {
+  padding: var(--space-36px);
 }

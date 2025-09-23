@@ -17,7 +17,7 @@ export default function Footer() {
   }[] = [
     {
       id: "home",
-      path: "/",
+      path: "/dashboard",
       icon: (active) => <Icon.InfoHome active={active} />,
       label: "Home",
     },

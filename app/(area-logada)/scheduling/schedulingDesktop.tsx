@@ -5,7 +5,6 @@ import ImageClients from "@/app/components/assets/images/clients.png";
 import ImageReporter from "@/app/components/assets/images/reporter.png";
 import ImageScheduling from "@/app/components/assets/images/scheduling.png";
 import ClientCard from "@/app/components/card";
-import "./styles.css";
 import {
   SchedulingPopupStatus,
   useGetActiveSchedulingsQuery,
@@ -17,8 +16,7 @@ import { useScheduling } from "@/app/hooks/useScheduling";
 import { useSchedulingContext } from "@/app/context";
 
 export default function SchedulingDesktop() {
-  const { handleStatusChange, handleTogglePopup, schedulings } =
-    useScheduling();
+  const { handleStatusChange, handleTogglePopup, schedulings } = useScheduling();
   const { search, openPopupId } = useSchedulingContext();
 
   const {
@@ -28,31 +26,36 @@ export default function SchedulingDesktop() {
   } = useGetActiveSchedulingsQuery();
 
   const listToRender = search.trim()
-    ? (schedulings ?? [])
-    : (activeSchedulings ?? []);
+    ? schedulings ?? []
+    : activeSchedulings ?? [];
 
   if (isLoading) return <p>Carregando...</p>;
   if (error) return <p>Erro ao carregar agendamentos</p>;
 
   return (
-    <div className="scheduling-desktop">
-      <div className="main-container">
-        <div className="buttons-container">
-          <Button.ButtonIcon
-            image={ImageScheduling.src}
-            alt="Imagem da agendas"
-          />
-          <Button.ButtonIcon
-            image={ImageReporter.src}
-            alt="Imagem dos relatórios"
-          />
-          <Button.ButtonIcon
-            image={ImageClients.src}
-            alt="Imagem dos clientes"
-          />
-        </div>
+    <div className="main-container">
 
-        <div className="cards-container">
+      
+      <div className="flex flex-col gap-4 h-full">
+        <Button.ButtonIcon
+          image={ImageScheduling.src}
+          alt="Imagem agendas"
+          className="flex-[1] w-full"
+        />
+        <Button.ButtonIcon
+          image={ImageReporter.src}
+          alt="Imagem relatórios"
+          className="flex-[1] w-full"
+        />
+        <Button.ButtonIcon
+          image={ImageClients.src}
+          alt="Imagem clientes"
+          className="flex-[1.5] w-full"
+        />
+      </div>
+
+
+        <div className="flex flex-col gap-4 md:w-5/12 max-h-[540px] overflow-y-auto">
           {listToRender?.map((scheduling) => (
             <ClientCard
               key={scheduling.id}
@@ -71,7 +74,9 @@ export default function SchedulingDesktop() {
             />
           ))}
         </div>
+
+
       </div>
-    </div>
+
   );
 }

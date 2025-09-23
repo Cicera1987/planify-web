@@ -19,15 +19,13 @@
   padding: 0;
 }
 
-.button-image {
-  width: 90%;
-  height: 98%;
-  object-fit: cover;
-  border-radius: 8px;
-  display: block;
-}
 
 span {
-  font-size: 12px;
+  font-size: var(--space-12px);
   color: var(--neutral-5);
+  font-weight: var(--font-w-semibold);
+}
+
+.active-label {
+  color: var(--primary-2);
 }

@@ -1,57 +1,70 @@
 "use client";
-
-import React from "react";
-import { useRouter, usePathname } from "next/navigation";
+import React, { ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import "./styles.css";
 import Icon from "../assets/icons";
+import { useIsMobile } from "@/app/hooks/useMobile";
+
+interface HeaderProps {
+  label?: string;
+  nome?: string;
+  fotoUrl?: string;
+  onBack?: () => void;
+  showUserInfo?: boolean;
+  children?: ReactNode;
+  icon?: ReactNode;
+  hideTitle?: boolean;
+}
 
 export default function Header({
+  label,
   nome,
   fotoUrl,
-  isMobile = false,
+  onBack,
+  showUserInfo = true,
+  hideTitle = false,
   children,
-}: {
-  label?: string;
-  nome: string;
-  fotoUrl?: string;
-  isMobile?: boolean;
-  children?: React.ReactNode;
-}) {
-  const router = useRouter();
+}: HeaderProps) {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
 
   const titles: Record<string, string> = {
     "/scheduling": "Atendimentos",
     "/client": "Cadastro de Clientes",
     "/dashboard": "Dashboard",
+    "/register": "Meu Cadastro",
+    "/profile": "Meu Perfil",
     "/": "Início",
   };
 
-  const title = titles[pathname] || pathname.replace("/", "");
+  const title = label || titles[pathname] || pathname.replace("/", "");
 
   return (
     <header className="header">
       <div className="header-container">
         <div className="header-left">
-          {!isMobile && (
-            <>
-              <button onClick={() => router.back()} className="header-back-btn">
-                <Icon.ToGoBack />
-              </button>
-              <h1 className="header-title">{title}</h1>
-            </>
+          {onBack && !hideTitle && (
+            <button onClick={onBack} className="header-back-btn">
+              <Icon.ToGoBack />
+            </button>
           )}
+          {!hideTitle && title && <h1 className="header-title">{title}</h1>}
         </div>
 
-        <div className="header-right">
-          <span>Hello,</span>
-          <span className="header-hello">{nome}</span>
-          <img
-            src={fotoUrl ? fotoUrl : "/images/avatar.png"}
-            alt="Avatar"
-            className="header-avatar"
-          />
-        </div>
+        {showUserInfo && (
+          <div className={isMobile ? "" : "header-right"}>
+            {!isMobile && nome && (
+              <span className="header-hello">{nome}</span>
+            )}
+            {fotoUrl && (
+              <img
+                src={fotoUrl || "/images/avatar.png"}
+                alt="Avatar"
+                className="header-avatar"
+              />
+            )}
+          </div>
+        )}
       </div>
 
       {children && <div className="children-header">{children}</div>}

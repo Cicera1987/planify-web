@@ -64,7 +64,6 @@ export function useRegister() {
       if (isEditMode && userId != null) {
         await updateUser({ userId: userId, ...payload }).unwrap();
         toast.success("Cadastrado atualizado com sucesso");
-        router.push("/scheduling");
         return;
       } else {
         await registerUser(payload).unwrap();

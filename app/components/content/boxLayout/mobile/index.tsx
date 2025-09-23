@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, ReactNode } from "react";
 import "./styles.css";
 
 import Icon from "../../../assets/icons";
 import Button from "../../../buttons";
+import { useIsMobile } from "@/app/hooks/useMobile";
 
 interface BoxMobileProps {
-  header: React.ReactNode;
-  sidebar: React.ReactNode;
-  children: React.ReactNode;
-  footer?: React.ReactNode;
+  header?: ReactNode;
+  sidebar?: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
 }
 
 export default function BoxMobile({
@@ -20,34 +21,32 @@ export default function BoxMobile({
   footer,
 }: BoxMobileProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   if (!isMobile) return <>{children}</>;
 
   return (
     <div className="box-mobile">
-      {isSidebarOpen && (
+      {sidebar && isSidebarOpen && (
         <div
           className="sidebar-overlay"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
-      <div className={`mobile-sidebar ${isSidebarOpen ? "open" : ""}`}>
-        {sidebar}
-      </div>
+      {sidebar && (
+        <div className={`mobile-sidebar ${isSidebarOpen ? "open" : ""}`}>
+          {sidebar}
+        </div>
+      )}
       <div className="mobile-header">
-        <Button.ButtonIcon
-          icon={<Icon.InfoMenu />}
-          onClick={() => setIsSidebarOpen(true)}
-        />
         {header}
+        {sidebar && (
+          <Button.ButtonIcon
+            icon={<Icon.InfoMenu />}
+            onClick={() => setIsSidebarOpen(true)}
+          />
+        )}
+
       </div>
       <main className="mobile-content">{children}</main>
       {footer}

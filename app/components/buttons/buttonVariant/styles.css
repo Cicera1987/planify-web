@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-8px);
-  padding: var(--space-8px) var(--space-12px);
+  padding: var(--space-16px) var(--space-12px);
   font-size: 14px;
   font-weight: var(--font-w-medium);
   cursor: pointer;
@@ -39,10 +39,16 @@
 .Button.filled {
   background-color: var(--primary-3);
   border: 1px solid var(--primary-3);
-  border-radius: var(--space-16px);
-  /* borda mais arredondada */
+  border-radius: var(--space-8px);
 }
 
 .Button.filled .Button-text {
   color: var(--neutral-6);
+}
+
+@media (max-width: 640px) {
+  .Button span {
+    font-size: var(--space-16px);
+    font-weight: var(--font-w-regular);
+  }
 }

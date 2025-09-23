@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { useIsMobile } from "@/app/hooks/useMobile";
 import Header from "@/app/components/header";
@@ -13,7 +13,7 @@ import { useCurrentUser } from "@/app/hooks/useCurrentUser";
 import Input from "@/app/components/inputs";
 import { useSchedulingContext } from "@/app/context";
 
-export default function Layout({
+export default function LayoutPrivate({
   desktopContent,
   mobileContent,
 }: {
@@ -22,6 +22,7 @@ export default function Layout({
 }) {
   const router = useRouter();
   const isMobile = useIsMobile();
+  const pathname = usePathname();
   const { user, isLoading } = useCurrentUser();
   const { search, setSearch, token, setToken, mounted, setMounted } =
     useSchedulingContext();
@@ -40,25 +41,37 @@ export default function Layout({
 
   const headerDesktop = (
     <Header
+      onBack={() => router.back()}
+      showUserInfo={false}
       nome={isLoading ? "Carregando..." : (user?.username ?? "")}
       fotoUrl={user?.imageUrl ?? ""}
     >
+     { pathname === "/scheduling" ? (
+      <div className="flex w-full justify-between">
       <Input.SearchInput
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Buscar pelo nome"
       />
       <h2>Próximos atendimentos</h2>
+      </div>
+      ) : null}
     </Header>
   );
-  const headerMobile = (
-    <Header
-      label="Agendamento"
-      nome={isLoading ? "Carregando..." : (user?.username ?? "")}
-      fotoUrl={user?.imageUrl ?? ""}
-      isMobile
-    />
-  );
+
+  const headerMobile =
+    pathname === "/scheduling" ? (
+      <Header
+        fotoUrl={user?.imageUrl ?? ""}
+        showUserInfo={true}
+        hideTitle={true}
+      />
+    ) : (
+      <Header
+        onBack={() => router.back()}
+        showUserInfo={false}
+      />
+    );
 
   const sidebar = <Sidebar />;
   const footer = <Footer />;

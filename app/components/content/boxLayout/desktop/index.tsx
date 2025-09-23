@@ -9,20 +9,18 @@ export default function BoxLayout({
   children,
   footer,
 }: {
-  sidebar: ReactNode;
-  header: ReactNode;
+  sidebar?: ReactNode;
+  header?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
 }) {
   return (
-    <div className="box-layout">
-      <aside className="box-sidebar">{sidebar}</aside>
-      <div className="box-main">
-        <header className="box-header">{header}</header>
-
-        <main className="box-content">{children}</main>
-
-        {footer && <footer className="box-footer">{footer}</footer>}
+    <div className="flex h-screen box-content">
+      {sidebar && <aside className="hidden md:block w-80">{sidebar}</aside>}
+      <div className="flex flex-col flex-1">
+        <header className="flex-shrink-0">{header}</header>
+        <main className="flex-1 p-6 overflow-y-auto box-main">{children}</main>
+        {footer && <footer className="flex-shrink-0">{footer}</footer>}
       </div>
     </div>
   );

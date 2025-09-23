@@ -13,7 +13,7 @@
   height: 100%;
   border-radius: var(--space-8px);
   font-size: var(--space-14px);
-  font-weight: var(--font-w-normal);
+  font-weight: var(--font-w-regular);
   font-family: var(--font-roboto);
   color: var(--black);
   background-color: var(--white);

@@ -51,7 +51,7 @@ module.exports = {
         montserratAlternates: ["Montserrat Alternates", "sans-serif"],
       },
       fontWeight: {
-        normal: "var(--font-w-normal)",
+        regular: "var(--font-w-regular)",
         medium: "var(--font-w-medium)",
         semibold: "var(--font-w-semibold)",
         bold: "var(--font-w-bold)",

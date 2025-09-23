@@ -1,4 +1,4 @@
-import Layout from "../layout/page";
+import Layout from "../layout/layoutPrivate";
 import SchedulingDesktop from "./schedulingDesktop";
 import SchedulingMobile from "./schedulingMobile";
 
