@@ -8,6 +8,7 @@
     "staging": "next build --turbopack && next start",
     "prod": "next build --turbopack && next start",
     "build": "next build --turbopack",
+    "build:no-turbo": "next build",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write ."

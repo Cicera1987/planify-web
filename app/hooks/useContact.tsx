@@ -7,6 +7,7 @@ import {
   useUpdateContactMutation,
   useDeleteContactMutation,
   useGetContactsQuery,
+  Contact,
 } from "../services/contactService";
 import { useSchedulingContext } from "../context";
 import Icon from "../components/assets/icons";
