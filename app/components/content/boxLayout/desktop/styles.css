@@ -3,4 +3,7 @@
 }
 .box-main {
   padding: var(--space-36px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16px);
 }

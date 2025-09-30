@@ -28,7 +28,7 @@ export const jobApi = createApi({
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("@planify/token");
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },

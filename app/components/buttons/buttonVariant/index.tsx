@@ -11,6 +11,7 @@ interface ButtonProps {
   variant?: ButtonVariant;
   type?: "button" | "submit" | "reset";
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
 }
 
 export default function ButtonVariant({
@@ -19,13 +20,16 @@ export default function ButtonVariant({
   variant = "icon",
   onClick,
   type = "button",
+  className = "",
 }: ButtonProps) {
   return (
-    <div>
-      <button type={type} onClick={onClick} className={`Button ${variant}`}>
-        {icon && <span className="Button-icon">{icon}</span>}
-        {text && <span className="Button-text">{text}</span>}
-      </button>
-    </div>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`Button ${variant} ${className}`}
+    >
+      {icon && <span className="Button-icon">{icon}</span>}
+      {text && <span className="Button-text">{text}</span>}
+    </button>
   );
 }

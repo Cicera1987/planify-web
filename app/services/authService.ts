@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_API } from "./api";
 
-
 export interface DecodedToken {
   jti?: string;
   sub?: string;

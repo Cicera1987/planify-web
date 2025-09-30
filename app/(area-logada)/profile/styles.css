@@ -108,7 +108,7 @@
   background-color: var(--color-white);
   border-top-left-radius: var(--space-8px);
   border-bottom-left-radius: var(--space-8px);
-  padding: var(--space-32px);;
+  padding: var(--space-32px);
   height: 100%;
   z-index: 3;
 }

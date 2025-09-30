@@ -19,10 +19,17 @@
 }
 
 .Button.icon {
-  padding: 8px;
-  background: transparent;
   border: none;
-  color: var(--neutral-1);
+  align-items: center;
+  width: 100%;
+  max-width: var(--space-40px);
+  justify-content: center;
+  border-radius: var(--space-8px);
+  background-color: var(--primary-5);
+  padding: var(--space-8px);
+}
+.Button.icon:hover {
+  background-color: var(--background-primary);
 }
 
 .Button.text {

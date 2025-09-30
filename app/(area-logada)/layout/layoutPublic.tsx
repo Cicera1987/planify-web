@@ -8,39 +8,39 @@ import { useRouter } from "next/navigation";
 import React, { ReactNode } from "react";
 
 interface LayoutPublicProps {
-    desktopContent: ReactNode;
-    mobileContent: ReactNode;
-    title: string;
-    showBackButton?: boolean;
+  desktopContent: ReactNode;
+  mobileContent: ReactNode;
+  title: string;
+  showBackButton?: boolean;
 }
 
 export default function LayoutPublic({
-    desktopContent,
-    mobileContent,
-    title,
-    showBackButton = true,
+  desktopContent,
+  mobileContent,
+  title,
+  showBackButton = true,
 }: LayoutPublicProps) {
-    const isMobile = useIsMobile();
-    const router = useRouter();
+  const isMobile = useIsMobile();
+  const router = useRouter();
 
-    const headerDesktop = (
-        <Header
-        label={title}
-        onBack={showBackButton ? () => router.back() : undefined}
-        />
-    );
+  const headerDesktop = (
+    <Header
+      label={title}
+      onBack={showBackButton ? () => router.back() : undefined}
+    />
+  );
 
-    const headerMobile = (
-        <Header
-        label="Meu Cadastro"
-        onBack={() => router.back()}
-        showUserInfo={false}
-        />
-    );
+  const headerMobile = (
+    <Header
+      label="Meu Cadastro"
+      onBack={() => router.back()}
+      showUserInfo={false}
+    />
+  );
 
-    if (isMobile) {
-        return <BoxMobile header={headerMobile}>{mobileContent}</BoxMobile>;
-    }
+  if (isMobile) {
+    return <BoxMobile header={headerMobile}>{mobileContent}</BoxMobile>;
+  }
 
-    return <BoxLayout header={headerDesktop}>{desktopContent}</BoxLayout>;
+  return <BoxLayout header={headerDesktop}>{desktopContent}</BoxLayout>;
 }

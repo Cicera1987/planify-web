@@ -26,7 +26,9 @@ export default function ButtonIcon({
   active?: boolean;
 }) {
   return (
-    <div className={`flex flex-col items-center justify-center gap-2 ${className}`}>
+    <div
+      className={`flex flex-col items-center justify-center gap-2 ${className}`}
+    >
       <button
         className="flex items-center justify-center bg-none border-none cursor-pointer p-0 w-full"
         onClick={onClick}
@@ -44,7 +46,7 @@ export default function ButtonIcon({
           </div>
         )}
       </button>
-      {label && <span className={active ? "active-label": ""}>{label}</span>}
+      {label && <span className={active ? "active-label" : ""}>{label}</span>}
     </div>
   );
 }

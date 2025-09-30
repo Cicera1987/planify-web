@@ -6,14 +6,11 @@ import RegisterDesktop from "./registerDesktop";
 import RegisterMobile from "./registerMobile";
 
 export default function Register() {
-
-
-return(
-  <LayoutPublic
-    title="Meu Cadastro"
-    desktopContent={<RegisterDesktop />}
-    mobileContent={<RegisterMobile />}
-  />
-)
-
+  return (
+    <LayoutPublic
+      title="Meu Cadastro"
+      desktopContent={<RegisterDesktop />}
+      mobileContent={<RegisterMobile />}
+    />
+  );
 }

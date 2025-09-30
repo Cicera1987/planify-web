@@ -13,8 +13,7 @@
   margin-top: var(--space-8px);
   width: 200px;
   background: var(--color-white);
-  border: 1px solid var(--neutral-2);
-  border-radius: var(--space-12px);
+  border: 1px solid var(--neutral-4);
   box-shadow: 0 var(--space-4px) var(--space-8px) rgba(0, 0, 0, 0.1);
   padding: var(--space-8px);
   z-index: 1000;
@@ -27,41 +26,37 @@
 }
 
 .status-btn {
-  padding: var(--space-8px) var(--space-12px);
-  border: none;
-  border-radius: var(--space-4px);
-  cursor: pointer;
-  font-weight: bold;
-  margin-bottom: var(--space-4px);
   width: 100%;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8px);
+  padding: var(--space-8px) var(--space-12px);
+  margin-bottom: var(--space-4px);
+  font-weight: 400;
+  background: transparent;
+  color: var(--black);
+  font-size: var(--space-12px);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
-.btn-gray {
-  background-color: var(--neutral-light);
-  color: var(--neutral-dark);
-}
-
-.btn-blue {
-  background-color: var(--primary-3);
-  color: var(--color-white);
-}
-
-.btn-green {
-  background-color: var(--secondary-2);
-  color: var(--color-white);
-}
-.btn-red {
-  background-color: var(--error);
-  color: var(--color-white);
-}
-
-.status-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-16px);
+  height: var(--space-16px);
 }
 
 .status-btn:hover {
   background-color: var(--neutral-4);
   color: var(--neutral-dark);
+}
+
+.status-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

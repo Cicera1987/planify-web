@@ -5,66 +5,72 @@ import Image from "next/image";
 import avatar from "@/app/components/assets/images/avatar.png";
 import "./styles.css";
 import { Scheduling } from "@/app/services/schedulingService";
-import Icon from "../assets/icons";
+import Icon from "../../assets/icons";
 import { formatDate } from "@/app/utils/formatDate";
 import { formatHours } from "@/app/utils/formatHours";
 import { formatPhone } from "@/app/utils/formatPhone";
 
-interface ClientCardProps {
+interface SchedulingCardProps {
   data: Scheduling;
   triggerIcon: ReactNode;
   onTriggerClick?: () => void;
 }
 
-export default function ClientCard({
+export default function SchedulingCard({
   data,
   triggerIcon,
   onTriggerClick,
-}: ClientCardProps) {
+}: SchedulingCardProps) {
   const { contact, calendarTime, calendarDay, status } = data;
 
   return (
-    <div className="client-card">
-      <div className="client-image">
+    <div className="scheduling-card">
+      <div className="scheduling-image">
         <Image
-          src={contact.imageUrl ?? avatar.src}
+          src={
+            data.contact.imageUrl && data.contact.imageUrl.startsWith("http")
+              ? data.contact.imageUrl
+              : avatar.src
+          }
           alt={contact.name}
           fill
-          className="client-img"
+          className="scheduling-img"
         />
       </div>
 
-      <div className="client-info">
-        <button className="client-trigger" onClick={onTriggerClick}>
+      <div className="scheduling-info">
+        <button className="scheduling-trigger" onClick={onTriggerClick}>
           {triggerIcon}
         </button>
 
-        <div className="client-text">
+        <div className="scheduling-text">
           <div className="header-name">
-            <h3 className="client-name">{contact.name}</h3>
-            <span className="client-date">
+            <h3 className="scheduling-name">{contact.name}</h3>
+            <span className="scheduling-date">
               {formatDate(calendarDay.localDate)}
             </span>
           </div>
 
           <div className="header-name">
-            <p className="client-title">
-              E-mail: <span className="client-email">{contact.email}</span>
+            <p className="scheduling-title">
+              E-mail: <span className="scheduling-email">{contact.email}</span>
             </p>
-            <p className="client-title">
+            <p className="scheduling-title">
               Horário:{" "}
-              <span className="client-text">
+              <span className="scheduling-text">
                 {formatHours(calendarTime.time)}
               </span>
             </p>
           </div>
 
           <div className="header-name">
-            <p className="client-title">
+            <p className="scheduling-title">
               <Icon.Whatsapp />{" "}
-              <span className="client-text">{formatPhone(contact.phone)}</span>
+              <span className="scheduling-text">
+                {formatPhone(contact.phone)}
+              </span>
             </p>
-            <p className="client-status">{status}</p>
+            <p className="scheduling-status">{status}</p>
           </div>
         </div>
       </div>

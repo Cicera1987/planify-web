@@ -29,9 +29,9 @@ export const SchedulingPopupStatusLabels: Record<
   SchedulingPopupStatus,
   string
 > = {
-  CONFIRMADO: "Confirmado",
-  CONCLUIDO: "Concluído",
-  CANCELADO: "Cancelado",
+  CONFIRMADO: "Confirmado", // Tratar este confirmado nas notificações, para que quando o cliente confirmar, mostre um icon de check verde na frente do nome no card
+  CONCLUIDO: "Finalizar atendimento",
+  CANCELADO: "Cancelar atendimento",
 };
 
 interface CalendarDay {
@@ -78,7 +78,7 @@ export const schedulingApi = createApi({
     baseUrl: BASE_API,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("@planify/token");
-      if (token) headers.set("authorization", `Bearer ${token}`);
+      if (token) headers.set("Authorization", `Bearer ${token}`);
       return headers;
     },
   }),

@@ -1,53 +1,53 @@
 "use client";
 
-import { useScheduling } from "@/app/hooks/useScheduling";
+import React, { ReactNode } from "react";
 import { Popup } from ".";
 import "./styles.css";
 
-import {
-  Scheduling,
-  SchedulingPopupStatus,
-  SchedulingPopupStatusLabels,
-} from "@/app/services/schedulingService";
-
-interface StatusPopupProps {
-  trigger: React.ReactNode;
-  onSelect: (status: SchedulingPopupStatus) => void;
-  scheduling: Scheduling;
+export interface ListPopupItem<T> {
+  value: string;
+  label: string;
+  icon?: ReactNode;
+  disabled?: boolean;
+  className?: string;
+  extra?: Partial<T>;
 }
 
-export function StatusPopup({
+interface ListPopupProps<T> {
+  trigger: React.ReactNode;
+  items: ListPopupItem<T>[];
+  onSelect: (value: string, data: T) => void;
+  isOpen: boolean;
+  onClose: () => void;
+  data: T;
+}
+
+export function StatusPopup<T>({
   trigger,
+  items,
   onSelect,
   isOpen,
   onClose,
-  scheduling,
-}: StatusPopupProps & { isOpen: boolean; onClose: () => void }) {
-  const { isStatusEnabled, getStatusStyle } = useScheduling();
-
+  data,
+}: ListPopupProps<T>) {
   return (
     <Popup trigger={trigger} isOpen={isOpen} onClose={onClose}>
       <ul className="status-list">
-        {Object.entries(SchedulingPopupStatusLabels).map(([key, label]) => {
-          const statusKey = key as SchedulingPopupStatus;
-          const btnClass = getStatusStyle(statusKey, scheduling.status);
-          const disabled = !isStatusEnabled(statusKey);
-
-          return (
-            <li key={key}>
-              <button
-                onClick={() => {
-                  onSelect(statusKey);
-                  onClose();
-                }}
-                disabled={disabled}
-                className={`status-btn ${btnClass}`}
-              >
-                {label}
-              </button>
-            </li>
-          );
-        })}
+        {items.map(({ value, label, icon, disabled, className }) => (
+          <li key={value}>
+            <button
+              onClick={() => {
+                onSelect(value, data);
+                onClose();
+              }}
+              disabled={disabled}
+              className={`status-btn ${className ?? ""}`}
+            >
+              {icon && <span className="status-icon">{icon}</span>}
+              {label}
+            </button>
+          </li>
+        ))}
       </ul>
     </Popup>
   );

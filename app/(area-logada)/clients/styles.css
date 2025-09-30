@@ -1,0 +1,43 @@
+.main-desktop-contact {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-height: 70vh;
+  overflow-y: auto;
+  gap: 16px;
+  justify-content: flex-start;
+  background: var(--white);
+  padding: var(--space-24px) var(--space-16px);
+  border-radius: var(--space-8px);
+}
+
+.main-mobile-contact {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 70vh;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: stretch;
+  background: var(--white);
+  padding: var(--space-24px) var(--space-16px);
+  border-radius: var(--space-8px);
+  overflow-y: auto;
+  margin-top: var(--space-16px);
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  width: 100%;
+  padding: var(--space-16px);
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .cards-container {
+    overflow-x: auto;
+    display: flex;
+  }
+}

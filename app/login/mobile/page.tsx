@@ -8,13 +8,15 @@ export default function MobileLogin() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-    
       <img
         src="/images/logo.png"
         alt="Logo Planify"
         className="w-24 sm:w-28 mb-4"
       />
-      <h1 style={{ color: "var(--primary-3)" }} className="text-2xl sm:text-3xl font-bold mb-8">
+      <h1
+        style={{ color: "var(--primary-3)" }}
+        className="text-2xl sm:text-3xl font-bold mb-8"
+      >
         Planify
       </h1>
 
@@ -22,7 +24,5 @@ export default function MobileLogin() {
         <LoginForm onSubmit={(data) => login(data.email, data.password)} />
       </div>
     </div>
-
-
   );
 }

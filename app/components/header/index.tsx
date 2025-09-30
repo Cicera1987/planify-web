@@ -30,14 +30,25 @@ export default function Header({
 
   const titles: Record<string, string> = {
     "/scheduling": "Atendimentos",
-    "/client": "Cadastro de Clientes",
     "/dashboard": "Dashboard",
+    "/clients": "Meus Clientes",
     "/register": "Meu Cadastro",
     "/profile": "Meu Perfil",
+    "/contact": "Cadastro de Cliente",
+    "/service": "Cadastro de Serviço",
+    "/package": "Cadastro de Pacote",
     "/": "Início",
   };
 
-  const title = label || titles[pathname] || pathname.replace("/", "");
+  function getTitle(path: string) {
+    if (/^\/contact\/\d+\/edit$/.test(path)) return "Editar Cliente";
+    if (/^\/service\/\d+\/edit$/.test(path)) return "Editar Serviço";
+    if (/^\/package\/\d+\/edit$/.test(path)) return "Editar Pacote de serviço";
+
+    return titles[path] || path.replace("/", "");
+  }
+
+  const title = getTitle(pathname);
 
   return (
     <header className="header">
@@ -53,9 +64,7 @@ export default function Header({
 
         {showUserInfo && (
           <div className={isMobile ? "" : "header-right"}>
-            {!isMobile && nome && (
-              <span className="header-hello">{nome}</span>
-            )}
+            {!isMobile && nome && <span className="header-hello">{nome}</span>}
             {fotoUrl && (
               <img
                 src={fotoUrl || "/images/avatar.png"}

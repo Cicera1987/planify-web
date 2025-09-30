@@ -2,24 +2,29 @@
 
 import { ChangeEvent, use, useMemo } from "react";
 import { toast } from "react-toastify";
-import { DecodedToken, Register, useRegisterMutation, useUpdateMutation, useUploadImageMutation } from "../services/authService";
+import {
+  DecodedToken,
+  Register,
+  useRegisterMutation,
+  useUpdateMutation,
+  useUploadImageMutation,
+} from "../services/authService";
 import { useSchedulingContext } from "../context";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./useAuth";
 import jwtDecode from "jwt-decode";
-import { RegisterFormInputs } from "../components/forms/formRegisterClient";
-import { useGetUserByIdQuery} from "../services/usersService";
+import { RegisterFormInputs } from "../components/forms/formUser";
+import { useGetUserByIdQuery } from "../services/usersService";
 
-export function useRegister() {
+export function useRegister({
+  isEditMode = false,
+}: { isEditMode?: boolean } = {}) {
   const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateMutation();
   const { setImageData, imageState } = useSchedulingContext();
   const [uploadImage] = useUploadImageMutation();
-  const { token, isAuthenticated } = useAuth();
+  const { token } = useAuth();
   const router = useRouter();
-
-
-  const isEditMode = isAuthenticated;
 
   let userId: number | null = null;
 
@@ -31,8 +36,11 @@ export function useRegister() {
       console.error("Token inválido:", err);
     }
   }
-  const { data: user } = useGetUserByIdQuery(userId ?? 0, { skip: !userId });
-  
+
+  const { data: user } = useGetUserByIdQuery(userId ?? 0, {
+    skip: !userId || !isEditMode,
+  });
+
   async function handleRegister(data: RegisterFormInputs) {
     let imageUrl = "";
 
@@ -79,7 +87,7 @@ export function useRegister() {
       });
     } catch (err) {
       toast.error(
-        isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário"
+        isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário",
       );
       console.error(err);
     }
@@ -104,7 +112,7 @@ export function useRegister() {
   const handleExternalImage = (
     url: string,
     provider: "GOOGLE" | "WHATSAPP",
-    providerUserId: string
+    providerUserId: string,
   ) => {
     setImageData({
       image: url,
@@ -128,13 +136,12 @@ export function useRegister() {
     return {};
   }, [isEditMode, user]);
 
-
   return {
     handleRegister,
     handleLocalImageChange,
     handleExternalImage,
     isLoading: isRegistering || isUpdating,
     isEditMode,
-    defaultValues
+    defaultValues,
   };
 }

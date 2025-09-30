@@ -16,6 +16,7 @@ interface RegisterFormProps {
   showLinks?: boolean;
   defaultValues?: Partial<RegisterFormInputs>;
   buttonText?: string;
+  isEditMode?: boolean;
 }
 
 export interface RegisterFormInputs {
@@ -33,7 +34,8 @@ export default function RegisterForm({
   onSubmit,
   loading = false,
   defaultValues,
-  buttonText = "Cadastrar",
+  buttonText = "Enviar",
+  isEditMode = false,
 }: RegisterFormProps) {
   const {
     register,
@@ -42,12 +44,11 @@ export default function RegisterForm({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<RegisterFormInputs>({ 
-    defaultValues 
-  }
-  );
-  const { handleLocalImageChange, isEditMode } = useRegister();
-  const { imageState,  } = useSchedulingContext();
+  } = useForm<RegisterFormInputs>({
+    defaultValues,
+  });
+  const { handleLocalImageChange } = useRegister();
+  const { imageState } = useSchedulingContext();
 
   useEffect(() => {
     if (defaultValues) reset(defaultValues);

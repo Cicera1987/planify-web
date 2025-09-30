@@ -1,11 +1,11 @@
 .search-input {
   width: 100%;
-  max-width: 400px;
+  height: var(--space-44px);
   padding: var(--space-8px) var(--space-12px);
   font-size: 14px;
   color: var(--neutral-dark);
   background-color: var(--color-white);
-  border: 1px solid var(--neutral-6);
+  border: 1px solid var(--neutral-4);
   border-radius: var(--space-8px);
   outline: none;
   transition:

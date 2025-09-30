@@ -5,9 +5,12 @@ import {
   useUpdateSchedulingStatusMutation,
   SchedulingPopupStatus,
   SchedulingStatus,
+  SchedulingPopupStatusLabels,
 } from "@/app/services/schedulingService";
 import { toast } from "react-toastify";
 import { useSchedulingContext } from "../context";
+import { ReactNode } from "react";
+import Icon from "@/app/components/assets/icons";
 
 export function useScheduling() {
   const [updateStatus, { isLoading }] = useUpdateSchedulingStatusMutation();
@@ -16,17 +19,6 @@ export function useScheduling() {
   const { data: schedulings } = useSearchSchedulingsByContactNameQuery(search, {
     skip: !search.trim().length,
   });
-
-  function getStatusStyle(
-    status: SchedulingPopupStatus,
-    schedulingStatus: SchedulingStatus,
-  ) {
-    if (status === "CONFIRMADO")
-      return schedulingStatus === "CONFIRMADO" ? "btn-blue" : "btn-gray";
-    if (status === "CONCLUIDO") return "btn-green";
-    if (status === "CANCELADO") return "btn-red";
-    return "";
-  }
 
   async function handleStatusChange(id: number, status: SchedulingPopupStatus) {
     try {
@@ -48,12 +40,39 @@ export function useScheduling() {
     return status === "CONCLUIDO" || status === "CANCELADO";
   }
 
+  const popupItems = Object.entries(SchedulingPopupStatusLabels).map(
+    ([value, label]) => {
+      let icon: ReactNode;
+
+      switch (value) {
+        case "CONFIRMADO":
+          icon = <Icon.Checked />;
+          break;
+        case "CONCLUIDO":
+          icon = <Icon.NotePad />;
+          break;
+        case "CANCELADO":
+          icon = <Icon.Full />;
+          break;
+        default:
+          icon = null;
+      }
+
+      return {
+        value: value as SchedulingPopupStatus,
+        label: label,
+        icon: icon,
+        isDisabled: !isStatusEnabled(value as SchedulingPopupStatus),
+      };
+    },
+  );
+
   return {
     schedulings,
     handleStatusChange,
     handleTogglePopup,
     isLoading,
     isStatusEnabled,
-    getStatusStyle,
+    popupItems,
   };
 }

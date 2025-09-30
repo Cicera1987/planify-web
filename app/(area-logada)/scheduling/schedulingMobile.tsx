@@ -4,7 +4,7 @@ import Button from "@/app/components/buttons";
 import Clients from "@/app/components/assets/images/clients-mobile.png";
 import Reporter from "@/app/components/assets/images/reporter-mobile.png";
 import Scheduling from "@/app/components/assets/images/scheduling-mobile.png";
-import ClientCard from "@/app/components/card";
+
 import "./styles.css";
 
 import {
@@ -15,10 +15,13 @@ import Icon from "@/app/components/assets/icons";
 import { useScheduling } from "@/app/hooks/useScheduling";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { useSchedulingContext } from "@/app/context";
+import SchedulingCard from "@/app/components/card/scheduling";
+import { useRouter } from "next/navigation";
 
 export default function SchedulingMobile() {
-  const { handleStatusChange, handleTogglePopup } = useScheduling();
+  const { handleStatusChange, handleTogglePopup, popupItems } = useScheduling();
   const { openPopupId } = useSchedulingContext();
+  const router = useRouter();
 
   const {
     data: activeSchedulings,
@@ -37,7 +40,11 @@ export default function SchedulingMobile() {
           <Button.ButtonIcon image={Reporter.src} alt="Relatório" />
         </div>
         <div>
-          <Button.ButtonIcon image={Clients.src} alt="Clientes" />
+          <Button.ButtonIcon
+            image={Clients.src}
+            alt="Clientes"
+            onClick={() => router.push("/clients")}
+          />
         </div>
       </div>
 
@@ -45,18 +52,23 @@ export default function SchedulingMobile() {
 
       <div className="mobile-cards-container">
         {activeSchedulings?.map((scheduling) => (
-          <ClientCard
+          <SchedulingCard
             key={scheduling.id}
             data={scheduling}
             triggerIcon={
               <StatusPopup
                 trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}
-                onSelect={(status: SchedulingPopupStatus) =>
-                  handleStatusChange(scheduling.id, status)
-                }
+                items={popupItems.map((item) => ({
+                  value: item.value,
+                  label: String(item.label),
+                  icon: item.icon,
+                }))}
+                data={scheduling}
+                onSelect={(status, sched) => {
+                  handleStatusChange(sched.id, status as SchedulingPopupStatus);
+                }}
                 isOpen={openPopupId === scheduling.id}
                 onClose={() => handleTogglePopup(scheduling.id)}
-                scheduling={scheduling}
               />
             }
           />

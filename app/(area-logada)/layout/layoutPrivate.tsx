@@ -14,9 +14,11 @@ import Input from "@/app/components/inputs";
 import { useSchedulingContext } from "@/app/context";
 
 export default function LayoutPrivate({
+  pageTitle,
   desktopContent,
   mobileContent,
 }: {
+  pageTitle?: ReactNode;
   desktopContent: ReactNode;
   mobileContent: ReactNode;
 }) {
@@ -42,19 +44,24 @@ export default function LayoutPrivate({
   const headerDesktop = (
     <Header
       onBack={() => router.back()}
-      showUserInfo={false}
+      showUserInfo={true}
       nome={isLoading ? "Carregando..." : (user?.username ?? "")}
-      fotoUrl={user?.imageUrl ?? ""}
+      fotoUrl={user?.imageUrl || "/images/avatar.png"}
     >
-     { pathname === "/scheduling" ? (
-      <div className="flex w-full justify-between">
-      <Input.SearchInput
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Buscar pelo nome"
-      />
-      <h2>Próximos atendimentos</h2>
-      </div>
+      {pathname === "/scheduling" ? (
+        <div className="flex w-full items-center justify-between gap-4">
+          <div className="flex-1">
+            <Input.SearchInput
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar pelo nome"
+              className="w-full"
+            />
+          </div>
+          <h2 className="text-lg font-semibold whitespace-nowrap">
+            Próximos atendimentos
+          </h2>
+        </div>
       ) : null}
     </Header>
   );
@@ -67,10 +74,7 @@ export default function LayoutPrivate({
         hideTitle={true}
       />
     ) : (
-      <Header
-        onBack={() => router.back()}
-        showUserInfo={false}
-      />
+      <Header onBack={() => router.back()} showUserInfo={false} />
     );
 
   const sidebar = <Sidebar />;
@@ -79,6 +83,8 @@ export default function LayoutPrivate({
   if (isMobile) {
     return (
       <BoxMobile header={headerMobile} sidebar={sidebar} footer={footer}>
+        <div className="mb-4">{pageTitle}</div>
+
         {mobileContent}
       </BoxMobile>
     );
@@ -86,6 +92,7 @@ export default function LayoutPrivate({
 
   return (
     <BoxLayout header={headerDesktop} sidebar={sidebar}>
+      {pageTitle}
       {desktopContent}
     </BoxLayout>
   );

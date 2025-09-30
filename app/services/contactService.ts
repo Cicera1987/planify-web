@@ -7,6 +7,7 @@ export interface Contact {
   phone: string;
   email?: string;
   observation?: string;
+  gender?: string;
   imageUrl?: string;
   professionalId: number;
   packageIds?: number[];
@@ -28,8 +29,9 @@ export const contactApi = createApi({
     baseUrl: BASE_API,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("@planify/token");
+      console.log("Token retrieved from localStorage:", token);
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },
@@ -58,7 +60,7 @@ export const contactApi = createApi({
       query: (newContact) => ({
         url: "/contacts",
         method: "POST",
-        body: newContact,
+        body: { ...newContact, packageIds: newContact.packageIds || [] },
       }),
       invalidatesTags: ["Contact"],
     }),

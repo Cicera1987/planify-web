@@ -1,4 +1,4 @@
-.client-card {
+.scheduling-card {
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -11,8 +11,7 @@
   box-sizing: border-box;
 }
 
-
-.client-image {
+.scheduling-image {
   position: relative;
   width: 60px;
   height: 60px;
@@ -21,14 +20,14 @@
   overflow: hidden;
 }
 
-.client-img {
+.scheduling-img {
   object-fit: cover;
   border-radius: var(--space-8px);
   width: 100%;
   height: 100%;
 }
 
-.client-info {
+.scheduling-info {
   position: relative;
   flex: 1;
   display: flex;
@@ -37,15 +36,15 @@
   padding-right: var(--space-16px);
   min-width: 0;
 }
-.client-text,
-.client-name,
-.client-email {
+.scheduling-text,
+.scheduling-name,
+.scheduling-email {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.client-trigger {
+.scheduling-trigger {
   position: absolute;
   top: 0;
   right: 0;
@@ -56,18 +55,18 @@
   cursor: pointer;
 }
 
-.client-trigger:hover {
+.scheduling-trigger:hover {
   background-color: var(--background-color-light);
 }
 
-.client-name {
+.scheduling-name {
   font-size: 1rem;
   font-weight: var(--font-w-bold);
   color: var(--primary-3);
   max-width: 289px;
 }
 
-.client-title {
+.scheduling-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -77,14 +76,14 @@
   gap: var(--space-4px);
 }
 
-.client-text {
+.scheduling-text {
   font-size: 0.75rem;
   color: var(--neutral-dark);
   font-weight: var(--font-w-regular);
   max-width: 100%;
 }
 
-.client-email {
+.scheduling-email {
   font-size: 0.75rem;
   color: var(--neutral-dark);
   font-weight: var(--font-w-regular);
@@ -99,14 +98,14 @@
   align-items: center;
 }
 
-.client-date {
+.scheduling-date {
   font-size: 0.875rem;
   font-weight: var(--font-w-semibold);
   color: var(--primary-3);
   margin-right: var(--space-8px);
 }
 
-.client-status {
+.scheduling-status {
   margin-left: var(--space-8px);
   padding: 2px 6px;
   border-radius: var(--space-4px);
@@ -124,7 +123,7 @@
 }
 
 @media (min-width: 370px) {
-  .client-card {
+  .scheduling-card {
     flex-direction: row;
     max-width: 100%;
   }

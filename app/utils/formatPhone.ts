@@ -1,4 +1,6 @@
 export const formatPhone = (phone: string) => {
+  if (!phone) return "";
+
   const cleaned = phone.replace(/\D/g, "").slice(0, 11);
   if (cleaned.length === 11) {
     return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;

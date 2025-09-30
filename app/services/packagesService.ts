@@ -25,7 +25,7 @@ export const packageApi = createApi({
     baseUrl: BASE_API,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("@planify/token");
-      if (token) headers.set("authorization", `Bearer ${token}`);
+      if (token) headers.set("Authorization", `Bearer ${token}`);
       return headers;
     },
   }),

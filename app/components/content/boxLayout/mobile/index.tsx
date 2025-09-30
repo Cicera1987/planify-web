@@ -46,7 +46,6 @@ export default function BoxMobile({
             onClick={() => setIsSidebarOpen(true)}
           />
         )}
-
       </div>
       <main className="mobile-content">{children}</main>
       {footer}
