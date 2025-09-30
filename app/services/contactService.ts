@@ -53,21 +53,15 @@ export const contactApi = createApi({
         `/contacts/search?name=${encodeURIComponent(name)}&page=${page}&size=${size}`,
       providesTags: ["Contact"],
     }),
-    createContact: builder.mutation<
-      Contact,
-      Omit<Contact, "id" | "professionalId" | "createdAt">
-    >({
-      query: (newContact) => ({
+    createContact: builder.mutation<Contact, FormData>({
+      query: (formData) => ({
         url: "/contacts",
         method: "POST",
-        body: { ...newContact, packageIds: newContact.packageIds || [] },
+        body: formData,
       }),
       invalidatesTags: ["Contact"],
     }),
-    updateContact: builder.mutation<
-      Contact,
-      { id: number; data: Partial<Contact> }
-    >({
+    updateContact: builder.mutation<Contact, { id: number; data: FormData }>({
       query: ({ id, data }) => ({
         url: `/contacts/${id}`,
         method: "PUT",

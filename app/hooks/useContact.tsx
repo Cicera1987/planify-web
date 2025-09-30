@@ -29,7 +29,7 @@ export function useContact(contactId?: number) {
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
   const { setImageData, imageState, setOpenPopupId } = useSchedulingContext();
   const isEditMode = Boolean(contactId);
-  const { data: contactsResponse } = useGetContactsQuery({ page: 0, size: 20 });
+  const { data: contactsResponse } = useGetContactsQuery({ page: 0, size: 10 });
   const contacts = contactsResponse?.content ?? [];
   const router = useRouter();
 
@@ -53,39 +53,35 @@ export function useContact(contactId?: number) {
       icon: <Icon.Calendar />,
     },
   ];
-
   async function handleSave(data: ContactFormInputs) {
-    let imageUrl = "";
-
-    if (imageState.file) {
-      try {
-        imageUrl = imageState.file.name;
-      } catch (err) {
-        console.error("Erro ao enviar imagem:", err);
-        toast.error("Falha ao enviar imagem");
-        return;
-      }
-    } else if (imageState.image && imageState.image.startsWith("http")) {
-      imageUrl = imageState.image;
-    }
-
-    const payload: ContactFormInputs = {
-      ...data,
-      phone: data.phone?.replace(/\D/g, "") || "",
-      ...(imageUrl && { imageUrl }),
-      packageIds:
-        data.packageIds && data.packageIds.length > 0 ? data.packageIds : [0],
-      gender: data.gender?.toUpperCase()
-    };
-
     try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("phone", data.phone.replace(/\D/g, ""));
+      if (data.email) formData.append("email", data.email);
+      if (data.observation) formData.append("observation", data.observation);
+      if (data.gender) formData.append("gender", data.gender.toUpperCase());
+
+      if (imageState.file) {
+        formData.append("file", imageState.file);
+      } else if (imageState.image && imageState.image.startsWith("http")) {
+        formData.append("imageUrl", imageState.image);
+      }
+
+      if (data.packageIds?.length) {
+        data.packageIds.forEach((id) =>
+          formData.append("packageIds", String(id)),
+        );
+      }
+
       if (isEditMode && contactId) {
-        await updateContact({ id: contactId, data: payload }).unwrap();
+        await updateContact({ id: contactId, data: formData }).unwrap();
+        router.push("/clients");
         toast.success("Contato atualizado com sucesso");
       } else {
-        await createContact(payload).unwrap();
-        toast.success("Contato criado com sucesso");
+        await createContact(formData).unwrap();
         router.push("/clients");
+        toast.success("Contato criado com sucesso");
       }
 
       setImageData({
@@ -94,7 +90,7 @@ export function useContact(contactId?: number) {
         provider: "CLOUDINARY",
         providerUserId: "",
       });
-    } catch (err) {
+    } catch (err: unknown) {
       toast.error(
         isEditMode ? "Erro ao atualizar contato" : "Erro ao criar contato",
       );
