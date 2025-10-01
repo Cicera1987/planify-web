@@ -29,7 +29,6 @@ export const contactApi = createApi({
     baseUrl: BASE_API,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("@planify/token");
-      console.log("Token retrieved from localStorage:", token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -38,19 +37,12 @@ export const contactApi = createApi({
   }),
   tagTypes: ["Contact"],
   endpoints: (builder) => ({
-    getContacts: builder.query<
-      PageResponse<Contact>,
-      { page?: number; size?: number }
-    >({
-      query: ({ page = 0, size = 10 }) => `/contacts?page=${page}&size=${size}`,
+    getContacts: builder.query<PageResponse<Contact>, { page?: number; size?: number }>({
+      query: ({ page = 1, size = 10 }) => `/contacts?page=${page}&size=${size}`,
       providesTags: ["Contact"],
     }),
-    searchContacts: builder.query<
-      PageResponse<Contact>,
-      { name: string; page?: number; size?: number }
-    >({
-      query: ({ name, page = 0, size = 10 }) =>
-        `/contacts/search?name=${encodeURIComponent(name)}&page=${page}&size=${size}`,
+    searchContacts: builder.query<PageResponse<Contact>, { name: string; page?: number; size?: number }>({
+      query: ({ name, page = 1, size = 10 }) => `/contacts/search?name=${encodeURIComponent(name)}&page=${page}&size=${size}`,
       providesTags: ["Contact"],
     }),
     createContact: builder.mutation<Contact, FormData>({

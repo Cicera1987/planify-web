@@ -3,13 +3,31 @@
 import Icon from "@/app/components/assets/icons";
 import Button from "@/app/components/buttons";
 import ClientCard from "@/app/components/card/clients";
+import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { useSchedulingContext } from "@/app/context";
 import { useContact } from "@/app/hooks/useContact";
 
 export default function ClientsMobile() {
   const { openPopupId } = useSchedulingContext();
-  const { handleTogglePopup, contacts, handleSelect, items } = useContact();
+  const {
+    handleTogglePopup,
+    contacts,
+    handleSelect,
+    items,
+    isLoadingContacts,
+    isFetching,
+    hasMore,
+    observerTarget 
+  } = useContact();
+
+  if (isLoadingContacts) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <Icon.Loading size="md" borderWidth="md" />
+      </div>
+    )
+  }
 
   return (
     <div className="main-mobile-contact">
@@ -29,6 +47,7 @@ export default function ClientsMobile() {
           }
         />
       ))}
+      <InfiniteScrollLoader observerTarget={observerTarget} isFetching={isFetching} hasMore={hasMore} />
     </div>
   );
 }

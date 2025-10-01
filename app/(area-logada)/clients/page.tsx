@@ -8,7 +8,7 @@ import { useSchedulingContext } from "@/app/context";
 import { useRouter } from "next/navigation";
 
 export default function Clients() {
-  const { search } = useSchedulingContext();
+  const { search, setSearch} = useSchedulingContext();
   const router = useRouter();
 
   return (
@@ -16,7 +16,7 @@ export default function Clients() {
       pageTitle={
         <SearchBar
           searchValue={search}
-          onSearchChange={() => {}}
+          onSearchChange={setSearch}
           onButtonClick={() => router.push("/contact")}
           placeholder="Pesquisar..."
         />

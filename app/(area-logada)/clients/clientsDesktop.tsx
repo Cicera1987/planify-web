@@ -7,10 +7,29 @@ import Icon from "@/app/components/assets/icons";
 import ClientCard from "@/app/components/card/clients";
 import "./styles.css";
 import { useSchedulingContext } from "@/app/context";
+import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
+
 
 export default function ClientsDesktop() {
-  const { search, openPopupId } = useSchedulingContext();
-  const { handleTogglePopup, contacts, handleSelect, items } = useContact();
+  const { openPopupId } = useSchedulingContext();
+  const { 
+    handleTogglePopup, 
+    contacts, 
+    handleSelect, 
+    items,
+    isLoadingContacts,
+    isFetching,
+    hasMore,
+    observerTarget,
+  } = useContact();
+  
+  if (isLoadingContacts) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <Icon.Loading size="lg" borderWidth="lg"/>
+      </div>
+    )
+  }
 
   return (
     <div className="main-desktop-contact">
@@ -31,6 +50,7 @@ export default function ClientsDesktop() {
             }
           />
         ))}
+        <InfiniteScrollLoader observerTarget={observerTarget} isFetching={isFetching} hasMore={hasMore} />
       </div>
     </div>
   );

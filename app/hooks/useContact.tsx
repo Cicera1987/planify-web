@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useMemo } from "react";
+import React, { ChangeEvent, useEffect, useMemo } from "react";
 import { toast } from "react-toastify";
 import {
   useCreateContactMutation,
@@ -8,10 +8,14 @@ import {
   useDeleteContactMutation,
   useGetContactsQuery,
   Contact,
+  useSearchContactsQuery,
 } from "../services/contactService";
 import { useSchedulingContext } from "../context";
 import Icon from "../components/assets/icons";
 import { useRouter } from "next/navigation";
+import { usePagination } from "./usePaginatiojn";
+import { get } from "http";
+
 
 export interface ContactFormInputs {
   name: string;
@@ -27,11 +31,30 @@ export function useContact(contactId?: number) {
   const [createContact, { isLoading: isCreating }] = useCreateContactMutation();
   const [updateContact, { isLoading: isUpdating }] = useUpdateContactMutation();
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
-  const { setImageData, imageState, setOpenPopupId } = useSchedulingContext();
+  const { setImageData, imageState, setOpenPopupId, search } = useSchedulingContext();
   const isEditMode = Boolean(contactId);
-  const { data: contactsResponse } = useGetContactsQuery({ page: 0, size: 10 });
-  const contacts = contactsResponse?.content ?? [];
   const router = useRouter();
+
+  const queryHook = (params: { page: number; size: number }) => {
+    if (search && search.trim() !== "") {
+      return useSearchContactsQuery({ name: search, ...params });
+    }
+    return useGetContactsQuery(params);
+  };
+
+  const {
+    items: contacts,
+    isLoading: isLoadingContacts,
+    isFetching,
+    hasMore,
+    observerTarget,
+    totalElements,
+    reset,
+  } = usePagination < Contact > (queryHook, 10)
+
+  useEffect(() => {
+    reset()
+  },[search])
 
   function handleSelect(action: string, contact: Contact) {
     if (action === "edit") {
@@ -53,6 +76,7 @@ export function useContact(contactId?: number) {
       icon: <Icon.Calendar />,
     },
   ];
+
   async function handleSave(data: ContactFormInputs) {
     try {
       const formData = new FormData();
@@ -146,5 +170,10 @@ export function useContact(contactId?: number) {
     handleTogglePopup,
     handleSelect,
     items: itemsContacts,
+    isLoadingContacts,
+    isFetching,
+    hasMore,
+    observerTarget,
+    totalElements,
   };
 }
