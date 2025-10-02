@@ -43,6 +43,7 @@ import Whatsapp from "./whatsapp";
 import Loading from "./loading";
 import Client from "./client";
 import Arrow from "./arrow";
+import Home from "./home";
 
 const Icon = Object.assign(
   {},
@@ -91,7 +92,8 @@ const Icon = Object.assign(
     Whatsapp,
     Loading,
     Client,
-    Arrow
+    Arrow,
+    Home,
   },
 );
 

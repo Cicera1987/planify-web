@@ -8,27 +8,30 @@ import ClientCard from "@/app/components/card/clients";
 import "./styles.css";
 import { useSchedulingContext } from "@/app/context";
 import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
+import AlertModal from "@/app/components/modals/alert";
 
-
-export default function ClientsDesktop() {
+export default function ClientsDesktop({}: {
+  onDelete?: (contactId: number) => void;
+}) {
   const { openPopupId } = useSchedulingContext();
-  const { 
-    handleTogglePopup, 
-    contacts, 
-    handleSelect, 
+  const {
+    handleTogglePopup,
+    contacts,
+    handleSelect,
     items,
     isLoadingContacts,
     isFetching,
     hasMore,
     observerTarget,
+    alertRef,
   } = useContact();
-  
+
   if (isLoadingContacts) {
     return (
       <div className="flex items-center justify-center py-8">
-        <Icon.Loading size="lg" borderWidth="lg"/>
+        <Icon.Loading size="md" borderWidth="md" />
       </div>
-    )
+    );
   }
 
   return (
@@ -50,8 +53,14 @@ export default function ClientsDesktop() {
             }
           />
         ))}
-        <InfiniteScrollLoader observerTarget={observerTarget} isFetching={isFetching} hasMore={hasMore} />
+        <InfiniteScrollLoader
+          observerTarget={observerTarget}
+          isFetching={isFetching}
+          hasMore={hasMore}
+        />
       </div>
+
+      <AlertModal ref={alertRef} />
     </div>
   );
 }

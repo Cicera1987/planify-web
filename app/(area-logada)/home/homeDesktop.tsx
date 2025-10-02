@@ -1,6 +1,10 @@
 "use client";
 
 import Button from "@/app/components/buttons";
+import ImageClients from "@/app/components/assets/images/clients.png";
+import ImageReporter from "@/app/components/assets/images/reporter.png";
+import ImageScheduling from "@/app/components/assets/images/scheduling.png";
+
 import {
   SchedulingPopupStatus,
   useGetActiveSchedulingsQuery,
@@ -11,11 +15,13 @@ import { useScheduling } from "@/app/hooks/useScheduling";
 import { useSchedulingContext } from "@/app/context";
 import SchedulingCard from "@/app/components/card/scheduling";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
+import { useRouter } from "next/navigation";
 
-export default function SchedulingDesktop() {
+export default function HomeDesktop() {
   const { handleStatusChange, handleTogglePopup, schedulings, popupItems } =
     useScheduling();
   const { search, openPopupId } = useSchedulingContext();
+  const router = useRouter();
 
   const {
     data: activeSchedulings,
@@ -37,8 +43,27 @@ export default function SchedulingDesktop() {
   if (error) return <p>Erro ao carregar agendamentos</p>;
 
   return (
-    <div className="main-desktop-scheduling">
-      <div className="cards-container-scheduling">
+    <div className="main-container">
+      <div className="flex flex-col gap-4 h-full">
+        <Button.ButtonIcon
+          image={ImageScheduling.src}
+          alt="Imagem agendas"
+          className="flex-[1] w-full"
+        />
+        <Button.ButtonIcon
+          image={ImageReporter.src}
+          alt="Imagem relatórios"
+          className="flex-[1] w-full"
+        />
+        <Button.ButtonIcon
+          image={ImageClients.src}
+          alt="Imagem clientes"
+          className="flex-[1.5] w-full"
+          onClick={() => router.push("/clients")}
+        />
+      </div>
+
+      <div className="flex flex-col gap-4 md:w-5/12 max-h-[540px] overflow-y-auto">
         {listToRender?.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}

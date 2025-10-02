@@ -48,7 +48,7 @@ export default function LayoutPrivate({
       nome={isLoading ? "Carregando..." : (user?.username ?? "")}
       fotoUrl={user?.imageUrl || "/images/avatar.png"}
     >
-      {pathname === "/scheduling" ? (
+      {pathname === "/home" ? (
         <div className="flex w-full items-center justify-between gap-4">
           <div className="flex-1">
             <Input.SearchInput
@@ -67,7 +67,7 @@ export default function LayoutPrivate({
   );
 
   const headerMobile =
-    pathname === "/scheduling" ? (
+    pathname === "/home" ? (
       <Header
         fotoUrl={user?.imageUrl ?? ""}
         showUserInfo={true}

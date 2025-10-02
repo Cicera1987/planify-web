@@ -3,12 +3,15 @@
 import Icon from "@/app/components/assets/icons";
 import Button from "@/app/components/buttons";
 import ClientCard from "@/app/components/card/clients";
+import AlertModal from "@/app/components/modals/alert";
 import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { useSchedulingContext } from "@/app/context";
 import { useContact } from "@/app/hooks/useContact";
 
-export default function ClientsMobile() {
+export default function ClientsMobile({}: {
+  onDelete?: (contactId: number) => void;
+}) {
   const { openPopupId } = useSchedulingContext();
   const {
     handleTogglePopup,
@@ -18,7 +21,8 @@ export default function ClientsMobile() {
     isLoadingContacts,
     isFetching,
     hasMore,
-    observerTarget 
+    observerTarget,
+    alertRef,
   } = useContact();
 
   if (isLoadingContacts) {
@@ -26,7 +30,7 @@ export default function ClientsMobile() {
       <div className="flex items-center justify-center py-8">
         <Icon.Loading size="md" borderWidth="md" />
       </div>
-    )
+    );
   }
 
   return (
@@ -47,7 +51,12 @@ export default function ClientsMobile() {
           }
         />
       ))}
-      <InfiniteScrollLoader observerTarget={observerTarget} isFetching={isFetching} hasMore={hasMore} />
+      <InfiniteScrollLoader
+        observerTarget={observerTarget}
+        isFetching={isFetching}
+        hasMore={hasMore}
+      />
+      <AlertModal ref={alertRef} />
     </div>
   );
 }

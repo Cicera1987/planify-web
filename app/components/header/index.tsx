@@ -29,6 +29,7 @@ export default function Header({
   const isMobile = useIsMobile();
 
   const titles: Record<string, string> = {
+    "/home": "Início",
     "/scheduling": "Atendimentos",
     "/dashboard": "Dashboard",
     "/clients": "Meus Clientes",
@@ -41,7 +42,9 @@ export default function Header({
   };
 
   function getTitle(path: string) {
+    if (/^\/user\/\d+\/edit$/.test(path)) return "Editar profissional";
     if (/^\/contact\/\d+\/edit$/.test(path)) return "Editar Cliente";
+    if (/^\/scheduling\/\d+\/edit$/.test(path)) return "Editar agendamento";
     if (/^\/service\/\d+\/edit$/.test(path)) return "Editar Serviço";
     if (/^\/package\/\d+\/edit$/.test(path)) return "Editar Pacote de serviço";
 

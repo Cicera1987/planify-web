@@ -1,21 +1,19 @@
 "use client";
 
-import React, { ChangeEvent, useEffect, useMemo } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useRef } from "react";
 import { toast } from "react-toastify";
 import {
   useCreateContactMutation,
   useUpdateContactMutation,
   useDeleteContactMutation,
-  useGetContactsQuery,
   Contact,
-  useSearchContactsQuery,
 } from "../services/contactService";
 import { useSchedulingContext } from "../context";
 import Icon from "../components/assets/icons";
 import { useRouter } from "next/navigation";
 import { usePagination } from "./usePaginatiojn";
-import { get } from "http";
-
+import { AlertRef } from "../components/modals/alert";
+import useQueryHook from "./useQuereryHook";
 
 export interface ContactFormInputs {
   name: string;
@@ -31,16 +29,11 @@ export function useContact(contactId?: number) {
   const [createContact, { isLoading: isCreating }] = useCreateContactMutation();
   const [updateContact, { isLoading: isUpdating }] = useUpdateContactMutation();
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
-  const { setImageData, imageState, setOpenPopupId, search } = useSchedulingContext();
+  const { setImageData, imageState, setOpenPopupId, search } =
+    useSchedulingContext();
   const isEditMode = Boolean(contactId);
   const router = useRouter();
-
-  const queryHook = (params: { page: number; size: number }) => {
-    if (search && search.trim() !== "") {
-      return useSearchContactsQuery({ name: search, ...params });
-    }
-    return useGetContactsQuery(params);
-  };
+  const alertRef = useRef<AlertRef>(null);
 
   const {
     items: contacts,
@@ -50,19 +43,44 @@ export function useContact(contactId?: number) {
     observerTarget,
     totalElements,
     reset,
-  } = usePagination < Contact > (queryHook, 10)
+  } = usePagination < Contact > (useQueryHook, 10);
 
   useEffect(() => {
-    reset()
-  },[search])
+    reset();
+  }, [search, reset]);
 
   function handleSelect(action: string, contact: Contact) {
     if (action === "edit") {
       router.push(`/contact/${contact.id}/edit`);
     } else if (action === "scheduling") {
       router.push(`/scheduling/${contact.id}`);
+    } else if (action === "delete") {
+      handleDelete(contact.id);
     }
   }
+
+  const handleDelete = (contactId: number) => {
+    if (!alertRef.current) {
+      toast.error("Erro ao abrir modal de confirmação");
+      return;
+    }
+
+    alertRef.current.open({
+      title: "Tem certeza que deseja inativar este contato?",
+      icon: <Icon.AlertCircle />,
+      confirmText: "Inativar",
+      cancelText: "Cancelar",
+      onConfirm: async () => {
+        try {
+          await deleteContact(contactId).unwrap();
+          toast.success("Contato inativado com sucesso");
+          reset();
+        } catch (error) {
+          toast.error("Erro ao inativar contato");
+        }
+      },
+    });
+  };
 
   const itemsContacts = [
     {
@@ -74,6 +92,11 @@ export function useContact(contactId?: number) {
       value: "sheduling",
       label: "Agendar atendimento",
       icon: <Icon.Calendar />,
+    },
+    {
+      value: "delete",
+      label: "Inativar Contato",
+      icon: <Icon.Logout />,
     },
   ];
 
@@ -165,7 +188,6 @@ export function useContact(contactId?: number) {
     isLoading: isCreating || isUpdating || isDeleting,
     isEditMode,
     defaultValues,
-    deleteContact,
     contacts,
     handleTogglePopup,
     handleSelect,
@@ -175,5 +197,7 @@ export function useContact(contactId?: number) {
     hasMore,
     observerTarget,
     totalElements,
+    handleDelete,
+    alertRef,
   };
 }

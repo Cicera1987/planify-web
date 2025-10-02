@@ -44,7 +44,8 @@ export default function ContactForm({
   } = useForm<ContactFormInputs>({ defaultValues });
   const { imageState } = useSchedulingContext();
   const { handleLocalImageChange } = useContact();
-  const { optionsPackages: packageOptions, isLoading: packagesLoading } = usePackages();
+  const { optionsPackages: packageOptions, isLoading: packagesLoading } =
+    usePackages();
 
   const genderOptions = ["Masculino", "Feminino"];
 
@@ -122,21 +123,24 @@ export default function ContactForm({
 
           <Input.CheckboxInput
             label="Pacote Mensal"
-            checked={watch("isActive") || !! watch("packageIds")?.length}
+            checked={watch("isActive") || !!watch("packageIds")?.length}
             onChange={(val) => setValue("isActive", val)}
             error={errors.isActive?.message}
           />
 
-          {(watch("isActive") || !!watch("packageIds")?.length) && !packagesLoading && (
-            <Input.SelectInput
-              label="Pacote Mensal"
-              value={watch("packageIds")?.[0] ?? null}
-              onChange={(value) => setValue("packageIds", value ? [Number(value)] : [])}
-              options={packageOptions}
-              placeholder="Selecione..."
-              error={errors.packageIds?.message}
-            />
-          )}
+          {(watch("isActive") || !!watch("packageIds")?.length) &&
+            !packagesLoading && (
+              <Input.SelectInput
+                label="Pacote Mensal"
+                value={watch("packageIds")?.[0] ?? null}
+                onChange={(value) =>
+                  setValue("packageIds", value ? [Number(value)] : [])
+                }
+                options={packageOptions}
+                placeholder="Selecione..."
+                error={errors.packageIds?.message}
+              />
+            )}
         </div>
         <div className="form-footer">
           <Button.ButtonVariant

@@ -1,46 +1,46 @@
 .multi-input-wrapper {
-    position: relative;
-    /* garante que o dropdown fique embaixo */
-    width: 100%;
+  position: relative;
+  /* garante que o dropdown fique embaixo */
+  width: 100%;
 }
 
 .multi-input {
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--neutral-light);
-    padding: 4px 0;
-    cursor: text;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--neutral-light);
+  padding: 4px 0;
+  cursor: text;
 }
 
 .multi-input-field {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: var(--space-14px);
-    color: var(--neutral-dark);
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--space-14px);
+  color: var(--neutral-dark);
 }
 
 .options-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    border: 1px solid var(--neutral-light);
-    border-radius: 4px;
-    margin-top: 4px;
-    max-height: 150px;
-    overflow-y: auto;
-    background: #fff;
-    z-index: 3;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid var(--neutral-light);
+  border-radius: 4px;
+  margin-top: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  background: #fff;
+  z-index: 3;
 }
 
 .option-item {
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: background 0.2s;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .option-item:hover {
-    background: var(--neutral-light);
+  background: var(--neutral-light);
 }

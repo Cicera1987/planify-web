@@ -10,6 +10,12 @@ export default function Sidebar() {
 
   const routeButtons = [
     {
+      id: "home",
+      path: "/home",
+      icon: <Icon.Home />,
+      label: "Início",
+    },
+    {
       id: "profile",
       path: "/profile",
       icon: <Icon.UseIcon />,

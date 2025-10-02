@@ -1,21 +1,27 @@
 "use client";
 
 import Button from "@/app/components/buttons";
+import Clients from "@/app/components/assets/images/clients-mobile.png";
+import Reporter from "@/app/components/assets/images/reporter-mobile.png";
+import Scheduling from "@/app/components/assets/images/scheduling-mobile.png";
+
+import "./styles.css";
+
 import {
   SchedulingPopupStatus,
   useGetActiveSchedulingsQuery,
 } from "@/app/services/schedulingService";
-
 import Icon from "@/app/components/assets/icons";
 import { useScheduling } from "@/app/hooks/useScheduling";
+import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { useSchedulingContext } from "@/app/context";
 import SchedulingCard from "@/app/components/card/scheduling";
-import { StatusPopup } from "@/app/components/popup/statusPopup";
+import { useRouter } from "next/navigation";
 
-export default function SchedulingDesktop() {
-  const { handleStatusChange, handleTogglePopup, schedulings, popupItems } =
-    useScheduling();
-  const { search, openPopupId } = useSchedulingContext();
+export default function HomeMobile() {
+  const { handleStatusChange, handleTogglePopup, popupItems } = useScheduling();
+  const { openPopupId } = useSchedulingContext();
+  const router = useRouter();
 
   const {
     data: activeSchedulings,
@@ -23,23 +29,29 @@ export default function SchedulingDesktop() {
     error,
   } = useGetActiveSchedulingsQuery();
 
-  const listToRender = search.trim()
-    ? (schedulings ?? [])
-    : (activeSchedulings ?? []);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-8">
-        <Icon.Loading size="md" borderWidth="md" />
-      </div>
-    );
-  }
+  if (isLoading) return <p>Carregando...</p>;
   if (error) return <p>Erro ao carregar agendamentos</p>;
 
   return (
-    <div className="main-desktop-scheduling">
-      <div className="cards-container-scheduling">
-        {listToRender?.map((scheduling) => (
+    <div className="scheduling-mobile">
+      <div className="container-mobile">
+        <div className="container-button-mobile">
+          <Button.ButtonIcon image={Scheduling.src} alt="Agenda" />
+          <Button.ButtonIcon image={Reporter.src} alt="Relatório" />
+        </div>
+        <div>
+          <Button.ButtonIcon
+            image={Clients.src}
+            alt="Clientes"
+            onClick={() => router.push("/clients")}
+          />
+        </div>
+      </div>
+
+      <h2 className="mobile-section-title">Próximos atendimentos</h2>
+
+      <div className="mobile-cards-container">
+        {activeSchedulings?.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}
             data={scheduling}

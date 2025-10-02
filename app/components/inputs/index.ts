@@ -11,7 +11,7 @@ const Input = Object.assign(
     SearchInput,
     MultiSelectInput,
     CheckboxInput,
-    SelectInput
+    SelectInput,
   },
 );
 

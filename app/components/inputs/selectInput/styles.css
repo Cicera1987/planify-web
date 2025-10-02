@@ -1,57 +1,57 @@
 .select-tag-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    border: none;
-    padding: 4px 0px;
-    background: var(--color-white);
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: none;
+  padding: 4px 0px;
+  background: var(--color-white);
 }
 
 .select-tag {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 16px;
-    cursor: pointer;
-    appearance: none;
-    color: var(--primary-2);
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  appearance: none;
+  color: var(--primary-2);
 }
 
 .custom-arrow {
-    position: absolute;
-    right: 8px;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
+  position: absolute;
+  right: 8px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
 }
 
 .tag {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    background-color: var(--color-white);
-    border: 1px solid var(--primary-2);
-    border-radius: 12px;
-    padding: 2px 8px;
-    font-size: 14px;
-    color: var(--primary-2);
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--primary-2);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 14px;
+  color: var(--primary-2);
 }
 
 .tag-remove {
-    margin-left: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: var(--space-16px);
-    color: var(--primary-2);
+  margin-left: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: var(--space-16px);
+  color: var(--primary-2);
 }
 
 .tag-remove:hover {
-    color: var(--error);
+  color: var(--error);
 }
 .input-label {
-    display: block;
-    font-size: var(--space-14px);
-    font-weight: var(--font-w-bold);
-    color: var(--neutral-dark);
+  display: block;
+  font-size: var(--space-14px);
+  font-weight: var(--font-w-bold);
+  color: var(--neutral-dark);
 }

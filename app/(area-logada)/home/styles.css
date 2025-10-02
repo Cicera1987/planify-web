@@ -1,0 +1,73 @@
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  background: var(--white);
+  padding: var(--space-24px) var(--space-16px);
+  border-radius: var(--space-8px);
+}
+
+/*Estilo do mobile */
+.scheduling-mobile {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: var(--space-16px);
+  padding: var(--space-16px);
+}
+
+.mobile-section-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-top: var(--space-8px);
+}
+
+.mobile-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16px, 16px);
+  max-height: 40vh;
+  overflow-y: auto;
+  padding-right: var(--space-8px);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-300, #8fb5ef) transparent;
+}
+
+.container-button-mobile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8px);
+  justify-content: center;
+}
+
+.container-button-mobile > div {
+  flex: 1 1 calc(33.333% - var(--space-8px));
+  min-width: 80px;
+  height: 100px;
+}
+.container-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8px, 8px);
+}
+
+.container-button-mobile img,
+.container-mobile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.container-button-mobile button,
+.container-mobile button {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}
