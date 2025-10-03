@@ -6,7 +6,7 @@ import Button from "@/app/components/buttons";
 import Icon from "@/app/components/assets/icons";
 import ClientCard from "@/app/components/card/clients";
 import "./styles.css";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 import AlertModal from "@/app/components/modals/alert";
 
@@ -19,14 +19,14 @@ export default function ClientsDesktop({}: {
     contacts,
     handleSelect,
     items,
-    isLoadingContacts,
+    isLoading,
     isFetching,
     hasMore,
     observerTarget,
     alertRef,
   } = useContact();
 
-  if (isLoadingContacts) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
         <Icon.Loading size="md" borderWidth="md" />

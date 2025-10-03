@@ -4,7 +4,7 @@ import SearchBar from "@/app/components/searchBar";
 import LayoutPrivate from "../layout/layoutPrivate";
 import SchedulingDesktop from "./schedulingDesktop";
 import SchedulingMobile from "./schedulingMobile";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import { useRouter } from "next/navigation";
 
 export default function Sheduling() {

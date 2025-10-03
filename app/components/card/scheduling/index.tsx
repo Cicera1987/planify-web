@@ -10,8 +10,11 @@ import { formatDate } from "@/app/utils/formatDate";
 import { formatHours } from "@/app/utils/formatHours";
 import { formatPhone } from "@/app/utils/formatPhone";
 
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
 interface SchedulingCardProps {
-  data: Scheduling;
+  data: DeepPartial<Scheduling>;
   triggerIcon: ReactNode;
   onTriggerClick?: () => void;
 }
@@ -28,11 +31,11 @@ export default function SchedulingCard({
       <div className="scheduling-image">
         <Image
           src={
-            data.contact.imageUrl && data.contact.imageUrl.startsWith("http")
+            data.contact?.imageUrl && data.contact.imageUrl.startsWith("http")
               ? data.contact.imageUrl
               : avatar.src
           }
-          alt={contact.name}
+          alt={contact?.name || "Avatar"}
           fill
           className="scheduling-img"
         />
@@ -45,20 +48,20 @@ export default function SchedulingCard({
 
         <div className="scheduling-text">
           <div className="header-name">
-            <h3 className="scheduling-name">{contact.name}</h3>
+            <h3 className="scheduling-name">{contact?.name}</h3>
             <span className="scheduling-date">
-              {formatDate(calendarDay.localDate)}
+              {formatDate(calendarDay?.localDate ?? null)}
             </span>
           </div>
 
           <div className="header-name">
             <p className="scheduling-title">
-              E-mail: <span className="scheduling-email">{contact.email}</span>
+              E-mail: <span className="scheduling-email">{contact?.email}</span>
             </p>
             <p className="scheduling-title">
               Horário:{" "}
               <span className="scheduling-text">
-                {formatHours(calendarTime.time)}
+                {formatHours(calendarTime?.time ?? "")}
               </span>
             </p>
           </div>
@@ -67,7 +70,7 @@ export default function SchedulingCard({
             <p className="scheduling-title">
               <Icon.Whatsapp />{" "}
               <span className="scheduling-text">
-                {formatPhone(contact.phone)}
+                {formatPhone(contact?.phone || "")}
               </span>
             </p>
             <p className="scheduling-status">{status}</p>

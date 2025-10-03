@@ -1,33 +1,24 @@
 "use client";
 
-import { ChangeEvent, use, useMemo } from "react";
+import { ChangeEvent, useMemo, useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import {
-  DecodedToken,
-  Register,
-  useRegisterMutation,
-  useUpdateMutation,
-  useUploadImageMutation,
-} from "../services/authService";
-import { useSchedulingContext } from "../context";
+import { RegisterFormInputs } from "../components/forms/formUser";
+import { useSchedulingContext } from "../context/schedulingProvaider";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./useAuth";
 import jwtDecode from "jwt-decode";
-import { RegisterFormInputs } from "../components/forms/formUser";
-import { useGetUserByIdQuery } from "../services/usersService";
+import { DecodedToken, Register, register, update } from "../services/authService";
+import { uploadImage } from "../services/authService";
+import { User, getUserById } from "../services/usersService";
 
-export function useRegister({
-  isEditMode = false,
-}: { isEditMode?: boolean } = {}) {
-  const [registerUser, { isLoading: isRegistering }] = useRegisterMutation();
-  const [updateUser, { isLoading: isUpdating }] = useUpdateMutation();
+export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {}) {
   const { setImageData, imageState } = useSchedulingContext();
-  const [uploadImage] = useUploadImageMutation();
   const { token } = useAuth();
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   let userId: number | null = null;
-
   if (token) {
     try {
       const decoded: DecodedToken = jwtDecode(token);
@@ -37,61 +28,55 @@ export function useRegister({
     }
   }
 
-  const { data: user } = useGetUserByIdQuery(userId ?? 0, {
-    skip: !userId || !isEditMode,
-  });
-
-  async function handleRegister(data: RegisterFormInputs) {
-    let imageUrl = "";
-
-    if (imageState.file) {
-      try {
-        imageUrl = await uploadImage(imageState.file).unwrap();
-      } catch (err) {
-        console.error("Erro ao enviar imagem:", err);
-        toast.error("Falha ao enviar imagem");
-        return;
-      }
-    } else if (imageState.image && imageState.image.startsWith("http")) {
-      imageUrl = imageState.image;
+  useEffect(() => {
+    if (isEditMode && userId) {
+      getUserById(userId)
+        .then(setUser)
+        .catch(err => console.error("Erro ao buscar usuário:", err));
     }
+  }, [isEditMode, userId]);
 
-    const payload: Register = {
-      username: data.username,
-      phone: data.phone?.replace(/\D/g, "") || "",
-      speciality: data.speciality || "",
-      email: data.email,
-      active: true,
-      ...(imageUrl && { imageUrl }),
-      provider: imageState.provider || "CLOUDINARY",
-      providerUserId: imageState.providerUserId || "",
-      ...(!isEditMode && { password: data.password }),
-    };
-
+  const handleRegister = async (data: RegisterFormInputs) => {
+    setIsLoading(true);
     try {
-      if (isEditMode && userId != null) {
-        await updateUser({ userId: userId, ...payload }).unwrap();
-        toast.success("Cadastrado atualizado com sucesso");
+      let imageUrl = "";
+
+      if (imageState.file) {
+        imageUrl = await uploadImage(imageState.file);
+      } else if (imageState.image && imageState.image.startsWith("http")) {
+        imageUrl = imageState.image;
+      }
+
+      const payload: Register = {
+        username: data.username,
+        phone: data.phone?.replace(/\D/g, "") || "",
+        speciality: data.speciality || "",
+        email: data.email,
+        active: true,
+        ...(imageUrl && { imageUrl }),
+        provider: imageState.provider || "CLOUDINARY",
+        providerUserId: imageState.providerUserId || "",
+        ...(!isEditMode && { password: data.password }),
+      };
+
+      if (isEditMode && userId) {
+        await update(userId, payload);
+        toast.success("Cadastro atualizado com sucesso");
         return;
       } else {
-        await registerUser(payload).unwrap();
+        await register(payload);
         toast.success("Usuário cadastrado com sucesso");
         router.push("/login");
       }
 
-      setImageData({
-        image: "",
-        file: undefined,
-        provider: "CLOUDINARY",
-        providerUserId: "",
-      });
+      setImageData({ image: "", file: undefined, provider: "CLOUDINARY", providerUserId: "" });
     } catch (err) {
-      toast.error(
-        isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário",
-      );
+      toast.error(isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário");
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleLocalImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -99,27 +84,13 @@ export function useRegister({
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImageData({
-        image: reader.result as string,
-        file,
-        provider: "CLOUDINARY",
-        providerUserId: "",
-      });
+      setImageData({ image: reader.result as string, file, provider: "CLOUDINARY", providerUserId: "" });
     };
     reader.readAsDataURL(file);
   };
 
-  const handleExternalImage = (
-    url: string,
-    provider: "GOOGLE" | "WHATSAPP",
-    providerUserId: string,
-  ) => {
-    setImageData({
-      image: url,
-      file: undefined,
-      provider,
-      providerUserId,
-    });
+  const handleExternalImage = (url: string, provider: "GOOGLE" | "WHATSAPP", providerUserId: string) => {
+    setImageData({ image: url, file: undefined, provider, providerUserId });
   };
 
   const defaultValues = useMemo(() => {
@@ -136,12 +107,5 @@ export function useRegister({
     return {};
   }, [isEditMode, user]);
 
-  return {
-    handleRegister,
-    handleLocalImageChange,
-    handleExternalImage,
-    isLoading: isRegistering || isUpdating,
-    isEditMode,
-    defaultValues,
-  };
+  return { handleRegister, handleLocalImageChange, handleExternalImage, isLoading, isEditMode, defaultValues };
 }

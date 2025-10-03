@@ -7,30 +7,26 @@ import Scheduling from "@/app/components/assets/images/scheduling-mobile.png";
 
 import "./styles.css";
 
-import {
-  SchedulingPopupStatus,
-  useGetActiveSchedulingsQuery,
-} from "@/app/services/schedulingService";
 import Icon from "@/app/components/assets/icons";
 import { useScheduling } from "@/app/hooks/useScheduling";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import SchedulingCard from "@/app/components/card/scheduling";
 import { useRouter } from "next/navigation";
+import { SchedulingPopupStatus } from "@/app/services/schedulingService";
 
 export default function HomeMobile() {
-  const { handleStatusChange, handleTogglePopup, popupItems } = useScheduling();
+  const {
+    handleStatusChange,
+    handleTogglePopup,
+    popupItems,
+    schedulings,
+    isLoading,
+  } = useScheduling();
   const { openPopupId } = useSchedulingContext();
   const router = useRouter();
 
-  const {
-    data: activeSchedulings,
-    isLoading,
-    error,
-  } = useGetActiveSchedulingsQuery();
-
   if (isLoading) return <p>Carregando...</p>;
-  if (error) return <p>Erro ao carregar agendamentos</p>;
 
   return (
     <div className="scheduling-mobile">
@@ -51,14 +47,13 @@ export default function HomeMobile() {
       <h2 className="mobile-section-title">Próximos atendimentos</h2>
 
       <div className="mobile-cards-container">
-        {
-          activeSchedulings?.length === 0 && (
-            <p className="text-center text-gray-500 mt-4">
-              Nenhum agendamento encontrado
-            </p>
-          )
-        }
-        {activeSchedulings?.map((scheduling) => (
+        {(!schedulings || schedulings.length === 0) && (
+          <p className="text-center text-gray-500 mt-4">
+            Nenhum agendamento encontrado
+          </p>
+        )}
+
+        {schedulings?.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}
             data={scheduling}
@@ -71,8 +66,8 @@ export default function HomeMobile() {
                   icon: item.icon,
                 }))}
                 data={scheduling}
-                onSelect={(status, sched) => {
-                  handleStatusChange(sched.id, status as SchedulingPopupStatus);
+                onSelect={(value, sched) => {
+                  handleStatusChange(sched.id, value as SchedulingPopupStatus);
                 }}
                 isOpen={openPopupId === scheduling.id}
                 onClose={() => handleTogglePopup(scheduling.id)}

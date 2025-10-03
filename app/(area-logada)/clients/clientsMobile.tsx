@@ -6,7 +6,7 @@ import ClientCard from "@/app/components/card/clients";
 import AlertModal from "@/app/components/modals/alert";
 import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import { useContact } from "@/app/hooks/useContact";
 
 export default function ClientsMobile({}: {
@@ -18,14 +18,14 @@ export default function ClientsMobile({}: {
     contacts,
     handleSelect,
     items,
-    isLoadingContacts,
+    isLoading,
     isFetching,
     hasMore,
     observerTarget,
     alertRef,
   } = useContact();
 
-  if (isLoadingContacts) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
         <Icon.Loading size="md" borderWidth="md" />

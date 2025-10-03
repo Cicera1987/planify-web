@@ -11,7 +11,7 @@ import BoxMobile from "@/app/components/content/boxLayout/mobile";
 import BoxLayout from "@/app/components/content/boxLayout/desktop";
 import { useCurrentUser } from "@/app/hooks/useCurrentUser";
 import Input from "@/app/components/inputs";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 
 export default function LayoutPrivate({
   pageTitle,

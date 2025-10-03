@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_API } from "./api";
+import { api } from "./api";
 
 export interface CalendarTime {
   id: number;
@@ -24,72 +23,32 @@ export interface CalendarTimeRequest {
   time: string;
 }
 
-export const calendarApi = createApi({
-  reducerPath: "calendarApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_API,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("@planify/token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  endpoints: (builder) => ({
-    getCalendar: builder.query<CalendarDay[], void>({
-      query: () => "/calendar",
-    }),
-    createCalendarDay: builder.mutation<CalendarDay, CalendarRequestDay>({
-      query: (day) => ({
-        url: "/calendar",
-        method: "POST",
-        body: day,
-      }),
-    }),
-    updateCalendarDay: builder.mutation<
-      CalendarDay,
-      { id: number; day: CalendarRequestDay }
-    >({
-      query: ({ id, day }) => ({
-        url: `/calendar/${id}`,
-        method: "PUT",
-        body: day,
-      }),
-    }),
-    deleteCalendarDay: builder.mutation<void, number>({
-      query: (id) => ({
-        url: `/calendar/${id}`,
-        method: "DELETE",
-      }),
-    }),
-    addTimeToDay: builder.mutation<
-      CalendarTime,
-      { idDay: number; time: CalendarTimeRequest }
-    >({
-      query: ({ idDay, time }) => ({
-        url: `/calendar/${idDay}/times`,
-        method: "POST",
-        body: time,
-      }),
-    }),
-    deleteTimeFromDay: builder.mutation<
-      void,
-      { idDay: number; idTime: number }
-    >({
-      query: ({ idDay, idTime }) => ({
-        url: `/calendar/${idDay}/times/${idTime}`,
-        method: "DELETE",
-      }),
-    }),
-  }),
-});
 
-export const {
-  useGetCalendarQuery,
-  useCreateCalendarDayMutation,
-  useUpdateCalendarDayMutation,
-  useDeleteCalendarDayMutation,
-  useAddTimeToDayMutation,
-  useDeleteTimeFromDayMutation,
-} = calendarApi;
+export const getCalendar = async (): Promise<CalendarDay[]> => {
+  const res = await api.get<CalendarDay[]>("/calendar");
+  return res.data;
+};
+
+
+export const createCalendarDay = async (day: CalendarRequestDay): Promise<CalendarDay> => {
+  const res = await api.post<CalendarDay>("/calendar", day);
+  return res.data;
+};
+
+export const updateCalendarDay = async (id: number, day: CalendarRequestDay): Promise<CalendarDay> => {
+  const res = await api.put<CalendarDay>(`/calendar/${id}`, day);
+  return res.data;
+};
+
+export const deleteCalendarDay = async (id: number): Promise<void> => {
+  await api.delete(`/calendar/${id}`);
+};
+
+export const addTimeToDay = async (idDay: number, time: CalendarTimeRequest): Promise<CalendarTime> => {
+  const res = await api.post<CalendarTime>(`/calendar/${idDay}/times`, time);
+  return res.data;
+};
+
+export const deleteTimeFromDay = async (idDay: number, idTime: number): Promise<void> => {
+  await api.delete(`/calendar/${idDay}/times/${idTime}`);
+};

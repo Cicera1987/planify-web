@@ -1,19 +1,46 @@
-import { useSchedulingContext } from "../context";
-import { useGetContactsQuery, useSearchContactsQuery } from "../services/contactService";
+import { useState, useEffect } from "react";
+import { useSchedulingContext } from "../context/schedulingProvaider";
+import * as contactApi from "../services/contactService";
+import { Contact, PageResponse } from "../services/contactService";
 
-function useQueryHook(params: { page: number; size: number }) {
+export default function useQueryHook(params: { page: number; size: number }): {
+    data?: PageResponse<Contact>;
+    isLoading: boolean;
+    isFetching: boolean;
+    error: string | null;
+} {
     const { search } = useSchedulingContext();
+    const [data, setData] = useState<PageResponse<Contact> | undefined>(undefined);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const searchResult = useSearchContactsQuery(
-        { name: search ?? "", ...params },
-        { skip: !search || !search.trim() }
-    );
+    useEffect(() => {
+        let isMounted = true;
+        setIsLoading(true);
 
-    const allResult = useGetContactsQuery(params, {
-        skip: !!search && !!search.trim() 
-    });
+        const fetchData = async () => {
+            try {
+                const result = search?.trim()
+                    ? await contactApi.searchContacts(search, params.page, params.size)
+                    : await contactApi.getContacts(params.page, params.size);
 
-    return search && search.trim() ? searchResult : allResult;
+                if (isMounted) setData(result);
+            } catch {
+                if (isMounted) setData(undefined);
+            } finally {
+                if (isMounted) setIsLoading(false);
+            }
+        };
+
+        fetchData();
+        return () => {
+            isMounted = false;
+        };
+    }, [search, params.page, params.size]);
+
+    return {
+        data,
+        isLoading,
+        isFetching: isLoading,
+        error: null,
+    };
 }
-
-export default useQueryHook;

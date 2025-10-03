@@ -5,33 +5,30 @@ import ImageClients from "@/app/components/assets/images/clients.png";
 import ImageReporter from "@/app/components/assets/images/reporter.png";
 import ImageScheduling from "@/app/components/assets/images/scheduling.png";
 
-import {
-  SchedulingPopupStatus,
-  useGetActiveSchedulingsQuery,
-} from "@/app/services/schedulingService";
-
 import Icon from "@/app/components/assets/icons";
 import { useScheduling } from "@/app/hooks/useScheduling";
-import { useSchedulingContext } from "@/app/context";
-import SchedulingCard from "@/app/components/card/scheduling";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
+
 import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { useRouter } from "next/navigation";
+import SchedulingCard from "@/app/components/card/scheduling";
+import { SchedulingPopupStatus } from "@/app/services/schedulingService";
 
 export default function HomeDesktop() {
-  const { handleStatusChange, handleTogglePopup, schedulings, popupItems } =
-    useScheduling();
+  const {
+    handleStatusChange,
+    handleTogglePopup,
+    schedulings,
+    popupItems,
+    isLoading,
+  } = useScheduling();
+
   const { search, openPopupId } = useSchedulingContext();
   const router = useRouter();
 
-  const {
-    data: activeSchedulings,
-    isLoading,
-    error,
-  } = useGetActiveSchedulingsQuery();
-
   const listToRender = search.trim()
-    ? (schedulings ?? [])
-    : (activeSchedulings ?? []);
+    ? schedulings
+    : schedulings; 
 
   if (isLoading) {
     return (
@@ -40,7 +37,6 @@ export default function HomeDesktop() {
       </div>
     );
   }
-  if (error) return <p>Erro ao carregar agendamentos</p>;
 
   return (
     <div className="main-container">
@@ -65,13 +61,11 @@ export default function HomeDesktop() {
       </div>
 
       <div className="flex flex-col gap-4 md:w-5/12 max-h-[540px] overflow-y-auto">
-        {
-          listToRender?.length === 0 && (
-            <p className="text-center text-gray-500 mt-4">
-              Nenhum agendamento encontrado
-            </p>
-          )
-        }
+        {(!listToRender || listToRender.length === 0) && (
+          <p className="text-center text-gray-500 mt-4">
+            Nenhum agendamento encontrado
+          </p>
+        )}
         {listToRender?.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}
@@ -85,8 +79,8 @@ export default function HomeDesktop() {
                   icon: item.icon,
                 }))}
                 data={scheduling}
-                onSelect={(status, sched) => {
-                  handleStatusChange(sched.id, status as SchedulingPopupStatus);
+                onSelect={(value, sched) => {
+                  handleStatusChange(sched.id, value as SchedulingPopupStatus);
                 }}
                 isOpen={openPopupId === scheduling.id}
                 onClose={() => handleTogglePopup(scheduling.id)}

@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_API } from "./api";
+import { api } from "./api";
 
 export interface DecodedToken {
   jti?: string;
@@ -10,6 +9,7 @@ export interface LoginRequest {
   email: string;
   password: string;
 }
+
 export interface LoginResponse {
   token: string;
 }
@@ -27,61 +27,30 @@ export interface Register {
   providerUserId?: string;
 }
 
-export const authApi = createApi({
-  reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_API,
-  }),
-  tagTypes: ["Register"],
-  endpoints: (builder) => ({
-    login: builder.mutation<LoginResponse, LoginRequest>({
-      query: (userData) => ({
-        url: "/auth/login",
-        method: "POST",
-        body: userData,
-      }),
-    }),
-    logout: builder.mutation<void, void>({
-      query: () => ({
-        url: "/auth/logout",
-        method: "POST",
-      }),
-    }),
-    uploadImage: builder.mutation<string, File>({
-      query: (file) => {
-        const formData = new FormData();
-        formData.append("file", file);
+export const login = async (data: LoginRequest): Promise<LoginResponse> => {
+  const response = await api.post<LoginResponse>("/auth/login", data);
+  return response.data;
+};
 
-        return {
-          url: "/upload",
-          method: "POST",
-          body: formData,
-          responseHandler: (response) => response.text(),
-        };
-      },
-    }),
-    register: builder.mutation<void, Register>({
-      query: (userData) => ({
-        url: "/auth/register",
-        method: "POST",
-        body: { ...userData, active: true },
-      }),
-    }),
-    update: builder.mutation({
-      query: ({ userId, ...userData }) => ({
-        url: `/auth/${userId}`,
-        method: "PATCH",
-        body: userData,
-      }),
-      invalidatesTags: ["Register"],
-    }),
-  }),
-});
+export const logout = async (): Promise<void> => {
+  await api.post("/auth/logout");
+};
 
-export const {
-  useLoginMutation,
-  useLogoutMutation,
-  useRegisterMutation,
-  useUpdateMutation,
-  useUploadImageMutation,
-} = authApi;
+export const uploadImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await api.post("/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+  return typeof response.data === "string" ? response.data : "";
+};
+
+export const register = async (userData: Register): Promise<void> => {
+  await api.post("/auth/register", { ...userData, active: true });
+};
+
+export const update = async (userId: string | number, userData: Partial<Register>): Promise<void> => {
+  await api.patch(`/auth/${userId}`, userData);
+};

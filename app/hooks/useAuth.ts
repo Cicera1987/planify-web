@@ -3,11 +3,8 @@
 import { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import {
-  setCredentials,
-  logout as logoutAction,
-} from "../store/features/authSlice";
-import { useLoginMutation, useLogoutMutation } from "../services/authService";
+import { setCredentials, logout as logoutAction } from "../store/features/authSlice";
+import { api } from "../services/api";
 
 export function useAuth() {
   const router = useRouter();
@@ -16,9 +13,6 @@ export function useAuth() {
   const [token, setToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string | null>(null);
-
-  const [loginMutation] = useLoginMutation();
-  const [logoutMutation] = useLogoutMutation();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -31,40 +25,31 @@ export function useAuth() {
     }
   }, [dispatch]);
 
-  const login = useCallback(
-    async (email: string, password: string) => {
-      setApiError(null);
-      try {
-        const response = await loginMutation({ email, password }).unwrap();
-        const pureToken = response.token.replace(/^Bearer\s+/i, "");
-        setToken(pureToken);
-        setIsAuthenticated(true);
-        localStorage.setItem("@planify/token", pureToken);
-        dispatch(setCredentials(pureToken));
-        router.push("/scheduling");
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        console.error("Login falhou:", error);
-        setApiError(
-          error?.data?.message || "Erro ao fazer login. Tente novamente.",
-        );
-      }
-    },
-    [loginMutation, dispatch, router],
-  );
-
-  const logout = useCallback(async () => {
+  const login = useCallback(async (email: string, password: string) => {
+    setApiError(null);
     try {
-      await logoutMutation().unwrap();
-    } catch (err) {
-      console.warn("Erro no logout server-side", err);
+      const res = await api.post<{ token: string }>("/auth/login", { email, password });
+      const pureToken = res.data.token.replace(/^Bearer\s+/i, "");
+      setToken(pureToken);
+      setIsAuthenticated(true);
+      localStorage.setItem("@planify/token", pureToken);
+      dispatch(setCredentials(pureToken));
+      router.push("/home");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error("Login falhou:", err);
+      setApiError(err?.response?.data?.message || "Erro ao fazer login. Tente novamente.");
     }
+  }, [dispatch, router]);
+
+  const logout = useCallback(() => {
     localStorage.removeItem("@planify/token");
     setToken(null);
     setIsAuthenticated(false);
     dispatch(logoutAction());
     router.replace("/");
-  }, [logoutMutation, dispatch, router]);
+  }, [dispatch, router]);
 
   return { token, isAuthenticated, apiError, login, logout };
 }
+

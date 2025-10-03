@@ -2,7 +2,7 @@ import { formatPhone } from "@/app/utils/formatPhone";
 import { useForm } from "react-hook-form";
 import Icon from "../../assets/icons";
 import { ChangeEvent, useEffect } from "react";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import Button from "../../buttons";
 import Input from "../../inputs";
 import "./styles.css";

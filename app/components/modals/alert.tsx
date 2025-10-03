@@ -17,7 +17,7 @@ type AlertProps = {
   cancelText?: string;
 };
 
-export type AlertRef = {
+export interface AlertRef {
   open: (options: {
     title: string;
     icon?: ReactNode;

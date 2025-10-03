@@ -4,7 +4,7 @@ import SearchBar from "@/app/components/searchBar";
 import LayoutPrivate from "../layout/layoutPrivate";
 import ClientsDesktop from "./clientsDesktop";
 import ClientsMobile from "./clientsMobile";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import { useRouter } from "next/navigation";
 import { useContact } from "@/app/hooks/useContact";
 

@@ -7,7 +7,7 @@ import Input from "../../inputs";
 import Button from "../../buttons";
 import { formatPhone } from "@/app/utils/formatPhone";
 import { useRegister } from "@/app/hooks/useRegister";
-import { useSchedulingContext } from "@/app/context";
+import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import Icon from "../../assets/icons";
 
 interface RegisterFormProps {

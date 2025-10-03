@@ -1,199 +1,164 @@
-"use client";
-
-import React, { ChangeEvent, use, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState, ChangeEvent } from "react";
 import { toast } from "react-toastify";
-import {
-  useCreateContactMutation,
-  useUpdateContactMutation,
-  useDeleteContactMutation,
-  Contact,
-} from "../services/contactService";
-import { useSchedulingContext } from "../context";
+import { useSchedulingContext, useContactsContext } from "../context";
 import Icon from "../components/assets/icons";
 import { useRouter } from "next/navigation";
 import { usePagination } from "./usePaginatiojn";
-import { AlertRef } from "../components/modals/alert";
 import useQueryHook from "./useQuereryHook";
-
-export interface ContactFormInputs {
-  name: string;
-  phone: string;
-  email?: string;
-  observation?: string;
-  gender?: string;
-  imageUrl?: string;
-  packageIds?: number[];
-}
+import * as contactApi from "../services/contactService";
+import {AlertRef} from "../components/modals/alert";
 
 export function useContact(contactId?: number) {
-  const [createContact, { isLoading: isCreating }] = useCreateContactMutation();
-  const [updateContact, { isLoading: isUpdating }] = useUpdateContactMutation();
-  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
-  const { setImageData, imageState, setOpenPopupId, search } =
-    useSchedulingContext();
-  const isEditMode = Boolean(contactId);
   const router = useRouter();
   const alertRef = useRef<AlertRef>(null);
+  const isEditMode = Boolean(contactId);
 
-  const {
-    items: contacts,
-    isLoading: isLoadingContacts,
-    isFetching,
-    hasMore,
-    observerTarget,
-    totalElements,
-    reset,
-  } = usePagination < Contact > (useQueryHook, 10);
+  const { search, setOpenPopupId, setImageData, imageState } = useSchedulingContext();
+  const { contacts, setContacts } = useContactsContext();
+
+  const [isLoadingContactId, setIsLoadingContactId] = useState(false);
+
+  const [contactDataId, setContactDataId] = useState < contactApi.Contact | null > (null);
+
+  useEffect(() => {
+    if (isEditMode && contactId) {
+      setIsLoadingContactId(true);
+      contactApi.getContactById(contactId)
+        .then(setContactDataId)
+        .finally(() => setIsLoadingContactId(false));
+    }
+  }, [isEditMode, contactId]);
+
+
+  const { items, isLoading, isFetching, hasMore, observerTarget, totalElements, reset } =
+    usePagination < contactApi.Contact > (useQueryHook, 10);
+
+  useEffect(() => {
+    setContacts(items);
+  }, [items, setContacts]);
 
   useEffect(() => {
     reset();
   }, [search, reset]);
 
-  function handleSelect(action: string, contact: Contact) {
-    if (action === "edit") {
-      router.push(`/contact/${contact.id}/edit`);
-    } else if (action === "scheduling") {
-      router.push(`/scheduling/${contact.id}`);
-    } else if (action === "delete") {
-      handleDelete(contact.id);
-    }
-  }
+  const handleSelect = useCallback(
+    (action: string, contact: contactApi.Contact) => {
+      if (action === "edit") router.push(`/contact/${contact.id}/edit`);
+      else if (action === "scheduling") router.push(`/scheduling/${contact.id}`);
+      else if (action === "delete") handleDelete(contact.id);
+    },
+    [router]
+  );
 
-  const handleDelete = (contactId: number) => {
-    if (!alertRef.current) {
-      toast.error("Erro ao abrir modal de confirmação");
-      return;
-    }
+  const handleDelete = useCallback(
+    async (id: number) => {
+      if (!alertRef.current) return toast.error("Erro ao abrir modal de confirmação");
 
-    alertRef.current.open({
-      title: "Tem certeza que deseja inativar este contato?",
-      icon: <Icon.AlertCircle />,
-      confirmText: "Inativar",
-      cancelText: "Cancelar",
-      onConfirm: async () => {
-        try {
-          await deleteContact(contactId).unwrap();
-          toast.success("Contato inativado com sucesso");
-          reset();
-        } catch (error) {
-          toast.error("Erro ao inativar contato");
+      alertRef.current.open({
+        title: "Tem certeza que deseja inativar este contato?",
+        icon: <Icon.AlertCircle />,
+        confirmText: "Inativar",
+        cancelText: "Cancelar",
+        onConfirm: async () => {
+          try {
+            await contactApi.deleteContact(id);
+            setContacts(contacts.filter(c => c.id !== id));
+            toast.success("Contato inativado com sucesso");
+            reset();
+          } catch {
+            toast.error("Erro ao inativar contato");
+          }
+        },
+      });
+    },
+    [contacts, setContacts, reset]
+  );
+
+  const handleSave = useCallback(
+    async (data: contactApi.ContactFormInputs) => {
+      try {
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("phone", data.phone.replace(/\D/g, ""));
+        if (data.email) formData.append("email", data.email);
+        if (data.observation) formData.append("observation", data.observation);
+        if (data.gender) formData.append("gender", data.gender.toUpperCase());
+        if (imageState.file) formData.append("file", imageState.file);
+        else if (imageState.image?.startsWith("http")) formData.append("imageUrl", imageState.image);
+        if (data.packageIds?.length) data.packageIds.forEach(id => formData.append("packageIds", String(id)));
+
+        if (isEditMode && contactId) {
+          const updated = await contactApi.updateContact(contactId, formData);
+          setContacts(contacts.map(c => (c.id === contactId ? updated : c)));
+          toast.success("Contato atualizado com sucesso");
+        } else {
+          const created = await contactApi.createContact(formData);
+          setContacts([created, ...contacts]);
+          toast.success("Contato criado com sucesso");
         }
-      },
-    });
-  };
 
-  const itemsContacts = [
-    {
-      value: "edit",
-      label: "Editar contato",
-      icon: <Icon.EditUser />,
-    },
-    {
-      value: "sheduling",
-      label: "Agendar atendimento",
-      icon: <Icon.Calendar />,
-    },
-    {
-      value: "delete",
-      label: "Inativar Contato",
-      icon: <Icon.InactivateUser />,
-    },
-  ];
-
-  async function handleSave(data: ContactFormInputs) {
-    try {
-      const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("phone", data.phone.replace(/\D/g, ""));
-      if (data.email) formData.append("email", data.email);
-      if (data.observation) formData.append("observation", data.observation);
-      if (data.gender) formData.append("gender", data.gender.toUpperCase());
-
-      if (imageState.file) {
-        formData.append("file", imageState.file);
-      } else if (imageState.image && imageState.image.startsWith("http")) {
-        formData.append("imageUrl", imageState.image);
-      }
-
-      if (data.packageIds?.length) {
-        data.packageIds.forEach((id) =>
-          formData.append("packageIds", String(id)),
-        );
-      }
-
-      if (isEditMode && contactId) {
-        await updateContact({ id: contactId, data: formData }).unwrap();
         router.push("/clients");
-        toast.success("Contato atualizado com sucesso");
-      } else {
-        await createContact(formData).unwrap();
-        router.push("/clients");
-        toast.success("Contato criado com sucesso");
+        setImageData({ image: "", file: undefined, provider: "CLOUDINARY", providerUserId: "" });
+        reset();
+      } catch {
+        toast.error(isEditMode ? "Erro ao atualizar contato" : "Erro ao criar contato");
       }
+    },
+    [isEditMode, contactId, contacts, router, setContacts, setImageData, imageState, reset]
+  );
 
-      setImageData({
-        image: "",
-        file: undefined,
-        provider: "CLOUDINARY",
-        providerUserId: "",
-      });
-    } catch (err: unknown) {
-      toast.error(
-        isEditMode ? "Erro ao atualizar contato" : "Erro ao criar contato",
-      );
-      console.error(err);
-    }
-  }
+  const handleLocalImageChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-  const handleLocalImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageData({
+          image: reader.result as string,
+          file,
+          provider: "CLOUDINARY",
+          providerUserId: "",
+        });
+      };
+      reader.readAsDataURL(file);
+    },
+    [setImageData]
+  );
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageData({
-        image: reader.result as string,
-        file,
-        provider: "CLOUDINARY",
-        providerUserId: "",
-      });
-    };
-    reader.readAsDataURL(file);
-  };
-  
   const defaultValues = useMemo(() => {
-    if (isEditMode && contactId) {
-      const contact = contacts.find((cnt) => cnt.id === contactId);
-      if (contact) {
-        return {
-          name: contact.name || "",
-          phone: contact.phone || "",
-          email: contact.email || "",
-          observation: contact.observation || "",
-          gender: contact.gender || "",
-          imageUrl: contact.imageUrl || "",
-          packageIds: contact.packageIds || [],
-        };
-      }
+    if (isEditMode && contactDataId) {
+      return {
+        name: contactDataId.name || "",
+        phone: contactDataId.phone || "",
+        email: contactDataId.email || "",
+        observation: contactDataId.observation || "",
+        gender: contactDataId.gender || "",
+        imageUrl: contactDataId.imageUrl || "",
+        packageIds: contactDataId.packageIds || [],
+      };
     }
     return {};
-  }, [isEditMode, contacts, contactId]);
-  
-  function handleTogglePopup(id: number) {
-    setOpenPopupId((prev) => (prev === id ? null : id));
-  }
+  }, [isEditMode, contactDataId]);
+
+  const handleTogglePopup = (id: number) => setOpenPopupId(prev => (prev === id ? null : id));
+
+  const itemsContacts = [
+    { value: "edit", label: "Editar contato", icon: <Icon.EditUser /> },
+    { value: "scheduling", label: "Agendar atendimento", icon: <Icon.Calendar /> },
+    { value: "delete", label: "Inativar Contato", icon: <Icon.InactivateUser /> },
+  ];
 
   return {
     handleSave,
     handleLocalImageChange,
-    isLoading: isCreating || isUpdating || isDeleting,
+    isLoading: isLoading || isLoadingContactId,
     isEditMode,
     defaultValues,
     contacts,
     handleTogglePopup,
     handleSelect,
     items: itemsContacts,
-    isLoadingContacts,
     isFetching,
     hasMore,
     observerTarget,

@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BASE_API } from "./api";
+import { api } from "./api"; 
 
 export interface PageResponse<T> {
   content: T[];
@@ -9,6 +8,7 @@ export interface PageResponse<T> {
   totalPages: number;
   apiVersion: string;
 }
+
 export interface User {
   id: number;
   username: string;
@@ -20,45 +20,29 @@ export interface User {
   active: boolean;
 }
 
-export const userApi = createApi({
-  reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_API,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("@planify/token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ["User"],
-  endpoints: (builder) => ({
-    getAllUsers: builder.query<
-      PageResponse<User>,
-      { page?: number; size?: number }
-    >({
-      query: ({ page = 0, size = 10 }) => `/users?page=${page}&size=${size}`,
-    }),
-    getUserById: builder.query<User, number>({
-      query: (id) => `/users/${id}`,
-      providesTags: ["User"],
-    }),
-    searchUsers: builder.query<
-      PageResponse<User>,
-      { name?: string; speciality?: string; page?: number; size?: number }
-    >({
-      query: ({ name, speciality, page = 0, size = 10 }) => {
-        const params = new URLSearchParams();
-        if (name) params.append("name", name);
-        if (speciality) params.append("speciality", speciality);
-        params.append("page", page.toString());
-        params.append("size", size.toString());
-        return `/users/search?${params.toString()}`;
-      },
-    }),
-  }),
-});
 
-export const { useGetAllUsersQuery, useGetUserByIdQuery, useSearchUsersQuery } =
-  userApi;
+export const getAllUsers = async (page = 0, size = 10): Promise<PageResponse<User>> => {
+  const response = await api.get<PageResponse<User>>(`/users?page=${page}&size=${size}`);
+  return response.data;
+};
+
+export const getUserById = async (id: number): Promise<User> => {
+  const response = await api.get<User>(`/users/${id}`);
+  return response.data;
+};
+
+export const searchUsers = async (params: {
+  name?: string;
+  speciality?: string;
+  page?: number;
+  size?: number;
+}): Promise<PageResponse<User>> => {
+  const searchParams = new URLSearchParams();
+  if (params.name) searchParams.append("name", params.name);
+  if (params.speciality) searchParams.append("speciality", params.speciality);
+  searchParams.append("page", (params.page ?? 0).toString());
+  searchParams.append("size", (params.size ?? 10).toString());
+
+  const response = await api.get<PageResponse<User>>(`/users/search?${searchParams.toString()}`);
+  return response.data;
+};
