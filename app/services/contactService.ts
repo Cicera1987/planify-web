@@ -44,6 +44,10 @@ export const contactApi = createApi({
       query: ({ page = 1, size = 10 }) => `/contacts?page=${page}&size=${size}`,
       providesTags: ["Contact"],
     }),
+    getContatctById: builder.query<Contact, number>({
+      query: (id) => `/contacts/${id}`,
+      providesTags: ["Contact"],
+    }),
     searchContacts: builder.query<
       PageResponse<Contact>,
       { name: string; page?: number; size?: number }
@@ -80,6 +84,7 @@ export const contactApi = createApi({
 
 export const {
   useGetContactsQuery,
+  useGetContatctByIdQuery,
   useSearchContactsQuery,
   useCreateContactMutation,
   useUpdateContactMutation,

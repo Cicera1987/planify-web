@@ -51,6 +51,13 @@ export default function HomeMobile() {
       <h2 className="mobile-section-title">Próximos atendimentos</h2>
 
       <div className="mobile-cards-container">
+        {
+          activeSchedulings?.length === 0 && (
+            <p className="text-center text-gray-500 mt-4">
+              Nenhum agendamento encontrado
+            </p>
+          )
+        }
         {activeSchedulings?.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}

@@ -5,7 +5,7 @@ import "./styles.css";
 import ContactForm from "@/app/components/forms/formContact";
 
 export default function ContactDesktop({ contactId }: { contactId?: number }) {
-  const { handleSave, isLoading, defaultValues, isEditMode } =
+  const { handleSave, isLoading, defaultValues, isEditMode, handleLocalImageChange } =
     useContact(contactId);
 
   return (
@@ -20,10 +20,12 @@ export default function ContactDesktop({ contactId }: { contactId?: number }) {
 
         <div className="form-contact-container">
           <ContactForm
+            key={contactId}
             onSubmit={handleSave}
             loading={isLoading}
             defaultValues={defaultValues}
             buttonText={isEditMode ? "Editar" : "Enviar"}
+            onImageChange={handleLocalImageChange}
           />
         </div>
       </div>

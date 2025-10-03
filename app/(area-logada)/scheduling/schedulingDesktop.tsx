@@ -34,34 +34,45 @@ export default function SchedulingDesktop() {
       </div>
     );
   }
+
   if (error) return <p>Erro ao carregar agendamentos</p>;
 
   return (
-    <div className="main-desktop-scheduling">
-      <div className="cards-container-scheduling">
-        {listToRender?.map((scheduling) => (
-          <SchedulingCard
-            key={scheduling.id}
-            data={scheduling}
-            triggerIcon={
-              <StatusPopup
-                trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}
-                items={popupItems.map((item) => ({
-                  value: item.value,
-                  label: String(item.label),
-                  icon: item.icon,
-                }))}
-                data={scheduling}
-                onSelect={(status, sched) => {
-                  handleStatusChange(sched.id, status as SchedulingPopupStatus);
-                }}
-                isOpen={openPopupId === scheduling.id}
-                onClose={() => handleTogglePopup(scheduling.id)}
-              />
-            }
-          />
-        ))}
-      </div>
+    <div>
+      {listToRender.length === 0 ? (
+        <p className="text-center w-full py-6 text-gray-500">
+          Nenhum agendamento encontrado
+        </p>
+      ) : (
+          <div className="main-desktop-scheduling">
+        <div className="cards-container-scheduling">
+          {listToRender.map((scheduling) => (
+            <SchedulingCard
+              key={scheduling.id}
+              data={scheduling}
+              triggerIcon={
+                <StatusPopup
+                  trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}
+                  items={popupItems.map((item) => ({
+                    value: item.value,
+                    label: String(item.label),
+                    icon: item.icon,
+                  }))}
+                  data={scheduling}
+                  onSelect={(status, sched) => {
+                    handleStatusChange(
+                      sched.id,
+                      status as SchedulingPopupStatus
+                    );
+                  }}
+                  isOpen={openPopupId === scheduling.id}
+                  onClose={() => handleTogglePopup(scheduling.id)}
+                />
+              }
+            />
+          ))}
+        </div>
+          </div>
+      )}
     </div>
-  );
-}
+  )}

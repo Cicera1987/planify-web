@@ -44,6 +44,8 @@ import Loading from "./loading";
 import Client from "./client";
 import Arrow from "./arrow";
 import Home from "./home";
+import EditUser from "./editUser";
+import InactivateUser from "./inactivateUser";
 
 const Icon = Object.assign(
   {},
@@ -94,6 +96,8 @@ const Icon = Object.assign(
     Client,
     Arrow,
     Home,
+    EditUser,
+    InactivateUser,
   },
 );
 

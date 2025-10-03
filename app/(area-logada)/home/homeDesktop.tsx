@@ -49,6 +49,7 @@ export default function HomeDesktop() {
           image={ImageScheduling.src}
           alt="Imagem agendas"
           className="flex-[1] w-full"
+          onClick={() => router.push("/scheduling")}
         />
         <Button.ButtonIcon
           image={ImageReporter.src}
@@ -64,6 +65,13 @@ export default function HomeDesktop() {
       </div>
 
       <div className="flex flex-col gap-4 md:w-5/12 max-h-[540px] overflow-y-auto">
+        {
+          listToRender?.length === 0 && (
+            <p className="text-center text-gray-500 mt-4">
+              Nenhum agendamento encontrado
+            </p>
+          )
+        }
         {listToRender?.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}

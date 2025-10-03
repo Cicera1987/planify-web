@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useEffect, useMemo, useRef } from "react";
+import React, { ChangeEvent, use, useEffect, useMemo, useRef } from "react";
 import { toast } from "react-toastify";
 import {
   useCreateContactMutation,
@@ -85,8 +85,8 @@ export function useContact(contactId?: number) {
   const itemsContacts = [
     {
       value: "edit",
-      label: "Editar Perfil",
-      icon: <Icon.UseContact />,
+      label: "Editar contato",
+      icon: <Icon.EditUser />,
     },
     {
       value: "sheduling",
@@ -96,7 +96,7 @@ export function useContact(contactId?: number) {
     {
       value: "delete",
       label: "Inativar Contato",
-      icon: <Icon.Logout />,
+      icon: <Icon.InactivateUser />,
     },
   ];
 
@@ -160,9 +160,10 @@ export function useContact(contactId?: number) {
     };
     reader.readAsDataURL(file);
   };
+  
   const defaultValues = useMemo(() => {
-    if (isEditMode && contacts && contactId) {
-      const contact = contacts.find((c) => c.id === contactId);
+    if (isEditMode && contactId) {
+      const contact = contacts.find((cnt) => cnt.id === contactId);
       if (contact) {
         return {
           name: contact.name || "",
@@ -177,7 +178,7 @@ export function useContact(contactId?: number) {
     }
     return {};
   }, [isEditMode, contacts, contactId]);
-
+  
   function handleTogglePopup(id: number) {
     setOpenPopupId((prev) => (prev === id ? null : id));
   }

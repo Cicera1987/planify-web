@@ -1,9 +1,8 @@
 import { formatPhone } from "@/app/utils/formatPhone";
 import { useForm } from "react-hook-form";
 import Icon from "../../assets/icons";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { useSchedulingContext } from "@/app/context";
-import { useContact } from "@/app/hooks/useContact";
 import Button from "../../buttons";
 import Input from "../../inputs";
 import "./styles.css";
@@ -26,6 +25,7 @@ interface ContactFormProps {
   loading?: boolean;
   defaultValues?: Partial<ContactFormInputs>;
   buttonText?: string;
+  onImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function ContactForm({
@@ -33,6 +33,7 @@ export default function ContactForm({
   loading = false,
   defaultValues,
   buttonText = "Enviar",
+  onImageChange,
 }: ContactFormProps) {
   const {
     register,
@@ -43,7 +44,6 @@ export default function ContactForm({
     reset,
   } = useForm<ContactFormInputs>({ defaultValues });
   const { imageState } = useSchedulingContext();
-  const { handleLocalImageChange } = useContact();
   const { optionsPackages: packageOptions, isLoading: packagesLoading } =
     usePackages();
 
@@ -79,7 +79,7 @@ export default function ContactForm({
           <input
             type="file"
             accept="image/*"
-            onChange={handleLocalImageChange}
+            onChange={onImageChange}
             className="file-input-contact"
           />
 
