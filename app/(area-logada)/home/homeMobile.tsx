@@ -37,7 +37,11 @@ export default function HomeMobile() {
     <div className="scheduling-mobile">
       <div className="container-mobile">
         <div className="container-button-mobile">
-          <Button.ButtonIcon image={Scheduling.src} alt="Agenda" />
+          <Button.ButtonIcon 
+          image={Scheduling.src} 
+          alt="Agenda"
+          onClick={() => router.push("/scheduling")}
+           />
           <Button.ButtonIcon image={Reporter.src} alt="Relatório" />
         </div>
         <div>
