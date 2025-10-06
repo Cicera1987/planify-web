@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Planify",
   description: "Sua agenda na ponta dos dedos.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
   },
 };
 export const viewport: Viewport = {
@@ -36,12 +36,12 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/icons/favicon.svg" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/images/icon-192.png" />
         <meta name="theme-color" content="#0063c7" />
       </head>
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/favicon.svg" type="images/svg+xml"/>
       <body className={`${poppins.variable} ${roboto.variable} antialiased`}>
         <ClientLayout>{children}</ClientLayout>
       </body>
