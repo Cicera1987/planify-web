@@ -22,13 +22,24 @@
   border: none;
   align-items: center;
   width: 100%;
+  justify-content: flex-start;
+  border-radius: var(--space-4px);
+  background-color: transparent;
+  padding: var(--space-4px);
+}
+
+.Button.headerIcon {
+  border: none;
+  align-items: center;
+  width: 100%;
   max-width: var(--space-40px);
   justify-content: center;
   border-radius: var(--space-8px);
   background-color: var(--primary-5);
   padding: var(--space-8px);
 }
-.Button.icon:hover {
+
+.Button.headerIcon:hover {
   background-color: var(--background-primary);
 }
 
@@ -37,9 +48,9 @@
   border: none;
 }
 
-.Button.text .Button-text {
+.Button.text {
   color: var(--primary-4);
-  font-weight: var(--font-w-medium);
+  font-weight: var(--font-w-regular);
   font-size: 14px;
 }
 
@@ -47,11 +58,22 @@
   background-color: var(--primary-3);
   border: 1px solid var(--primary-3);
   border-radius: var(--space-8px);
+    
+  span {
+    color: var(--neutral-6);
+  }
 }
 
-.Button.filled .Button-text {
-  color: var(--neutral-6);
+.Button.info {
+  background-color: var(--primary-2);
+  border: 1px solid var(--primary-2);
+  border-radius: var(--space-8px);
+ 
+  span{
+    color: var(--neutral-6);
+  }
 }
+
 
 @media (max-width: 640px) {
   .Button span {

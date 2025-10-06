@@ -31,6 +31,7 @@ export default function Header({
   const titles: Record<string, string> = {
     "/home": "Início",
     "/scheduling": "Atendimentos",
+    "/schedule": "Agendamento",
     "/dashboard": "Dashboard",
     "/clients": "Meus Clientes",
     "/register": "Meu Cadastro",
@@ -45,6 +46,7 @@ export default function Header({
     if (/^\/user\/\d+\/edit$/.test(path)) return "Editar profissional";
     if (/^\/contact\/\d+\/edit$/.test(path)) return "Editar Cliente";
     if (/^\/scheduling\/\d+\/edit$/.test(path)) return "Editar agendamento";
+    if (/^\/contact\/\d+\/schedule$/.test(path)) return "Agendamento";
     if (/^\/service\/\d+\/edit$/.test(path)) return "Editar Serviço";
     if (/^\/package\/\d+\/edit$/.test(path)) return "Editar Pacote de serviço";
 

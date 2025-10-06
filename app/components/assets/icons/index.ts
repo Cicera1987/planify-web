@@ -46,6 +46,10 @@ import Arrow from "./arrow";
 import Home from "./home";
 import EditUser from "./editUser";
 import InactivateUser from "./inactivateUser";
+import ContactPhone from "./contactPhone";
+import ContactEmail from "./contactEmail";
+import DateIcon from "./dateIcon";
+import TimeIcon from "./timeIcon";
 
 const Icon = Object.assign(
   {},
@@ -98,6 +102,10 @@ const Icon = Object.assign(
     Home,
     EditUser,
     InactivateUser,
+    ContactPhone,
+    ContactEmail,
+    DateIcon,
+    TimeIcon
   },
 );
 

@@ -44,7 +44,7 @@ export function useContact(contactId?: number) {
   const handleSelect = useCallback(
     (action: string, contact: contactApi.Contact) => {
       if (action === "edit") router.push(`/contact/${contact.id}/edit`);
-      else if (action === "scheduling") router.push(`/scheduling/${contact.id}`);
+      else if (action === "schedule") router.push(`/contact/${contact.id}/schedule`);
       else if (action === "delete") handleDelete(contact.id);
     },
     [router]
@@ -145,7 +145,7 @@ export function useContact(contactId?: number) {
 
   const itemsContacts = [
     { value: "edit", label: "Editar contato", icon: <Icon.EditUser /> },
-    { value: "scheduling", label: "Agendar atendimento", icon: <Icon.Calendar /> },
+    { value: "schedule", label: "Agendar atendimento", icon: <Icon.Calendar /> },
     { value: "delete", label: "Inativar Contato", icon: <Icon.InactivateUser /> },
   ];
 
@@ -165,5 +165,6 @@ export function useContact(contactId?: number) {
     totalElements,
     handleDelete,
     alertRef,
+    contactDataId,
   };
 }

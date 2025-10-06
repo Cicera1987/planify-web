@@ -118,6 +118,6 @@ h2 {
   line-height: var(--space-32px);
 }
 
-.hidden::-webkit-scrollbar {
+.scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

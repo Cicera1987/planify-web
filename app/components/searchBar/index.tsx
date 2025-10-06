@@ -28,7 +28,7 @@ export default function SearchBar({
       />
       <Button.ButtonVariant
         onClick={onButtonClick}
-        variant="icon"
+        variant="headerIcon"
         icon={<Icon.Client />}
         type="button"
       />
