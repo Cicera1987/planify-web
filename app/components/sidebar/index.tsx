@@ -40,8 +40,8 @@ export default function Sidebar() {
       label: "Pacotes de Serviços",
     },
     {
-      id: "services",
-      path: "/services",
+      id: "jobs",
+      path: "/jobs",
       icon: <Icon.Services />,
       label: "Serviços",
     },

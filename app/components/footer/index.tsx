@@ -17,7 +17,7 @@ export default function Footer() {
   }[] = [
     {
       id: "home",
-      path: "/dashboard",
+      path: "/home",
       icon: (active) => <Icon.InfoHome active={active} />,
       label: "Home",
     },
@@ -34,8 +34,8 @@ export default function Footer() {
       label: "Agenda",
     },
     {
-      id: "services",
-      path: "/services",
+      id: "jobs",
+      path: "/jobs",
       icon: (active) => <Icon.InfoServices active={active} />,
       label: "Serviços",
     },
