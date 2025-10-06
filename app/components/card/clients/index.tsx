@@ -22,14 +22,13 @@ export default function ClientCard({
   return (
     <div className="client-card">
       <div className="client-image">
-        <Image
+        <img
           src={
             data.imageUrl && data.imageUrl.startsWith("http")
               ? data.imageUrl
               : avatar.src
           }
           alt={data.name}
-          fill
           className="client-img"
         />
       </div>

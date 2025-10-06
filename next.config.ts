@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
-
-// @ts-ignore
 import withPWA from "next-pwa";
 
 const runtimeCaching = [
-
   {
     urlPattern: /^https:\/\/planify-api-deploy-render\.onrender\.com\/.*$/,
     handler: "NetworkFirst",
@@ -12,7 +9,7 @@ const runtimeCaching = [
       cacheName: "api-cache",
       expiration: {
         maxEntries: 50,
-        maxAgeSeconds: 86400, // 1 dia
+        maxAgeSeconds: 86400,
       },
     },
   },
@@ -23,13 +20,13 @@ const runtimeCaching = [
       cacheName: "static-cache",
       expiration: {
         maxEntries: 50,
-        maxAgeSeconds: 604800, 
+        maxAgeSeconds: 604800,
       },
     },
   },
 ];
 
-const nextConfig: NextConfig = {
+const nextConfig: NextConfig = withPWA({
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -45,10 +42,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "encrypted-tbn0.gstatic.com" },
     ],
   },
-};
-
-export default withPWA({
-  ...nextConfig,
   pwa: {
     dest: "public",
     register: true,
@@ -57,3 +50,5 @@ export default withPWA({
     runtimeCaching,
   },
 });
+
+export default nextConfig;
