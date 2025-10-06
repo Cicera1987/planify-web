@@ -11,7 +11,9 @@ import BoxMobile from "@/app/components/content/boxLayout/mobile";
 import BoxLayout from "@/app/components/content/boxLayout/desktop";
 import { useCurrentUser } from "@/app/hooks/useCurrentUser";
 import Input from "@/app/components/inputs";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/app/store/store";
+import { setSearch, setToken, setMounted } from "@/app/store/features/schedulingSlice";
 
 export default function LayoutPrivate({
   pageTitle,
@@ -26,18 +28,19 @@ export default function LayoutPrivate({
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const { user, isLoading } = useCurrentUser();
-  const { search, setSearch, token, setToken, mounted, setMounted } =
-    useSchedulingContext();
+  const dispatch = useDispatch < AppDispatch > ();
+
+  const { search, token, mounted } = useSelector((state: RootState) => state.scheduling);
 
   useEffect(() => {
-    setMounted(true);
+    dispatch(setMounted(true));
     const savedToken = localStorage.getItem("@planify/token");
-    setToken(savedToken);
+    dispatch(setToken(savedToken));
 
     if (!savedToken) {
       router.push("/login");
     }
-  }, [router]);
+  }, [router, dispatch]);
 
   if (!mounted || !token) return null;
 
@@ -45,15 +48,15 @@ export default function LayoutPrivate({
     <Header
       onBack={() => router.back()}
       showUserInfo={true}
-      nome={isLoading ? "Carregando..." : (user?.username ?? "")}
+      nome={isLoading ? "Carregando..." : user?.username ?? ""}
       fotoUrl={user?.imageUrl || "/images/avatar.png"}
     >
-      {pathname === "/home" ? (
+      {pathname === "/home" && (
         <div className="flex w-full items-center justify-between gap-4">
           <div className="flex-1">
             <Input.SearchInput
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => dispatch(setSearch(e.target.value))}
               placeholder="Buscar pelo nome"
               className="w-full"
             />
@@ -62,7 +65,7 @@ export default function LayoutPrivate({
             Próximos atendimentos
           </h2>
         </div>
-      ) : null}
+      )}
     </Header>
   );
 
@@ -84,7 +87,6 @@ export default function LayoutPrivate({
     return (
       <BoxMobile header={headerMobile} sidebar={sidebar} footer={footer}>
         <div className="mb-4">{pageTitle}</div>
-
         {mobileContent}
       </BoxMobile>
     );

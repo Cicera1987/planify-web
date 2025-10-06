@@ -47,7 +47,7 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
                     )}
                     <span className="client-phone-schedule" onClick={openWhatsApp}>
                         <Icon.Whatsapp />
-                        {formatPhone(contactDataId?.phone)}
+                        {formatPhone(contactDataId?.phone || "")}
                     </span>
                 </div>
 
@@ -67,7 +67,7 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
                 <Button.ButtonVariant
                     type="button"
                     variant="icon"
-                    text={formatPhone(contactDataId?.phone)}
+                    text={formatPhone(contactDataId?.phone || "")}
                     icon={<Icon.ContactPhone />}
                     onClick={openWhatsApp}
                 />
@@ -85,7 +85,7 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
                     <div className="position-data">
                         <Icon.DateIcon /> <span>22 de Dezembro</span>
                     </div>
-                    <Button.ButtonIcon type="button" variant="icon" icon={<Icon.Follow />} />
+                    <Button.ButtonIcon icon={<Icon.Follow />} />
                 </div>
 
                 <div className="appointment-details">

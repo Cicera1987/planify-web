@@ -1,22 +1,27 @@
 "use client";
 
-import { ChangeEvent, useMemo, useState, useEffect } from "react";
+import { ChangeEvent, useMemo, useEffect } from "react";
 import { toast } from "react-toastify";
 import { RegisterFormInputs } from "../components/forms/formUser";
-import { useSchedulingContext } from "../context/schedulingProvaider";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./useAuth";
 import jwtDecode from "jwt-decode";
 import { DecodedToken, Register, register, update } from "../services/authService";
 import { uploadImage } from "../services/authService";
-import { User, getUserById } from "../services/usersService";
+import { getUserById } from "../services/usersService";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/store";
+import { setImageState, setIsLoading } from "../store/features/schedulingSlice";
+import { setCurrentUser } from "../store/features/usersSlice";
+
 
 export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {}) {
-  const { setImageData, imageState } = useSchedulingContext();
-  const { token } = useAuth();
+  const dispatch = useDispatch();
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { token } = useAuth();
+
+  const { imageState, isLoading } = useSelector((state: RootState) => state.scheduling);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
   let userId: number | null = null;
   if (token) {
@@ -31,13 +36,13 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
   useEffect(() => {
     if (isEditMode && userId) {
       getUserById(userId)
-        .then(setUser)
-        .catch(err => console.error("Erro ao buscar usuário:", err));
+        .then((user) => dispatch(setCurrentUser(user)))
+        .catch((err) => console.error("Erro ao buscar usuário:", err));
     }
-  }, [isEditMode, userId]);
+  }, [isEditMode, userId, dispatch]);
 
   const handleRegister = async (data: RegisterFormInputs) => {
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
     try {
       let imageUrl = "";
 
@@ -62,19 +67,30 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
       if (isEditMode && userId) {
         await update(userId, payload);
         toast.success("Cadastro atualizado com sucesso");
-        return;
+        
+        dispatch
+        setCurrentUser({
+          id: userId,
+          username: payload.username,
+          phone: payload.phone,
+          email: payload.email || "",
+          speciality: payload.speciality,
+          imageUrl: payload.imageUrl,
+          active: payload.active,
+          position: currentUser?.position || "PROFESSIONAL", 
+        })
       } else {
         await register(payload);
         toast.success("Usuário cadastrado com sucesso");
         router.push("/login");
       }
 
-      setImageData({ image: "", file: undefined, provider: "CLOUDINARY", providerUserId: "" });
+      dispatch(setImageState({ image: "", file: undefined, provider: "CLOUDINARY", providerUserId: "" }));
     } catch (err) {
       toast.error(isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário");
       console.error(err);
     } finally {
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -84,28 +100,28 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImageData({ image: reader.result as string, file, provider: "CLOUDINARY", providerUserId: "" });
+      dispatch(setImageState({ image: reader.result as string, file, provider: "CLOUDINARY", providerUserId: "" }));
     };
     reader.readAsDataURL(file);
   };
 
   const handleExternalImage = (url: string, provider: "GOOGLE" | "WHATSAPP", providerUserId: string) => {
-    setImageData({ image: url, file: undefined, provider, providerUserId });
+    dispatch(setImageState({ image: url, file: undefined, provider, providerUserId }));
   };
 
   const defaultValues = useMemo(() => {
-    if (isEditMode && user) {
+    if (isEditMode && currentUser) {
       return {
-        imageUrl: user.imageUrl || "",
-        username: user.username || "",
-        email: user.email || "",
-        confirmEmail: user.email || "",
-        phone: user.phone || "",
-        speciality: user.speciality || "",
+        imageUrl: currentUser.imageUrl || "",
+        username: currentUser.username || "",
+        email: currentUser.email || "",
+        confirmEmail: currentUser.email || "",
+        phone: currentUser.phone || "",
+        speciality: currentUser.speciality || "",
       };
     }
     return {};
-  }, [isEditMode, user]);
+  }, [isEditMode, currentUser]);
 
   return { handleRegister, handleLocalImageChange, handleExternalImage, isLoading, isEditMode, defaultValues };
 }

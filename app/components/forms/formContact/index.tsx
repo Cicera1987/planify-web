@@ -2,11 +2,13 @@ import { formatPhone } from "@/app/utils/formatPhone";
 import { useForm } from "react-hook-form";
 import Icon from "../../assets/icons";
 import { ChangeEvent, useEffect } from "react";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
+
 import Button from "../../buttons";
 import Input from "../../inputs";
 import "./styles.css";
 import { usePackages } from "@/app/hooks/usePackages";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
 
 interface ContactFormInputs {
   name: string;
@@ -43,7 +45,12 @@ export default function ContactForm({
     formState: { errors },
     reset,
   } = useForm<ContactFormInputs>({ defaultValues });
-  const { imageState } = useSchedulingContext();
+
+
+  const { imageState } = useSelector(
+    (state: RootState) => state.scheduling
+  )
+
   const { optionsPackages: packageOptions, isLoading: packagesLoading } =
     usePackages();
 

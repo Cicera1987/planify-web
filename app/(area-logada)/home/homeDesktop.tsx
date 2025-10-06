@@ -7,12 +7,13 @@ import ImageScheduling from "@/app/components/assets/images/scheduling.png";
 
 import Icon from "@/app/components/assets/icons";
 import { useScheduling } from "@/app/hooks/useScheduling";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 
 import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { useRouter } from "next/navigation";
 import SchedulingCard from "@/app/components/card/scheduling";
 import { SchedulingPopupStatus } from "@/app/services/schedulingService";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
 
 export default function HomeDesktop() {
   const {
@@ -23,7 +24,9 @@ export default function HomeDesktop() {
     isLoading,
   } = useScheduling();
 
-  const { search, openPopupId } = useSchedulingContext();
+  const {search, openPopupId } = useSelector(
+    (state: RootState) => state.scheduling
+  )
   const router = useRouter();
 
   const listToRender = search.trim()

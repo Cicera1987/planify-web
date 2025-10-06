@@ -6,20 +6,24 @@ import ClientCard from "@/app/components/card/clients";
 import AlertModal from "@/app/components/modals/alert";
 import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import { useContact } from "@/app/hooks/useContact";
+import { RootState } from "@/app/store/store";
+import { useSelector } from "react-redux";
 
 export default function ClientsMobile({}: {
   onDelete?: (contactId: number) => void;
 }) {
-  const { openPopupId } = useSchedulingContext();
+
+  const { openPopupId } = useSelector(
+    (state: RootState) => state.scheduling
+  )
+
   const {
     handleTogglePopup,
     contacts,
     handleSelect,
     items,
     isLoading,
-    isFetching,
     hasMore,
     observerTarget,
     alertRef,
@@ -53,7 +57,7 @@ export default function ClientsMobile({}: {
       ))}
       <InfiniteScrollLoader
         observerTarget={observerTarget}
-        isFetching={isFetching}
+        isFetching={isLoading}
         hasMore={hasMore}
       />
       <AlertModal ref={alertRef} />

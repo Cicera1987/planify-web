@@ -4,13 +4,20 @@ import SearchBar from "@/app/components/searchBar";
 import LayoutPrivate from "../layout/layoutPrivate";
 import ClientsDesktop from "./clientsDesktop";
 import ClientsMobile from "./clientsMobile";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import { useRouter } from "next/navigation";
 import { useContact } from "@/app/hooks/useContact";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { setSearch } from "@/app/store/features/schedulingSlice";
 
 export default function Clients() {
-  const { search, setSearch } = useSchedulingContext();
+
   const { handleDelete } = useContact();
+
+  const { search } = useSelector(
+    (state: RootState) => state.scheduling
+  )
+
 
   const router = useRouter();
 

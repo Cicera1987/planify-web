@@ -7,8 +7,9 @@ import Input from "../../inputs";
 import Button from "../../buttons";
 import { formatPhone } from "@/app/utils/formatPhone";
 import { useRegister } from "@/app/hooks/useRegister";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import Icon from "../../assets/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
 
 interface RegisterFormProps {
   onSubmit: (data: RegisterFormInputs) => void;
@@ -48,7 +49,10 @@ export default function RegisterForm({
     defaultValues,
   });
   const { handleLocalImageChange } = useRegister();
-  const { imageState } = useSchedulingContext();
+
+  const { imageState } = useSelector(
+    (state: RootState) => state.scheduling
+  )
 
   useEffect(() => {
     if (defaultValues) reset(defaultValues);

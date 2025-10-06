@@ -5,15 +5,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import { ContactsProvider, SchedulingProvider } from "./context";
-
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen">
       <Provider store={store}>
-        <SchedulingProvider>
-          <ContactsProvider>
           <ToastContainer
             position="top-right"
             autoClose={3000}
@@ -26,8 +22,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
             theme="colored"
           />
           <main>{children}</main>
-          </ContactsProvider>
-        </SchedulingProvider>
       </Provider>
     </div>
   );

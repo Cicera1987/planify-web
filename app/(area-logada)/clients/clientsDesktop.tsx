@@ -6,21 +6,24 @@ import Button from "@/app/components/buttons";
 import Icon from "@/app/components/assets/icons";
 import ClientCard from "@/app/components/card/clients";
 import "./styles.css";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 import AlertModal from "@/app/components/modals/alert";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
 
 export default function ClientsDesktop({}: {
   onDelete?: (contactId: number) => void;
 }) {
-  const { openPopupId } = useSchedulingContext();
+  const { openPopupId } = useSelector(
+    (state:RootState) => state.scheduling
+  )
+  
   const {
     handleTogglePopup,
     contacts,
     handleSelect,
     items,
     isLoading,
-    isFetching,
     hasMore,
     observerTarget,
     alertRef,
@@ -55,7 +58,7 @@ export default function ClientsDesktop({}: {
         ))}
         <InfiniteScrollLoader
           observerTarget={observerTarget}
-          isFetching={isFetching}
+          isFetching={isLoading}
           hasMore={hasMore}
         />
       </div>

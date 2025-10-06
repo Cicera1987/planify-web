@@ -1,5 +1,4 @@
 "use client";
-import { use } from "react";
 import "./styles.css";
 import { useContact } from "@/app/hooks/useContact";
 import { ScheduleContact } from "@/app/components/schedule";

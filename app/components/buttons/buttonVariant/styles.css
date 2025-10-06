@@ -44,14 +44,16 @@
 }
 
 .Button.text {
+  display: flex;
+  justify-content: flex-start;
   background: transparent;
   border: none;
 }
 
-.Button.text {
-  color: var(--primary-4);
-  font-weight: var(--font-w-regular);
-  font-size: 14px;
+.Button.text span {
+    color: var(--primary-4);
+    font-weight: var(--font-w-regular);
+    font-size: 14px;
 }
 
 .Button.filled {

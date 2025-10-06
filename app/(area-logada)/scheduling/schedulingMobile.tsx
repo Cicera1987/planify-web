@@ -5,9 +5,10 @@ import "./styles.css";
 import Icon from "@/app/components/assets/icons";
 import { useScheduling } from "@/app/hooks/useScheduling";
 import { StatusPopup } from "@/app/components/popup/statusPopup";
-import { useSchedulingContext } from "@/app/context/schedulingProvaider";
 import SchedulingCard from "@/app/components/card/scheduling";
 import { SchedulingPopupStatus } from "@/app/services/schedulingService";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
 
 export default function SchedulingMobile() {
   const {
@@ -17,7 +18,11 @@ export default function SchedulingMobile() {
     popupItems,
     isLoading,
   } = useScheduling();
-  const { openPopupId } = useSchedulingContext();
+
+  const { openPopupId } = useSelector(
+    (state: RootState) => state.scheduling
+  )
+
 
   if (isLoading) {
     return (
