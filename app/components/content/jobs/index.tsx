@@ -50,7 +50,6 @@ export default function JobsContent() {
     handleEdit(procedure);
   };
 
-
   return (
     <div className="jobs-container">
       <TagList

@@ -1,6 +1,6 @@
 {
   "name": "Planify",
-  "short_name": "Planify",
+  "short_name": "Agenda",
   "description": "Agendamento e gestão de tarefas",
   "start_url": "/",
   "display": "standalone",

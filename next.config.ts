@@ -27,7 +27,7 @@ const runtimeCaching = [
   },
 ];
 
-const nextConfig: NextConfig = withPWA({
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -43,13 +43,14 @@ const nextConfig: NextConfig = withPWA({
       { protocol: "https", hostname: "encrypted-tbn0.gstatic.com" },
     ],
   },
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === "development",
-    runtimeCaching,
-  },
-});
+};
 
-export default nextConfig;
+export default withPWA({
+  ...nextConfig,
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NEXT_RUNTIME === "edge" || process.env.NODE_ENV === "development",
+  runtimeCaching,
+  sw: "sw.js",
+});
