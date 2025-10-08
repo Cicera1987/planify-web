@@ -9,7 +9,7 @@ interface UseInfiniteScrollOptions {
 
 export function usePagination(
   pageSize = 10,
-  options: UseInfiniteScrollOptions = {}
+  options: UseInfiniteScrollOptions = {},
 ) {
   const { threshold = 300, enabled = true } = options;
   const [page, setPage] = useState(0);
@@ -31,7 +31,7 @@ export function usePagination(
           loadMore();
         }
       },
-      { threshold: 0.1, rootMargin: `${threshold}px` }
+      { threshold: 0.1, rootMargin: `${threshold}px` },
     );
 
     const currentTarget = observerTarget.current;
@@ -53,6 +53,6 @@ export function usePagination(
     loadMore,
     reset,
     hasMore,
-    setHasMore, 
+    setHasMore,
   };
 }

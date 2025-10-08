@@ -12,7 +12,6 @@ export interface ContactFormInputs {
   packageIds?: number[];
 }
 
-
 export interface Contact {
   id: number;
   name: string;
@@ -35,8 +34,13 @@ export interface PageResponse<T> {
   apiVersion?: string;
 }
 
-export const getContacts = async (page = 0, size = 10): Promise<PageResponse<Contact>> => {
-  const res = await api.get<PageResponse<Contact>>(`/contacts?page=${page}&size=${size}`);
+export const getContacts = async (
+  page = 0,
+  size = 10,
+): Promise<PageResponse<Contact>> => {
+  const res = await api.get<PageResponse<Contact>>(
+    `/contacts?page=${page}&size=${size}`,
+  );
   return res.data;
 };
 
@@ -48,10 +52,10 @@ export const getContactById = async (id: number): Promise<Contact> => {
 export const searchContacts = async (
   name: string,
   page = 0,
-  size = 10
+  size = 10,
 ): Promise<PageResponse<Contact>> => {
   const res = await api.get<PageResponse<Contact>>(
-    `/contacts/search?name=${encodeURIComponent(name)}&page=${page}&size=${size}`
+    `/contacts/search?name=${encodeURIComponent(name)}&page=${page}&size=${size}`,
   );
   return res.data;
 };
@@ -61,7 +65,10 @@ export const createContact = async (data: FormData): Promise<Contact> => {
   return res.data;
 };
 
-export const updateContact = async (id: number, data: FormData): Promise<Contact> => {
+export const updateContact = async (
+  id: number,
+  data: FormData,
+): Promise<Contact> => {
   const res = await api.put<Contact>(`/contacts/${id}`, data);
   return res.data;
 };

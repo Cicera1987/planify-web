@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
-import { DecodedToken} from "../services/authService";
+import { DecodedToken } from "../services/authService";
 import { User, getUserById } from "../services/usersService";
 
 interface UseCurrentUserResult {

@@ -2,8 +2,7 @@
 
 import Button from "@/app/components/buttons";
 import ImageClients from "@/app/components/assets/images/clients.png";
-import ImageReporter from "@/app/components/assets/images/reporter.png";
-import ImageScheduling from "@/app/components/assets/images/scheduling.png";
+import ImageScheduling from "@/app/components/assets/images/schedule.png";
 
 import Icon from "@/app/components/assets/icons";
 import { useScheduling } from "@/app/hooks/useScheduling";
@@ -24,14 +23,12 @@ export default function HomeDesktop() {
     isLoading,
   } = useScheduling();
 
-  const {search, openPopupId } = useSelector(
-    (state: RootState) => state.scheduling
-  )
+  const { search, openPopupId } = useSelector(
+    (state: RootState) => state.scheduling,
+  );
   const router = useRouter();
 
-  const listToRender = search.trim()
-    ? schedulings
-    : schedulings; 
+  const listToRender = search.trim() ? schedulings : schedulings;
 
   if (isLoading) {
     return (
@@ -43,22 +40,15 @@ export default function HomeDesktop() {
 
   return (
     <div className="main-container">
-      <div className="flex flex-col gap-4 h-full">
+      <div className="container-button-mobile">
         <Button.ButtonIcon
           image={ImageScheduling.src}
-          alt="Imagem agendas"
-          className="flex-[1] w-full"
+          alt="Agenda"
           onClick={() => router.push("/scheduling")}
         />
         <Button.ButtonIcon
-          image={ImageReporter.src}
-          alt="Imagem relatórios"
-          className="flex-[1] w-full"
-        />
-        <Button.ButtonIcon
           image={ImageClients.src}
-          alt="Imagem clientes"
-          className="flex-[1.5] w-full"
+          alt="Clientes"
           onClick={() => router.push("/clients")}
         />
       </div>

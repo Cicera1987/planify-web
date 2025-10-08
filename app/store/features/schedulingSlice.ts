@@ -33,10 +33,10 @@ export const fetchSchedulings = createAsyncThunk(
   "scheduling/fetchSchedulings",
   async (search: string) => {
     const res = await api.get<Scheduling[]>(
-      `/scheduling/search?name=${encodeURIComponent(search)}`
+      `/scheduling/search?name=${encodeURIComponent(search)}`,
     );
     return res.data;
-  }
+  },
 );
 
 export const updateSchedulingStatus = createAsyncThunk(
@@ -46,10 +46,10 @@ export const updateSchedulingStatus = createAsyncThunk(
     const res = await api.put<Scheduling>(
       `/scheduling/${id}/status`,
       params.toString(),
-      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
     );
     return res.data;
-  }
+  },
 );
 
 const schedulingSlice = createSlice({
@@ -64,7 +64,7 @@ const schedulingSlice = createSlice({
     },
     setImageState: (
       state,
-      action: PayloadAction<Partial<SchedulingState["imageState"]>>
+      action: PayloadAction<Partial<SchedulingState["imageState"]>>,
     ) => {
       state.imageState = { ...state.imageState, ...action.payload };
     },
@@ -100,7 +100,7 @@ const schedulingSlice = createSlice({
       .addCase(updateSchedulingStatus.fulfilled, (state, action) => {
         const updated = action.payload;
         state.schedulings = state.schedulings.map((scheduling) =>
-          scheduling.id === updated.id ? updated : scheduling
+          scheduling.id === updated.id ? updated : scheduling,
         );
       });
   },

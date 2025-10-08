@@ -6,7 +6,12 @@ import { RegisterFormInputs } from "../components/forms/formUser";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./useAuth";
 import jwtDecode from "jwt-decode";
-import { DecodedToken, Register, register, update } from "../services/authService";
+import {
+  DecodedToken,
+  Register,
+  register,
+  update,
+} from "../services/authService";
 import { uploadImage } from "../services/authService";
 import { getUserById } from "../services/usersService";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,13 +19,16 @@ import { RootState } from "../store/store";
 import { setImageState, setIsLoading } from "../store/features/schedulingSlice";
 import { setCurrentUser } from "../store/features/usersSlice";
 
-
-export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {}) {
+export function useRegister({
+  isEditMode = false,
+}: { isEditMode?: boolean } = {}) {
   const dispatch = useDispatch();
   const router = useRouter();
   const { token } = useAuth();
 
-  const { imageState, isLoading } = useSelector((state: RootState) => state.scheduling);
+  const { imageState, isLoading } = useSelector(
+    (state: RootState) => state.scheduling,
+  );
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
   let userId: number | null = null;
@@ -67,8 +75,8 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
       if (isEditMode && userId) {
         await update(userId, payload);
         toast.success("Cadastro atualizado com sucesso");
-        
-        dispatch
+
+        dispatch;
         setCurrentUser({
           id: userId,
           username: payload.username,
@@ -77,17 +85,26 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
           speciality: payload.speciality,
           imageUrl: payload.imageUrl,
           active: payload.active,
-          position: currentUser?.position || "PROFESSIONAL", 
-        })
+          position: currentUser?.position || "PROFESSIONAL",
+        });
       } else {
         await register(payload);
         toast.success("Usuário cadastrado com sucesso");
         router.push("/login");
       }
 
-      dispatch(setImageState({ image: "", file: undefined, provider: "CLOUDINARY", providerUserId: "" }));
+      dispatch(
+        setImageState({
+          image: "",
+          file: undefined,
+          provider: "CLOUDINARY",
+          providerUserId: "",
+        }),
+      );
     } catch (err) {
-      toast.error(isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário");
+      toast.error(
+        isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário",
+      );
       console.error(err);
     } finally {
       dispatch(setIsLoading(false));
@@ -100,13 +117,26 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      dispatch(setImageState({ image: reader.result as string, file, provider: "CLOUDINARY", providerUserId: "" }));
+      dispatch(
+        setImageState({
+          image: reader.result as string,
+          file,
+          provider: "CLOUDINARY",
+          providerUserId: "",
+        }),
+      );
     };
     reader.readAsDataURL(file);
   };
 
-  const handleExternalImage = (url: string, provider: "GOOGLE" | "WHATSAPP", providerUserId: string) => {
-    dispatch(setImageState({ image: url, file: undefined, provider, providerUserId }));
+  const handleExternalImage = (
+    url: string,
+    provider: "GOOGLE" | "WHATSAPP",
+    providerUserId: string,
+  ) => {
+    dispatch(
+      setImageState({ image: url, file: undefined, provider, providerUserId }),
+    );
   };
 
   const defaultValues = useMemo(() => {
@@ -123,5 +153,12 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
     return {};
   }, [isEditMode, currentUser]);
 
-  return { handleRegister, handleLocalImageChange, handleExternalImage, isLoading, isEditMode, defaultValues };
+  return {
+    handleRegister,
+    handleLocalImageChange,
+    handleExternalImage,
+    isLoading,
+    isEditMode,
+    defaultValues,
+  };
 }

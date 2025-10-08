@@ -8,14 +8,17 @@ import {
   updateSchedulingStatus,
   setOpenPopupId,
 } from "@/app/store/features/schedulingSlice";
-import { SchedulingPopupStatus, SchedulingPopupStatusLabels } from "@/app/services/schedulingService";
+import {
+  SchedulingPopupStatus,
+  SchedulingPopupStatusLabels,
+} from "@/app/services/schedulingService";
 import Icon from "@/app/components/assets/icons";
 import { toast } from "react-toastify";
 
 export function useScheduling() {
-  const dispatch = useDispatch < AppDispatch > ();
+  const dispatch = useDispatch<AppDispatch>();
   const { schedulings, search, openPopupId, isLoading } = useSelector(
-    (state: RootState) => state.scheduling
+    (state: RootState) => state.scheduling,
   );
 
   const handleFetch = useCallback(() => {
@@ -26,21 +29,23 @@ export function useScheduling() {
   const handleStatusChange = useCallback(
     async (id: number, status: SchedulingPopupStatus) => {
       try {
-        await dispatch(updateSchedulingStatus({ id, newStatus: status })).unwrap();
+        await dispatch(
+          updateSchedulingStatus({ id, newStatus: status }),
+        ).unwrap();
         toast.success("Status atualizado com sucesso");
         dispatch(setOpenPopupId(null));
       } catch {
         toast.error("Erro ao atualizar status");
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   const handleTogglePopup = useCallback(
     (id: number) => {
       dispatch(setOpenPopupId(openPopupId === id ? null : id));
     },
-    [dispatch, openPopupId]
+    [dispatch, openPopupId],
   );
 
   const popupItems = useMemo(
@@ -64,7 +69,7 @@ export function useScheduling() {
           icon,
         };
       }),
-    []
+    [],
   );
 
   return {

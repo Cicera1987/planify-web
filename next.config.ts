@@ -14,7 +14,8 @@ const runtimeCaching = [
     },
   },
   {
-    urlPattern: /^https:\/\/planify-web-prod\.onrender\.com\/.*\.(js|css|png|jpg|jpeg|svg)$/,
+    urlPattern:
+      /^https:\/\/planify-web-prod\.onrender\.com\/.*\.(js|css|png|jpg|jpeg|svg)$/,
     handler: "CacheFirst",
     options: {
       cacheName: "static-cache",

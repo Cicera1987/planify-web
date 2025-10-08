@@ -1,95 +1,92 @@
 .schedule-contact {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-width: 337px;
-    height: 70vh;
-    padding: var(--space-24px);
-    box-sizing: border-box;
-    gap: var(--space-32px);
-    justify-content: space-around;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 337px;
+  height: 70vh;
+  padding: var(--space-24px);
+  box-sizing: border-box;
+  gap: var(--space-32px);
+  justify-content: space-around;
+  overflow-y: auto;
 }
 
 .session {
-    border-radius: var(--space-8px);
+  border-radius: var(--space-8px);
 }
 
 .session-client {
-    text-align: left;
-
+  text-align: left;
 }
 
 .client-name-schedule {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--neutral-1);
-    padding: 0 var(--space-8px);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--neutral-1);
+  padding: 0 var(--space-8px);
 }
 
 .client-info-schedule {
-    display: flex;
-    align-items: center;
-    gap: var(--space-8px);
-    justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8px);
+  justify-content: flex-start;
 }
 
 .client-image-schedule {
-    width: 70px;
-    height: 70px;
-    border-radius: var(--space-8px);
-    object-fit: cover;
+  width: 70px;
+  height: 70px;
+  border-radius: var(--space-8px);
+  object-fit: cover;
 }
 
 .client-phone-schedule {
-    display: flex;
-    align-items: center;
-    color: var(--neutral-1);
-    cursor: pointer;
-    font-size: var(--space-12px);
+  display: flex;
+  align-items: center;
+  color: var(--neutral-1);
+  cursor: pointer;
+  font-size: var(--space-12px);
 }
 
 .client-gender-schedule {
-    display: flex;
-    align-items: start;
-    padding: var(--space-8px);
-    font-size: 0.95rem;
-    color: var(--neutral-1);
+  display: flex;
+  align-items: start;
+  padding: var(--space-8px);
+  font-size: 0.95rem;
+  color: var(--neutral-1);
 }
 
 .session-actions .button-group {
-    display: flex;
-    gap: var(--space-8px);
-    margin-bottom: var(--space-8px);
+  display: flex;
+  gap: var(--space-8px);
+  margin-bottom: var(--space-8px);
 }
-
 
 .session-appointments {
-    border: 1px solid var(--primary-2);;
-    border-radius: var(--space-8px);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-12px);
-    padding: var(--space-12px);
-
+  border: 1px solid var(--primary-2);
+  border-radius: var(--space-8px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12px);
+  padding: var(--space-12px);
 }
 .appointment-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--neutral-1);
-    font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--neutral-1);
+  font-size: 1rem;
 }
 
-.position-data{
-    display: flex;
-    align-items: center;
-    gap: var(--space-8px);
+.position-data {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8px);
 }
 .appointment-details {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--neutral-1);
-    font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--neutral-1);
+  font-size: 1rem;
 }

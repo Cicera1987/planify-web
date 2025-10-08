@@ -3,7 +3,6 @@
 import "./styles.css";
 
 export default function PackagesDesktop() {
- 
   return (
     <div className="packages-container">
       <div className="desktop-packages">
@@ -14,9 +13,7 @@ export default function PackagesDesktop() {
           </div>
         </div>
 
-        <div className="form-packages-container">
-          Pacotes de serviços
-        </div>
+        <div className="form-packages-container">Pacotes de serviços</div>
       </div>
     </div>
   );

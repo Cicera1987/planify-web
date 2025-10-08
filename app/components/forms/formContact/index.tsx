@@ -46,10 +46,7 @@ export default function ContactForm({
     reset,
   } = useForm<ContactFormInputs>({ defaultValues });
 
-
-  const { imageState } = useSelector(
-    (state: RootState) => state.scheduling
-  )
+  const { imageState } = useSelector((state: RootState) => state.scheduling);
 
   const { optionsPackages: packageOptions, isLoading: packagesLoading } =
     usePackages();

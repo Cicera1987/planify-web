@@ -13,10 +13,7 @@ import { useSelector } from "react-redux";
 export default function ClientsMobile({}: {
   onDelete?: (contactId: number) => void;
 }) {
-
-  const { openPopupId } = useSelector(
-    (state: RootState) => state.scheduling
-  )
+  const { openPopupId } = useSelector((state: RootState) => state.scheduling);
 
   const {
     handleTogglePopup,

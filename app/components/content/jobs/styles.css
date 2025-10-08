@@ -1,0 +1,142 @@
+/* === CONTAINER GERAL === */
+.jobs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 372px;
+}
+
+/* === TÍTULO === */
+.jobs-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* === LISTA DE PROCEDIMENTOS / TAGS === */
+.procedure-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-start;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 16px;
+  max-height: 220px;
+  max-width: 372px;
+  overflow-y: auto;
+  background-color: #fafafa;
+}
+
+/* Scrollbar custom */
+.procedure-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.procedure-list::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.procedure-list::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
+}
+
+/* === BOTÃO DE EXCLUSÃO === */
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: #c33;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
+.procedure-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+}
+
+.form-title {
+  font-size: var(--space-14px);
+  font-weight: 600;
+  text-align: start;
+  margin-bottom: 4px;
+}
+
+/* === CONTAINER DAS TAGS === */
+.tag-list-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 48px;
+  padding: 20px;
+  gap: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* === LABEL DA LISTA === */
+.tag-list-label {
+  font-weight: 500;
+  font-size: var(--space-12px);
+  margin-bottom: 4px;
+  color: #333;
+}
+
+/* === MENSAGEM QUANDO NÃO HÁ TAGS === */
+.no-tags {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.tag-list {
+  display: flex;
+  width: 100%;
+  max-width: 372px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-item {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 4px 8px;
+  gap: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  border: 1px solid var(--primary-2);
+}
+
+.tag-item:hover {
+  transform: scale(1.1);
+}
+
+.tag-text {
+  font-weight: 400;
+  color: var(--primary-2);
+}
+
+.procedure-list::after {
+  content: "";
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to top, #fafafa, transparent);
+  pointer-events: none;
+}

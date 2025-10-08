@@ -83,16 +83,16 @@ export const getSchedulingHistory = async (): Promise<Scheduling[]> => {
 };
 
 export const searchSchedulingsByContactName = async (
-  name: string
+  name: string,
 ): Promise<Scheduling[]> => {
   const res = await api.get<Scheduling[]>(
-    `/scheduling/search?name=${encodeURIComponent(name)}`
+    `/scheduling/search?name=${encodeURIComponent(name)}`,
   );
   return res.data;
 };
 
 export const createScheduling = async (
-  data: SchedulingRequest
+  data: SchedulingRequest,
 ): Promise<Scheduling> => {
   const res = await api.post<Scheduling>("/scheduling", data);
   return res.data;
@@ -100,12 +100,16 @@ export const createScheduling = async (
 
 export const updateSchedulingStatus = async (
   id: number,
-  status: SchedulingStatusRequest
+  status: SchedulingStatusRequest,
 ): Promise<Scheduling> => {
   const params = new URLSearchParams({ newStatus: status.newStatus });
-  const res = await api.put<Scheduling>(`/scheduling/${id}/status`, params.toString(), {
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  });
+  const res = await api.put<Scheduling>(
+    `/scheduling/${id}/status`,
+    params.toString(),
+    {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    },
+  );
   return res.data;
 };
 

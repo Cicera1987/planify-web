@@ -18,28 +18,24 @@ export interface PackageRequest {
   serviceIds: number[];
 }
 
-
 export const getAllPackages = async (): Promise<Package[]> => {
   const res = await api.get<Package[]>("/packages");
   return res.data;
 };
-
 
 export const getPackageById = async (id: number): Promise<Package> => {
   const res = await api.get<Package>(`/packages/${id}`);
   return res.data;
 };
 
-export const createPackage = async (
-  pkg: PackageRequest
-): Promise<Package> => {
+export const createPackage = async (pkg: PackageRequest): Promise<Package> => {
   const res = await api.post<Package>("/packages", pkg);
   return res.data;
 };
 
 export const updatePackage = async (
   id: number,
-  pkg: PackageRequest
+  pkg: PackageRequest,
 ): Promise<Package> => {
   const res = await api.put<Package>(`/packages/${id}`, pkg);
   return res.data;

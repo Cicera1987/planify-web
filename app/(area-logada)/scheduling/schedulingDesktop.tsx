@@ -19,10 +19,7 @@ export default function SchedulingDesktop() {
     isLoading,
   } = useScheduling();
 
-  const { openPopupId } = useSelector(
-    (state: RootState) => state.scheduling
-  )
-
+  const { openPopupId } = useSelector((state: RootState) => state.scheduling);
 
   if (isLoading) {
     return (

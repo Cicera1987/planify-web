@@ -10,11 +10,7 @@ import { RootState } from "@/app/store/store";
 import { setSearch } from "@/app/store/features/contactsSlice";
 
 export default function Sheduling() {
-
-  const { search } = useSelector(
-    (state: RootState) => state.scheduling
-  )
-
+  const { search } = useSelector((state: RootState) => state.scheduling);
 
   const router = useRouter();
   return (

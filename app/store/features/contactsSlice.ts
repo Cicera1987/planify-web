@@ -29,7 +29,7 @@ export const fetchContacts = createAsyncThunk(
       return await contactApi.searchContacts(search, page, 10);
     }
     return await contactApi.getContacts(page, 10);
-  }
+  },
 );
 
 const contactsSlice = createSlice({
@@ -59,11 +59,11 @@ const contactsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        const { content, pageNumber, totalPages, totalElements } = action.payload;
+        const { content, pageNumber, totalPages, totalElements } =
+          action.payload;
 
-
-        const existingIds = new Set(state.list.map(contact => contact.id));
-        const filteredContent = content.filter(c => !existingIds.has(c.id));
+        const existingIds = new Set(state.list.map((contact) => contact.id));
+        const filteredContent = content.filter((c) => !existingIds.has(c.id));
 
         if (state.page === 0) {
           state.list = filteredContent;
@@ -82,11 +82,6 @@ const contactsSlice = createSlice({
   },
 });
 
-export const {
-  setCurrentContact,
-  setContactList,
-  setSearch,
-  clearContacts,
-} = contactsSlice.actions;
+export const { setCurrentContact, setContactList, setSearch, clearContacts } =
+  contactsSlice.actions;
 export default contactsSlice.reducer;
-

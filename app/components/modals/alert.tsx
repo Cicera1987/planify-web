@@ -26,7 +26,7 @@ export interface AlertRef {
     cancelText?: string;
   }) => void;
   close: () => void;
-};
+}
 
 const AlertModal = forwardRef<AlertRef, AlertProps>((_props, ref) => {
   const [isOpen, setIsOpen] = useState(false);

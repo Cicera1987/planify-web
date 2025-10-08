@@ -5,98 +5,104 @@ import Button from "../buttons";
 import "./styles.css";
 
 interface ContactData {
-    id: number;
-    name: string;
-    phone: string;
-    email?: string;
-    gender?: string;
-    imageUrl?: string;
+  id: number;
+  name: string;
+  phone: string;
+  email?: string;
+  gender?: string;
+  imageUrl?: string;
 }
 
 interface ContactContainerProps {
-    contactDataId: ContactData | null;
+  contactDataId: ContactData | null;
 }
 
 export const ScheduleContact: React.FC<ContactContainerProps> = ({
-    contactDataId,
+  contactDataId,
 }) => {
-    const openWhatsApp = () => {
-        if (contactDataId?.phone) {
-            window.open(`https://wa.me/${contactDataId.phone}`, "_blank");
-        }
-    };
+  const openWhatsApp = () => {
+    if (contactDataId?.phone) {
+      window.open(`https://wa.me/${contactDataId.phone}`, "_blank");
+    }
+  };
 
-    const openEmail = () => {
-        if (contactDataId?.email) {
-            window.open(`mailto:${contactDataId.email}`, "_blank");
-        }
-    };
+  const openEmail = () => {
+    if (contactDataId?.email) {
+      window.open(`mailto:${contactDataId.email}`, "_blank");
+    }
+  };
 
-    return (
-        <div className="schedule-contact scrollbar-hide">
-            <div className="session session-client">
-                <p className="client-name-schedule">{contactDataId?.name}</p>
+  return (
+    <div className="schedule-contact scrollbar-hide">
+      <div className="session session-client">
+        <p className="client-name-schedule">{contactDataId?.name}</p>
 
-                <div className="client-info-schedule">
-                    {contactDataId?.imageUrl && (
-                        <img
-                            src={contactDataId.imageUrl}
-                            alt={contactDataId.name}
-                            className="client-image-schedule"
-                        />
-                    )}
-                    <span className="client-phone-schedule" onClick={openWhatsApp}>
-                        <Icon.Whatsapp />
-                        {formatPhone(contactDataId?.phone || "")}
-                    </span>
-                </div>
-
-                {contactDataId?.gender && (
-                    <p className="client-gender-schedule">
-                        {contactDataId.gender.charAt(0).toUpperCase() +
-                            contactDataId.gender.slice(1).toLowerCase()}
-                    </p>
-                )}
-            </div>
-            <div className="session session-actions">
-                <div className="button-group">
-                    <Button.ButtonVariant type="button" variant="info" text="Informações" />
-                    <Button.ButtonVariant type="button" variant="filled" text="Agendamento" />
-                </div>
-
-                <Button.ButtonVariant
-                    type="button"
-                    variant="icon"
-                    text={formatPhone(contactDataId?.phone || "")}
-                    icon={<Icon.ContactPhone />}
-                    onClick={openWhatsApp}
-                />
-                <Button.ButtonVariant
-                    type="button"
-                    variant="icon"
-                    text={contactDataId?.email}
-                    icon={<Icon.ContactEmail />}
-                    onClick={openEmail}
-                />
-            </div>
-            <div className="session session-appointments">
-
-                <div className="appointment-header">
-                    <div className="position-data">
-                        <Icon.DateIcon /> <span>22 de Dezembro</span>
-                    </div>
-                    <Button.ButtonIcon icon={<Icon.Follow />} />
-                </div>
-
-                <div className="appointment-details">
-                    <div className="position-data">
-                        <Icon.TimeIcon />
-                        <span>14:30</span>
-                    </div>
-                    <div>Manicure</div>
-                </div>
-            </div>
-
+        <div className="client-info-schedule">
+          {contactDataId?.imageUrl && (
+            <img
+              src={contactDataId.imageUrl}
+              alt={contactDataId.name}
+              className="client-image-schedule"
+            />
+          )}
+          <span className="client-phone-schedule" onClick={openWhatsApp}>
+            <Icon.Whatsapp />
+            {formatPhone(contactDataId?.phone || "")}
+          </span>
         </div>
-    );
+
+        {contactDataId?.gender && (
+          <p className="client-gender-schedule">
+            {contactDataId.gender.charAt(0).toUpperCase() +
+              contactDataId.gender.slice(1).toLowerCase()}
+          </p>
+        )}
+      </div>
+      <div className="session session-actions">
+        <div className="button-group">
+          <Button.ButtonVariant
+            type="button"
+            variant="info"
+            text="Informações"
+          />
+          <Button.ButtonVariant
+            type="button"
+            variant="filled"
+            text="Agendamento"
+          />
+        </div>
+
+        <Button.ButtonVariant
+          type="button"
+          variant="icon"
+          text={formatPhone(contactDataId?.phone || "")}
+          icon={<Icon.ContactPhone />}
+          onClick={openWhatsApp}
+        />
+        <Button.ButtonVariant
+          type="button"
+          variant="icon"
+          text={contactDataId?.email}
+          icon={<Icon.ContactEmail />}
+          onClick={openEmail}
+        />
+      </div>
+      <div className="session session-appointments">
+        <div className="appointment-header">
+          <div className="position-data">
+            <Icon.DateIcon /> <span>22 de Dezembro</span>
+          </div>
+          <Button.ButtonIcon icon={<Icon.Follow />} />
+        </div>
+
+        <div className="appointment-details">
+          <div className="position-data">
+            <Icon.TimeIcon />
+            <span>14:30</span>
+          </div>
+          <div>Manicure</div>
+        </div>
+      </div>
+    </div>
+  );
 };

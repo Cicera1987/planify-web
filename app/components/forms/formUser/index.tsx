@@ -50,9 +50,7 @@ export default function RegisterForm({
   });
   const { handleLocalImageChange } = useRegister();
 
-  const { imageState } = useSelector(
-    (state: RootState) => state.scheduling
-  )
+  const { imageState } = useSelector((state: RootState) => state.scheduling);
 
   useEffect(() => {
     if (defaultValues) reset(defaultValues);

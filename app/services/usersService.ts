@@ -1,4 +1,4 @@
-import { api } from "./api"; 
+import { api } from "./api";
 
 export interface PageResponse<T> {
   content: T[];
@@ -20,9 +20,13 @@ export interface User {
   active: boolean;
 }
 
-
-export const getAllUsers = async (page = 0, size = 10): Promise<PageResponse<User>> => {
-  const response = await api.get<PageResponse<User>>(`/users?page=${page}&size=${size}`);
+export const getAllUsers = async (
+  page = 0,
+  size = 10,
+): Promise<PageResponse<User>> => {
+  const response = await api.get<PageResponse<User>>(
+    `/users?page=${page}&size=${size}`,
+  );
   return response.data;
 };
 
@@ -43,6 +47,8 @@ export const searchUsers = async (params: {
   searchParams.append("page", (params.page ?? 0).toString());
   searchParams.append("size", (params.size ?? 10).toString());
 
-  const response = await api.get<PageResponse<User>>(`/users/search?${searchParams.toString()}`);
+  const response = await api.get<PageResponse<User>>(
+    `/users/search?${searchParams.toString()}`,
+  );
   return response.data;
 };

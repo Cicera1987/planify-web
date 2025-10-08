@@ -5,8 +5,13 @@ import "./styles.css";
 import ContactForm from "@/app/components/forms/formContact";
 
 export default function ContactDesktop({ contactId }: { contactId?: number }) {
-  const { handleSave, isLoading, defaultValues, isEditMode, handleLocalImageChange } =
-    useContact(contactId);
+  const {
+    handleSave,
+    isLoading,
+    defaultValues,
+    isEditMode,
+    handleLocalImageChange,
+  } = useContact(contactId);
 
   return (
     <div className="contact-container">

@@ -51,6 +51,9 @@ export const register = async (userData: Register): Promise<void> => {
   await api.post("/auth/register", { ...userData, active: true });
 };
 
-export const update = async (userId: string | number, userData: Partial<Register>): Promise<void> => {
+export const update = async (
+  userId: string | number,
+  userData: Partial<Register>,
+): Promise<void> => {
   await api.patch(`/auth/${userId}`, userData);
 };

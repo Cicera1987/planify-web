@@ -3,7 +3,10 @@
 import { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { setCredentials, logout as logoutAction } from "../store/features/authSlice";
+import {
+  setCredentials,
+  logout as logoutAction,
+} from "../store/features/authSlice";
 import { api } from "../services/api";
 
 export function useAuth() {
@@ -25,22 +28,31 @@ export function useAuth() {
     }
   }, [dispatch]);
 
-  const login = useCallback(async (email: string, password: string) => {
-    setApiError(null);
-    try {
-      const res = await api.post<{ token: string }>("/auth/login", { email, password });
-      const pureToken = res.data.token.replace(/^Bearer\s+/i, "");
-      setToken(pureToken);
-      setIsAuthenticated(true);
-      localStorage.setItem("@planify/token", pureToken);
-      dispatch(setCredentials(pureToken));
-      router.push("/home");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      console.error("Login falhou:", err);
-      setApiError(err?.response?.data?.message || "Erro ao fazer login. Tente novamente.");
-    }
-  }, [dispatch, router]);
+  const login = useCallback(
+    async (email: string, password: string) => {
+      setApiError(null);
+      try {
+        const res = await api.post<{ token: string }>("/auth/login", {
+          email,
+          password,
+        });
+        const pureToken = res.data.token.replace(/^Bearer\s+/i, "");
+        setToken(pureToken);
+        setIsAuthenticated(true);
+        localStorage.setItem("@planify/token", pureToken);
+        dispatch(setCredentials(pureToken));
+        router.push("/home");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        console.error("Login falhou:", err);
+        setApiError(
+          err?.response?.data?.message ||
+            "Erro ao fazer login. Tente novamente.",
+        );
+      }
+    },
+    [dispatch, router],
+  );
 
   const logout = useCallback(() => {
     localStorage.removeItem("@planify/token");
@@ -52,4 +64,3 @@ export function useAuth() {
 
   return { token, isAuthenticated, apiError, login, logout };
 }
-

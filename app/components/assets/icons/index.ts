@@ -50,6 +50,7 @@ import ContactPhone from "./contactPhone";
 import ContactEmail from "./contactEmail";
 import DateIcon from "./dateIcon";
 import TimeIcon from "./timeIcon";
+import CloseTag from "./closeTag";
 
 const Icon = Object.assign(
   {},
@@ -105,7 +106,8 @@ const Icon = Object.assign(
     ContactPhone,
     ContactEmail,
     DateIcon,
-    TimeIcon
+    TimeIcon,
+    CloseTag,
   },
 );
 

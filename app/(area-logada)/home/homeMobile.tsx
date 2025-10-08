@@ -1,9 +1,8 @@
 "use client";
 
 import Button from "@/app/components/buttons";
-import Clients from "@/app/components/assets/images/clients-mobile.png";
-import Reporter from "@/app/components/assets/images/reporter-mobile.png";
-import Scheduling from "@/app/components/assets/images/scheduling-mobile.png";
+import Clients from "@/app/components/assets/images/clients.png";
+import Scheduling from "@/app/components/assets/images/schedule.png";
 
 import "./styles.css";
 
@@ -25,9 +24,7 @@ export default function HomeMobile() {
     isLoading,
   } = useScheduling();
 
-  const { openPopupId } = useSelector(
-    (state: RootState) => state.scheduling
-  )
+  const { openPopupId } = useSelector((state: RootState) => state.scheduling);
 
   const router = useRouter();
 
@@ -37,14 +34,11 @@ export default function HomeMobile() {
     <div className="scheduling-mobile">
       <div className="container-mobile">
         <div className="container-button-mobile">
-          <Button.ButtonIcon 
-          image={Scheduling.src} 
-          alt="Agenda"
-          onClick={() => router.push("/scheduling")}
-           />
-          <Button.ButtonIcon image={Reporter.src} alt="Relatório" />
-        </div>
-        <div>
+          <Button.ButtonIcon
+            image={Scheduling.src}
+            alt="Agenda"
+            onClick={() => router.push("/scheduling")}
+          />
           <Button.ButtonIcon
             image={Clients.src}
             alt="Clientes"

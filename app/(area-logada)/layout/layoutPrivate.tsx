@@ -13,7 +13,11 @@ import { useCurrentUser } from "@/app/hooks/useCurrentUser";
 import Input from "@/app/components/inputs";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/app/store/store";
-import { setSearch, setToken, setMounted } from "@/app/store/features/schedulingSlice";
+import {
+  setSearch,
+  setToken,
+  setMounted,
+} from "@/app/store/features/schedulingSlice";
 
 export default function LayoutPrivate({
   pageTitle,
@@ -28,9 +32,11 @@ export default function LayoutPrivate({
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const { user, isLoading } = useCurrentUser();
-  const dispatch = useDispatch < AppDispatch > ();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { search, token, mounted } = useSelector((state: RootState) => state.scheduling);
+  const { search, token, mounted } = useSelector(
+    (state: RootState) => state.scheduling,
+  );
 
   useEffect(() => {
     dispatch(setMounted(true));
@@ -48,7 +54,7 @@ export default function LayoutPrivate({
     <Header
       onBack={() => router.back()}
       showUserInfo={true}
-      nome={isLoading ? "Carregando..." : user?.username ?? ""}
+      nome={isLoading ? "Carregando..." : (user?.username ?? "")}
       fotoUrl={user?.imageUrl || "/images/avatar.png"}
     >
       {pathname === "/home" && (

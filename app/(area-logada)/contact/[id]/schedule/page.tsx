@@ -11,7 +11,7 @@ export default function Schedule() {
 
   return (
     <LayoutPrivate
-      desktopContent={<ScheduleServiceDesktop contactId={contactId }/>}
+      desktopContent={<ScheduleServiceDesktop contactId={contactId} />}
       mobileContent={<ScheduleServiceMobile contactId={contactId} />}
     />
   );

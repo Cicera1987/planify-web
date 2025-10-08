@@ -11,13 +11,9 @@ import { RootState } from "@/app/store/store";
 import { setSearch } from "@/app/store/features/schedulingSlice";
 
 export default function Clients() {
-
   const { handleDelete } = useContact();
 
-  const { search } = useSelector(
-    (state: RootState) => state.scheduling
-  )
-
+  const { search } = useSelector((state: RootState) => state.scheduling);
 
   const router = useRouter();
 

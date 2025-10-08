@@ -3,15 +3,11 @@ import "./styles.css";
 import { useContact } from "@/app/hooks/useContact";
 import { ScheduleContact } from "@/app/components/schedule";
 
-
-export default function ScheduleServiceDesktop(
-  {
-    contactId,
-  } : {
-    contactId?: number;
-  }
-) {
-
+export default function ScheduleServiceDesktop({
+  contactId,
+}: {
+  contactId?: number;
+}) {
   const { contactDataId } = useContact(contactId);
 
   return (
@@ -25,8 +21,8 @@ export default function ScheduleServiceDesktop(
         </div>
 
         <div className="form-schedule-container">
-          <ScheduleContact contactDataId={contactDataId}/>
-      </div>
+          <ScheduleContact contactDataId={contactDataId} />
+        </div>
       </div>
     </div>
   );

@@ -51,16 +51,16 @@
 }
 
 .Button.text span {
-    color: var(--primary-4);
-    font-weight: var(--font-w-regular);
-    font-size: 14px;
+  color: var(--primary-4);
+  font-weight: var(--font-w-regular);
+  font-size: 14px;
 }
 
 .Button.filled {
   background-color: var(--primary-3);
   border: 1px solid var(--primary-3);
   border-radius: var(--space-8px);
-    
+
   span {
     color: var(--neutral-6);
   }
@@ -70,12 +70,11 @@
   background-color: var(--primary-2);
   border: 1px solid var(--primary-2);
   border-radius: var(--space-8px);
- 
-  span{
+
+  span {
     color: var(--neutral-6);
   }
 }
-
 
 @media (max-width: 640px) {
   .Button span {
