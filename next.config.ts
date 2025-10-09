@@ -50,7 +50,9 @@ export default withPWA({
   dest: "public",
   register: true,
   skipWaiting: true,
-  disable: process.env.NEXT_RUNTIME === "edge" || process.env.NODE_ENV === "development",
+  disable:
+    process.env.NEXT_RUNTIME === "edge" ||
+    process.env.NODE_ENV === "development",
   runtimeCaching,
   sw: "sw.js",
 });
