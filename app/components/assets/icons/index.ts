@@ -51,6 +51,7 @@ import ContactEmail from "./contactEmail";
 import DateIcon from "./dateIcon";
 import TimeIcon from "./timeIcon";
 import CloseTag from "./closeTag";
+import ArrowLeft from "./arrowLeft";
 
 const Icon = Object.assign(
   {},
@@ -108,6 +109,7 @@ const Icon = Object.assign(
     DateIcon,
     TimeIcon,
     CloseTag,
+    ArrowLeft,
   },
 );
 

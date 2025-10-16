@@ -15,9 +15,9 @@ export interface Job {
 export interface JobRequest {
   name: string;
   description: string;
-  price: number;
+  price: string | number;
   category: string;
-  duration: number;
+  duration: string | number;
 }
 
 export const getAllJobs = async (): Promise<Job[]> => {

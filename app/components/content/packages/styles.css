@@ -1,4 +1,4 @@
-.jobs-container {
+.pck-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,21 +7,20 @@
   height: 100%;
   max-width: 372px;
   min-width: 372px;
-  padding: var(--space-24px);
 }
 
-.jobs-title,
-.form-title {
+.pck-title,
+.pck-form-title {
   font-weight: 600;
   text-align: center;
 }
 
-.jobs-title {
+.pck-title {
   font-size: 1.5rem;
   margin-bottom: var(--space-8px);
 }
 
-.form-title {
+.pck-form-title {
   font-size: var(--space-14px);
   text-align: start;
   height: 32px;
@@ -29,7 +28,7 @@
   align-items: center;
 }
 
-.procedure-form {
+.pck-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-16px);
@@ -38,13 +37,13 @@
   font-size: var(--space-12px);
 }
 
-.form-number {
+.pck-form-number {
   display: flex;
   gap: 12px;
   width: 100%;
 }
 
-.form-number > * {
+.pck-form-number > * {
   flex: 1;
   min-width: 0;
 }

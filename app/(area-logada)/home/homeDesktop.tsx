@@ -37,32 +37,33 @@ export default function HomeDesktop() {
       </div>
     );
   }
-
   return (
-    <div className="main-container">
-      <div className="container-button-mobile">
-        <Button.ButtonIcon
-          image={ImageScheduling.src}
-          alt="Agenda"
-          onClick={() => router.push("/scheduling")}
-        />
-        <Button.ButtonIcon
-          image={ImageClients.src}
-          alt="Clientes"
-          onClick={() => router.push("/clients")}
-        />
-      </div>
+    <div className="main-container scrollbar-hide">
+      <div className="flow-container">
+        <div className="buttons-container">
+          <Button.ButtonIcon
+            image={ImageScheduling.src}
+            alt="Agenda"
+            onClick={() => router.push("/scheduling")}
+          />
+          <Button.ButtonIcon
+            image={ImageClients.src}
+            alt="Clientes"
+            onClick={() => router.push("/clients")}
+          />
+        </div>
 
-      <div className="flex flex-col gap-4 md:w-5/12 max-h-[540px] overflow-y-auto">
         {(!listToRender || listToRender.length === 0) && (
-          <p className="text-center text-gray-500 mt-4">
+          <p className="text-start text-gray-500 w-full">
             Nenhum agendamento encontrado
           </p>
         )}
+
         {listToRender?.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}
             data={scheduling}
+            className="scheduling-card"
             triggerIcon={
               <StatusPopup
                 trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}

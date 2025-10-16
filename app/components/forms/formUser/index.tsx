@@ -64,8 +64,8 @@ export default function RegisterForm({
   }, [watch("phone"), setValue]);
 
   return (
-    <div className="register-page">
-      <form onSubmit={handleSubmit(onSubmit)} className="register-form">
+    <div className="use-page">
+      <form onSubmit={handleSubmit(onSubmit)} className="use-form">
         <div className="form-fields">
           <div className="image-preview-container">
             {imageState.image || defaultValues?.imageUrl ? (

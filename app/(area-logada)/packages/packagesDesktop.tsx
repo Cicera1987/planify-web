@@ -1,20 +1,12 @@
-"use client";
-
-import "./styles.css";
+import PackagesContent from "@/app/components/content/packages/page";
+import BoxRegister from "@/app/components/content/BoxRegister";
 
 export default function PackagesDesktop() {
-  return (
-    <div className="packages-container">
-      <div className="desktop-packages">
-        <div className="background-packages-dark"></div>
-        <div className="background-packages-light">
-          <div className="light-packages-header">
-            <h1 className="app-packages-title">Pacotes de serviços</h1>
-          </div>
-        </div>
+  console.log("Renderizando BoxRegister");
 
-        <div className="form-packages-container">Pacotes de serviços</div>
-      </div>
-    </div>
+  return (
+    <BoxRegister title="Pacotes de serviços">
+      <PackagesContent />
+    </BoxRegister>
   );
 }

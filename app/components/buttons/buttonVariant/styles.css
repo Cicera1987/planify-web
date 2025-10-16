@@ -3,8 +3,6 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-  gap: var(--space-8px);
-  padding: var(--space-16px) var(--space-12px);
   font-size: 14px;
   font-weight: var(--font-w-medium);
   cursor: pointer;
@@ -46,10 +44,20 @@
 .Button.text {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   background: transparent;
   border: none;
+  width: auto;
+  gap: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
+.Button.text span {
+  color: var(--primary-4);
+  font-weight: var(--font-w-regular);
+  font-size: 14px;
+}
 .Button.text span {
   color: var(--primary-4);
   font-weight: var(--font-w-regular);
@@ -60,6 +68,7 @@
   background-color: var(--primary-3);
   border: 1px solid var(--primary-3);
   border-radius: var(--space-8px);
+  padding: var(--space-16px) var(--space-12px);
 
   span {
     color: var(--neutral-6);

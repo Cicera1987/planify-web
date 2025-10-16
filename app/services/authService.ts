@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api, apiPublic } from "./api";
 
 export interface DecodedToken {
   jti?: string;
@@ -28,7 +28,7 @@ export interface Register {
 }
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
-  const response = await api.post<LoginResponse>("/auth/login", data);
+  const response = await apiPublic.post<LoginResponse>("/auth/login", data);
   return response.data;
 };
 

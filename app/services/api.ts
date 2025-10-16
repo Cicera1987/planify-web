@@ -5,6 +5,10 @@ export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API,
 });
 
+export const apiPublic = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_API,
+});
+
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = localStorage.getItem("@planify/token");
   if (token && config.headers) {

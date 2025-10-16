@@ -17,6 +17,7 @@ interface SchedulingCardProps {
   data: DeepPartial<Scheduling>;
   triggerIcon: ReactNode;
   onTriggerClick?: () => void;
+  className?: string;
 }
 
 export default function SchedulingCard({

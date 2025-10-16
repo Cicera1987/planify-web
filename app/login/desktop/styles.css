@@ -1,4 +1,4 @@
-.desktop-login {
+.login-desktop {
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -8,17 +8,17 @@
   overflow: hidden;
 }
 
-.background-dark {
+.login-background-dark {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--background);
+  background-color: var(--white);
   z-index: 1;
 }
 
-.background-light {
+.login-background-light {
   position: absolute;
   top: 0;
   right: 0;
@@ -34,24 +34,24 @@
   padding: 40px 20px;
 }
 
-.light-header {
+.login-light-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.logo {
+.login-logo {
   width: 80px;
   margin-bottom: 20px;
 }
 
-.app-title {
+.login-app-title {
   font-size: 36px;
   font-weight: bold;
   color: var(--primary-3);
 }
 
-.form-container {
+.login-form-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -60,7 +60,7 @@
   height: 547px;
   transform: translate(-50%, -50%);
   z-index: 3;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--white);
   padding: 60px 32px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);

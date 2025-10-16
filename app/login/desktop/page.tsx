@@ -10,16 +10,20 @@ export default function DesktopLogin() {
   const { login } = useAuth();
 
   return (
-    <div className="desktop-login">
-      <div className="background-dark"></div>
-      <div className="background-light">
-        <div className="light-header">
-          <img src="/images/logo.png" alt="Logo Planify" className="logo" />
-          <h1 className="app-title">Planify</h1>
+    <div className="login-desktop">
+      <div className="login-background-dark"></div>
+      <div className="login-background-light">
+        <div className="login-light-header">
+          <img
+            src="/images/logo.png"
+            alt="Logo Planify"
+            className="login-logo"
+          />
+          <h1 className="login-app-title">Planify</h1>
         </div>
       </div>
 
-      <div className="form-container">
+      <div className="login-form-container">
         <LoginForm onSubmit={(data) => login(data.email, data.password)} />
       </div>
     </div>

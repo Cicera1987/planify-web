@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { Package } from "../services/packagesService";
 import { getAllPackages } from "../services/packagesService"; // função Axios que vamos criar
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { setPackageList } from "../store/features/packagesSlice";
 
 interface PackageOption {
   value: number;
@@ -10,21 +13,15 @@ interface PackageOption {
 }
 
 export function usePackages() {
-  const [packages, setPackages] = useState<Package[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const dispatch = useDispatch();
+  const packages = useSelector((state: RootState) => state.packages.list);
 
   const fetchPackages = async () => {
-    setIsLoading(true);
-    setIsError(false);
     try {
-      const data = await getAllPackages();
-      setPackages(data);
+      const data: Package[] = await getAllPackages();
+      dispatch(setPackageList(data));
     } catch (err) {
       console.error("Erro ao buscar pacotes:", err);
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -32,11 +29,16 @@ export function usePackages() {
     fetchPackages();
   }, []);
 
+  const isLoading = async () => {
+    const packages = await getAllPackages();
+    dispatch(setPackageList(packages));
+  };
+
   const optionsPackages: PackageOption[] =
     packages.map((pack) => ({
       value: pack.id,
       label: pack.name,
     })) || [];
 
-  return { optionsPackages, isLoading, isError, refetch: fetchPackages };
+  return { optionsPackages, refetch: fetchPackages, packages, isLoading };
 }

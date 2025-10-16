@@ -1,20 +1,15 @@
-.register-page {
+.use-page {
   display: flex;
   flex-direction: column;
+  width: 100%;
   border-radius: var(--space-8px);
 }
 
-.register-form {
+.use-form {
   display: flex;
   width: 400px;
+  padding: var(--space-8px) var(--space-16px);
   flex-direction: column;
-  gap: var(--space-4px);
-}
-
-.register-error {
-  color: var(--error);
-  margin-top: var(--space-12px);
-  font-size: 14px;
 }
 
 .image-preview-container {
@@ -29,24 +24,25 @@
   height: 90px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #ccc;
+  border: 2px solid var(--neutral-4);
 }
 
 .image-placeholder {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background-color: #f0f0f0;
+  background-color: var(--neutral-6);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #888;
+  color: var(--neutral-3);
   font-weight: bold;
   font-size: 18px;
-  border: 2px dashed #ccc;
+  border: 2px dashed var(--neutral-4);
 }
 
-.file-input {
-  display: block;
-  margin: 0 auto 8px auto;
+.form-footer {
+  display: flex;
+  margin-top: auto;
+  padding-top: var(--space-16px);
 }

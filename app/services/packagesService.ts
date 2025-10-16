@@ -1,11 +1,15 @@
 import { api } from "./api";
 import { Job } from "./jobService";
 
+export interface ServiceRequest {
+  id: number;
+  quantity: number;
+}
 export interface Package {
   id: number;
   name: string;
-  totalPrice: number;
-  numberSessions: number;
+  totalPrice: number | string;
+  numberSessions: number | string;
   ownerId: number;
   createdAt: string;
   services: Job[];
@@ -13,9 +17,10 @@ export interface Package {
 
 export interface PackageRequest {
   name: string;
-  totalPrice: number;
-  numberSessions: number;
+  totalPrice: number | string;
+  numberSessions: number | string;
   serviceIds: number[];
+  services: ServiceRequest[];
 }
 
 export const getAllPackages = async (): Promise<Package[]> => {

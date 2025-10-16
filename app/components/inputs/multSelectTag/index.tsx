@@ -1,0 +1,133 @@
+"use client";
+
+import React from "react";
+import Icon from "../../assets/icons";
+import "./styles.css";
+import TagWithCounter from "../../tags/tagWithCounter";
+
+interface ItemsTag {
+  id: string | number;
+  label?: string;
+  quantity: number;
+}
+
+interface MultiSelectTagProps {
+  label: string;
+  options: { value: string | number; label: string }[];
+  value: ItemsTag[];
+  onChange: (value: ItemsTag[]) => void;
+  placeholder?: string;
+  required?: boolean;
+  error?: string | boolean;
+  isEditMode?: boolean;
+}
+
+export default function MultSelectTag({
+  label,
+  options,
+  value,
+  onChange,
+  placeholder = "Selecionar",
+  required = false,
+  error,
+  isEditMode = false,
+}: MultiSelectTagProps) {
+  const handleAdd = (item: ItemsTag) => {
+    if (!item) return;
+
+    const existingItem = value.find((v) => v.id === item.id);
+
+    if (existingItem) {
+      // Se já existe, incrementa a quantidade
+      const newValues = value.map((v) =>
+        v.id === item.id ? { ...v, quantity: v.quantity + 1 } : v,
+      );
+      onChange(newValues);
+    } else {
+      // Se não existe, adiciona com quantity 1
+      onChange([...value, { ...item, quantity: 1 }]);
+    }
+  };
+
+  const handleRemove = (id: string | number) => {
+    onChange(value.filter((item) => item.id !== id));
+  };
+
+  const handleChangeQuantity = (id: string | number, newQty: number) => {
+    if (newQty < 1) {
+      handleRemove(id);
+      return;
+    }
+
+    const newValues = value.map((item) =>
+      item.id === id ? { ...item, quantity: newQty } : item,
+    );
+    onChange(newValues);
+  };
+
+  return (
+    <div className="mult-input-wrapper">
+      <label className="mult-input-label">
+        {label} {required && <span style={{ color: "red" }}>*</span>}
+      </label>
+
+      <div className="mult-select-tag-wrapper">
+        <div className="mult-tags-container">
+          {value.map((val) => {
+            const opt = options.find((option) => option.value === val.id);
+            return (
+              <TagWithCounter
+                key={val.id}
+                label={opt?.label || val.label || ""}
+                quantity={val.quantity}
+                onIncrease={() =>
+                  handleChangeQuantity(val.id, val.quantity + 1)
+                }
+                onDecrease={() =>
+                  handleChangeQuantity(val.id, val.quantity - 1)
+                }
+              />
+            );
+          })}
+        </div>
+
+        <div className="mult-select-row">
+          <select
+            className="mult-select-tag"
+            value=""
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              const parsedValue = isNaN(Number(selectedValue))
+                ? selectedValue
+                : Number(selectedValue);
+
+              const itemToAdd: ItemsTag = {
+                id: parsedValue,
+                label:
+                  options.find((opt) => opt.value === parsedValue)?.label || "",
+                quantity: 1,
+              };
+
+              handleAdd(itemToAdd);
+            }}
+          >
+            <option value="">{placeholder}</option>
+            {options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+
+          <span className="mult-custom-arrow">
+            <Icon.Arrow />
+          </span>
+        </div>
+      </div>
+
+      {error && typeof error === "string" && (
+        <div className="mult-input-error">{error}</div>
+      )}
+    </div>
+  );
+}

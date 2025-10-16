@@ -11,6 +11,15 @@
   border-radius: var(--space-8px);
 }
 
+.cards-container-scheduling {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  width: 100%;
+  padding: var(--space-16px);
+  box-sizing: border-box;
+}
+
 .main-mobile-scheduling {
   display: flex;
   flex-direction: column;
@@ -24,15 +33,6 @@
   border-radius: var(--space-8px);
   overflow-y: auto;
   margin-top: var(--space-16px);
-}
-
-.cards-container-scheduling {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-  width: 100%;
-  padding: var(--space-16px);
-  box-sizing: border-box;
 }
 
 @media (max-width: 640px) {

@@ -3,6 +3,7 @@ import SearchInput from "./searchInput";
 import MultiSelectInput from "./multSelectInput";
 import CheckboxInput from "./checkboxInput";
 import SelectInput from "./selectInput";
+import MultSelectTag from "./multSelectTag";
 
 const Input = Object.assign(
   {},
@@ -12,6 +13,7 @@ const Input = Object.assign(
     MultiSelectInput,
     CheckboxInput,
     SelectInput,
+    MultSelectTag,
   },
 );
 
