@@ -76,6 +76,13 @@
   justify-content: space-between;
   color: var(--neutral-1);
   font-size: 1rem;
+
+  svg:hover {
+    cursor: pointer;
+    fill: var(--neutral-1);
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+  }
 }
 
 .position-data {

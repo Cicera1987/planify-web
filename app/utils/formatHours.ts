@@ -15,7 +15,7 @@ const isValidTime = (value: string) => {
 };
 
 const formatTimeInput = (value: string) => {
-  let digits = value.replace(/\D/g, "");
+  const digits = value.replace(/\D/g, "");
   if (digits.length === 0) return "";
   if (digits.length <= 2) return digits;
   return digits.slice(0, 2) + ":" + digits.slice(2, 4);

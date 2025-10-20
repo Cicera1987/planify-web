@@ -79,7 +79,6 @@ export default function CalendarContent(): ReactElement {
     try {
       const newDays = await createCalendarDay(payload);
       newDays.forEach(day => dispatch(upsertCalendarDay(day)));
-
       toast.success("Horário cadastrado com sucesso!");
       reset();
     } catch (error) {
@@ -91,12 +90,10 @@ export default function CalendarContent(): ReactElement {
   return (
     <div className="calendar-container">
       <h2 className="calendar-title">Calendário</h2>
-
       <CustomDatePicker
         selectedDates={selectedDates}
         setSelectedDates={setSelectedDates}
       />
-
       <form onSubmit={handleSubmit(onSubmit)} className="calendar-form">
         <Input.InputForm
           label="Informe a Hora"
@@ -110,6 +107,7 @@ export default function CalendarContent(): ReactElement {
           required
           value={timeValue}
           onChange={(e) => setValue("time", formatTimeInput(e.target.value))}
+          error={errors.time?.message as string}
         />
         <div className="calendar-events scroll-list">
         <div className="calendar-events-items">
@@ -121,7 +119,6 @@ export default function CalendarContent(): ReactElement {
               if (item) handleDeleteTime(item.dayId, item.timeId);
           }}
             />
-
         </div>
         </div>
         <div className="calendar-footer">

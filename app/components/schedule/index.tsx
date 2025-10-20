@@ -90,14 +90,14 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
       <div className="session session-appointments">
         <div className="appointment-header">
           <div className="position-data">
-            <Icon.DateIcon /> <span>22 de Dezembro</span>
+            <Icon.TimeIcon /> <span>22 de Dezembro</span>
           </div>
           <Button.ButtonIcon icon={<Icon.Follow />} />
         </div>
 
         <div className="appointment-details">
           <div className="position-data">
-            <Icon.TimeIcon />
+            <Icon.DateIcon />
             <span>14:30</span>
           </div>
           <div>Manicure</div>

@@ -10,8 +10,6 @@ export default function ButtonIcon({
   image,
   onClick,
   alt = "button icon",
-  width,
-  height,
   className = "",
   active = false,
 }: {

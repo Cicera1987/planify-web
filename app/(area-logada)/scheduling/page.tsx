@@ -19,7 +19,7 @@ export default function Sheduling() {
         <SearchBar
           searchValue={search}
           onSearchChange={setSearch}
-          onButtonClick={() => router.push("/contact")}
+          onButtonClick={() => router.push("/clients")}
           placeholder="Pesquisar..."
         />
       }

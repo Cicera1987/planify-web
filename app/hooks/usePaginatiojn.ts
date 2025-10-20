@@ -8,7 +8,6 @@ interface UseInfiniteScrollOptions {
 }
 
 export function usePagination(
-  pageSize = 10,
   options: UseInfiniteScrollOptions = {},
 ) {
   const { threshold = 300, enabled = true } = options;

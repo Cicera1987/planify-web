@@ -48,7 +48,7 @@ export default function ContactForm({
 
   const { imageState } = useSelector((state: RootState) => state.scheduling);
 
-  const { optionsPackages: packageOptions, isLoading: packagesLoading } =
+  const { optionsPackages: packageOptions } =
     usePackages();
 
   const genderOptions = ["Masculino", "Feminino"];
@@ -57,15 +57,14 @@ export default function ContactForm({
     if (defaultValues) reset(defaultValues);
   }, [defaultValues, reset]);
 
+  const phoneValue = watch("phone");
+
   useEffect(() => {
     const phone = watch("phone");
     if (phone) {
       setValue("phone", formatPhone(phone));
     }
-  }, [watch("phone"), setValue]);
-
-  const isActive = watch("isActive");
-  console.log('isActive: ', isActive);
+  }, [phoneValue, setValue]);
 
   return (
     <div className="contact-page">

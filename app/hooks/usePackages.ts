@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Package } from "../services/packagesService";
 import { getAllPackages } from "../services/packagesService"; // função Axios que vamos criar
 import { useDispatch, useSelector } from "react-redux";

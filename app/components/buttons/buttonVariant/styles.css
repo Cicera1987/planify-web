@@ -24,6 +24,7 @@
   border-radius: var(--space-4px);
   background-color: transparent;
   padding: var(--space-4px);
+  gap: var(--space-8px);
 }
 
 .Button.headerIcon {

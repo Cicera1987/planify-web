@@ -17,7 +17,6 @@ interface HeaderProps {
 }
 
 export default function Header({
-  label,
   nome,
   fotoUrl,
   onBack,

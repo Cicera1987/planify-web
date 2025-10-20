@@ -75,8 +75,6 @@ export function useRegister({
       if (isEditMode && userId) {
         await update(userId, payload);
         toast.success("Cadastro atualizado com sucesso");
-
-        dispatch;
         setCurrentUser({
           id: userId,
           username: payload.username,
