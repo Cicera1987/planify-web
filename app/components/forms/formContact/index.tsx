@@ -64,10 +64,13 @@ export default function ContactForm({
     }
   }, [watch("phone"), setValue]);
 
+  const isActive = watch("isActive");
+  console.log('isActive: ', isActive);
+
   return (
     <div className="contact-page">
       <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
-        <div className="form-fields">
+        <div className="contact-form-fields">
           <div className="image-preview-contact-container">
             {imageState.image || defaultValues?.imageUrl ? (
               <img
@@ -132,8 +135,7 @@ export default function ContactForm({
             error={errors.isActive?.message}
           />
 
-          {(watch("isActive") || !!watch("packageIds")?.length) &&
-            !packagesLoading && (
+          {watch("isActive") && (
               <Input.SelectInput
                 label="Pacote Mensal"
                 value={watch("packageIds")?.[0] ?? null}
@@ -146,7 +148,7 @@ export default function ContactForm({
               />
             )}
         </div>
-        <div className="form-footer">
+        <div className="contact-form-footer">
           <Button.ButtonVariant
             text={loading ? "" : buttonText}
             icon={loading ? <Icon.Loading /> : undefined}

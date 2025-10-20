@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Input from "../../inputs";
 import Button from "../../buttons";
 import Icon from "../../assets/icons";
-import DefaultTag from "../../tags/defaultTag";
 import mask from "@/app/utils/mask";
 
 import { Package, PackageRequest } from "@/app/services/packagesService";
@@ -17,6 +16,7 @@ import {
   deletePackage,
 } from "@/app/services/packagesService";
 import "./styles.css";
+import Tag from "../../tags";
 
 export default function PackagesContent() {
   const { packages, refetch } = usePackages();
@@ -31,6 +31,7 @@ export default function PackagesContent() {
     handleSubmit,
     setValue,
     reset,
+    control,
     formState: { errors },
   } = useForm<PackageRequest>({
     defaultValues: {
@@ -115,7 +116,7 @@ export default function PackagesContent() {
 
   return (
     <div className="pck-container">
-      <DefaultTag
+      <Tag.Default
         id="tag-packages"
         label="Pacotes de serviços"
         items={packages}
@@ -169,26 +170,31 @@ export default function PackagesContent() {
             required
           />
         </div>
+        <Controller
+          name="services"
+          control={control}
+          rules={{
+            validate: (value) =>
+              value && value.length > 0 ? true : "Selecione pelo menos um serviço",
+          }}
+          render={({ field, fieldState }) => (
+            <Input.MultSelectTag
+              options={jobOptions}
+              value={field.value}
+              onChange={(values) => {
+                const newServices = values.map((value) => ({
+                  id: Number(value.id),
+                  quantity: value.quantity,
+                }));
 
-        <Input.MultSelectTag
-          label="Serviços"
-          options={jobOptions}
-          value={services}
-          onChange={(values) =>
-            setValue(
-              "services",
-              values.map((value) => ({
-                id: Number(value.id),
-                quantity: value.quantity,
-              })),
-            )
-          }
-          placeholder="Selecione"
-          error={errors.services?.message}
-          isEditMode={!!editingPackage}
-          required
+                field.onChange(newServices);
+              }}
+              placeholder="Selecione"
+              error={fieldState.error?.message}
+              isEditMode={!!editingPackage}
+            />
+          )}
         />
-
         <Button.ButtonVariant
           type="submit"
           variant="filled"

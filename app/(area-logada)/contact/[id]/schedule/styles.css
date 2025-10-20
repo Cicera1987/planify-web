@@ -24,11 +24,6 @@
   gap: var(--space-8px);
 }
 
-.form-footer {
-  margin-top: auto;
-  padding-top: var(--space-8px);
-}
-
 .schedule-header {
   background-color: var(--foreground);
   padding: var(--space-8px) 0;

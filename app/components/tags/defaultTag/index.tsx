@@ -15,6 +15,7 @@ interface TagProps<T extends TagItemBase> {
   onEdit?: (item: T) => void;
   onDelete?: (id: number) => void;
   editingId?: number | null;
+  formatItem?: (item: T) => string;
 }
 
 export default function DefaultTag<T extends TagItemBase>({
@@ -23,6 +24,7 @@ export default function DefaultTag<T extends TagItemBase>({
   onEdit,
   onDelete,
   editingId,
+  formatItem
 }: TagProps<T>) {
   return (
     <div className="tag-list-container">
@@ -38,7 +40,7 @@ export default function DefaultTag<T extends TagItemBase>({
                 className={`tag-item ${editingId === item.id ? "tag-item--active" : ""}`}
               >
                 <span className="tag-text" onClick={() => onEdit?.(item)}>
-                  {item.name}
+                  {formatItem ? formatItem(item) : item.name}
                 </span>
                 <Button.ButtonIcon
                   onClick={() => onDelete?.(item.id)}

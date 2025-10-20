@@ -12,7 +12,7 @@ interface ItemsTag {
 }
 
 interface MultiSelectTagProps {
-  label: string;
+  label?: string;
   options: { value: string | number; label: string }[];
   value: ItemsTag[];
   onChange: (value: ItemsTag[]) => void;
@@ -35,16 +35,14 @@ export default function MultSelectTag({
   const handleAdd = (item: ItemsTag) => {
     if (!item) return;
 
-    const existingItem = value.find((v) => v.id === item.id);
+    const existingItem = value.find((val) => val.id === item.id);
 
     if (existingItem) {
-      // Se já existe, incrementa a quantidade
-      const newValues = value.map((v) =>
-        v.id === item.id ? { ...v, quantity: v.quantity + 1 } : v,
+      const newValues = value.map((val) =>
+        val.id === item.id ? { ...val, quantity: val.quantity + 1 } : val,
       );
       onChange(newValues);
     } else {
-      // Se não existe, adiciona com quantity 1
       onChange([...value, { ...item, quantity: 1 }]);
     }
   };

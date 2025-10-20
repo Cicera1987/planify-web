@@ -7,7 +7,7 @@ import { useJobs } from "@/app/hooks/useJobs";
 import { Job, JobRequest } from "@/app/services/jobService";
 import Icon from "../../assets/icons";
 import mask from "@/app/utils/mask";
-import DefaultTag from "../../tags/defaultTag";
+import Tag from "../../tags";
 
 export default function JobsContent() {
   const { jobList, addJob, editJob, removeJob, fetchJobs } = useJobs();
@@ -82,7 +82,7 @@ export default function JobsContent() {
 
   return (
     <div className="jobs-container">
-      <DefaultTag
+      <Tag.Default
         id="tag-service"
         label="Procedimentos"
         items={jobList}

@@ -3,31 +3,15 @@
   flex-direction: column;
   width: 100%;
   height: auto;
-  padding: var(--space-8px);
+  
   border-radius: var(--space-8px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  min-height: 200px;
   max-height: 200px;
-}
-
-.scroll-list {
-  flex: 1;
-  overflow-y: auto;
-  max-height: 180px;
-  padding-right: 4px;
-}
-
-.scroll-list::-webkit-scrollbar {
-  width: 3px;
-}
-
-.scroll-list::-webkit-scrollbar-thumb {
-  background-color: var(--primary-2);
-  border-radius: 10px;
 }
 
 .tag-list-label {
   font-size: var(--space-12px);
+  padding: var(--space-12px) var(--space-16px) 0 var(--space-12px);
   font-weight: 500;
   color: var(--neutral-dark);
   margin-bottom: var(--space-16px);
@@ -37,7 +21,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  padding: var(--space-12px);
+  padding: var(--space-12px) var(--space-12px);
   gap: var(--space-8px);
 }
 

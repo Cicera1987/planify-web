@@ -12,7 +12,7 @@
 }
 
 .modal-box {
-  background-color: white;
+  background-color: var(--white);
   border-radius: 1rem;
   padding: 24px;
   width: 100%;
@@ -65,21 +65,21 @@
 }
 
 .cancel-btn {
-  border: 1px solid #ccc;
-  background-color: #f8f8f8;
-  color: #555;
+  border: 1px solid var(--neutral-light);
+  background-color: var(--neutral-4);
+  color: var(--neutral-1);
 }
 
 .cancel-btn:hover {
-  background-color: #eee;
+  background-color: var(--white);
 }
 
 .confirm-btn {
-  background-color: #ef4444;
-  color: white;
+  background-color: var(--btn-danger);
+  color: var(--white);
   border: none;
 }
 
 .confirm-btn:hover {
-  background-color: #dc2626;
+  background-color: var(--btn-danger-hover);
 }

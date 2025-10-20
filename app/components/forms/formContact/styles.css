@@ -1,16 +1,23 @@
 .contact-page {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100vh;
   border-radius: var(--space-8px);
 }
 
 .contact-form {
   display: flex;
-  width: 400px;
+  width: 100%;
+  padding: var(--space-8px) var(--space-16px);
   flex-direction: column;
-  gap: var(--space-4px);
 }
 
+.contact-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12px);
+}
 .contact-error {
   color: var(--error);
   margin-top: var(--space-12px);
@@ -21,7 +28,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
 }
 
 .image-preview-contact {
@@ -29,24 +35,30 @@
   height: 90px;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #ccc;
+  border: 2px solid var(--neutral-4);
 }
 
 .image-placeholder-contact {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background-color: #f0f0f0;
+  background-color: var(--neutral-6);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #888;
+  color: var(--neutral-3);
   font-weight: bold;
   font-size: 18px;
-  border: 2px dashed #ccc;
+  border: 2px dashed var(--neutral-4);
 }
 
 .file-input-contact {
   display: block;
   margin: 0 auto 8px auto;
+}
+
+.contact-form-footer {
+  display: flex;
+  margin-top: auto;
+  margin-top: var(--space-16px);
 }

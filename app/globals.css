@@ -23,6 +23,8 @@
   --neutral-light: #cecece;
   --neutral-dark: #2d2d2d;
   --neutral-danger: #f33060;
+  --btn-danger: #ef4444;
+  --btn-danger-hover: #dc2626;
   --success: #0ce07a;
   --error: #ff0000;
   --warning: #ffd211;
@@ -119,5 +121,36 @@ h2 {
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;
+   display: none;
 }
+
+.scroll-list {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 180px;
+  padding-right: 4px;
+}
+
+.scroll-list::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scroll-list::-webkit-scrollbar-thumb {
+  background-color: var(--primary-2);
+  border-radius: var(--space-8px);
+}
+
+.scroll-box {
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.scroll-box::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+  background-color: var(--primary-2);
+  border-radius: var(--space-8px);
+}
+

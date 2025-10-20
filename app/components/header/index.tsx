@@ -30,15 +30,19 @@ export default function Header({
 
   const titles: Record<string, string> = {
     "/home": "Início",
+    "/profile": "Meu Perfil",
     "/scheduling": "Atendimentos",
     "/schedule": "Agendamento",
     "/dashboard": "Dashboard",
-    "/clients": "Meus Clientes",
-    "/register": "Meu Cadastro",
-    "/profile": "Meu Perfil",
-    "/contact": "Cadastro de Cliente",
     "/jobs": "Cadastro de Serviço",
     "/packages": "Cadastro de Pacotes",
+    "/clients": "Meus Clientes",
+    "/register": "Meu Cadastro",
+    "/contact": "Cadastro de Cliente",
+    "/notification": "Notificações",
+    "/calendar": "Calendário",
+    "/finance": "Financeiro",
+    "reports": "Relatórios",
     "/": "Início",
   };
 

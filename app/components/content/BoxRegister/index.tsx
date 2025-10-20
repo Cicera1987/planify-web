@@ -17,7 +17,7 @@ export default function BoxRegister({ title, children }: BoxProps) {
           </div>
         </div>
 
-        <div className="container-form scrollbar-hide">{children}</div>
+        <div className="container-form scroll-box">{children}</div>
       </div>
     </div>
   );

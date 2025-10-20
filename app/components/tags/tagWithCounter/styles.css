@@ -2,13 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  border: 1px solid #3b82f6;
-  border-radius: 12px;
-  padding: 4px 8px;
-  color: #3b82f6;
-  font-size: 12px;
-  gap: 4px;
+  border: 1px solid var(--primary-2);
+  border-radius: var(--space-12px);
+  padding: var(--space-4px) var(--space-8px);
+  color: var(--primary-2);
+  font-size: var(--space-12px);
+  gap: var(--space-4px);
+  height: var(--space-32px);
 }
 
 .tag-main {
@@ -28,20 +28,20 @@
   justify-content: center;
   font-weight: bold;
   border: none;
-  color: #3b82f6;
+  color: var(--primary-2);
 
-  width: 12px;
-  height: 12px;
+  width: var(--space-12px);
+  height: var(--space-12px);
   cursor: pointer;
 }
 
 .tag-remove {
-  margin-left: 4px;
+  margin-left: var(--space-4px);
   cursor: pointer;
-  color: #ef4444;
+  color: var(--primary-2);
 }
 .tag-label {
-  font-size: 12px;
-  color: #3b82f6;
-  font-weight: 400;
+  font-size: var(--space-12px);
+  color: var(--primary-2);
+  font-weight: var(--font-w-regular);
 }

@@ -64,6 +64,12 @@ export default function Sidebar() {
       label: "Movimento Financeiro",
     },
     {
+      id: "calendar",
+      path: "/calendar",
+      icon: <Icon.Calendar />,
+      label: "Meu calendário",
+    },
+    {
       id: "password",
       path: "/password",
       icon: <Icon.Logout />,

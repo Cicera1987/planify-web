@@ -5,6 +5,14 @@ export interface CalendarTime {
   time: string;
 }
 
+export interface CalendarTimeWithDayId {
+  id?: number;
+  name?: string;
+  dayId: number;
+  timeId: number;
+}
+
+
 export interface CalendarDay {
   id: number;
   userId: number;
@@ -29,9 +37,9 @@ export const getCalendar = async (): Promise<CalendarDay[]> => {
 };
 
 export const createCalendarDay = async (
-  day: CalendarRequestDay,
-): Promise<CalendarDay> => {
-  const res = await api.post<CalendarDay>("/calendar", day);
+  days: CalendarRequestDay[]
+): Promise<CalendarDay[]> => {
+  const res = await api.post<CalendarDay[]>("/calendar", days);
   return res.data;
 };
 
