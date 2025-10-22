@@ -19,7 +19,6 @@ import {
 } from "@/app/store/features/contactsSlice";
 import { usePagination } from "./usePaginatiojn";
 import { AppDispatch, RootState } from "../store/store";
-
 export function useContact(contactId?: number) {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
@@ -43,10 +42,21 @@ export function useContact(contactId?: number) {
       setIsLoadingContactId(true);
       contactApi
         .getContactById(contactId)
-        .then(setContactDataId)
+        .then((contact) => {
+          setContactDataId(contact);
+          dispatch({
+            type: "scheduling/setImageState",
+            payload: {
+              image: contact.imageUrl || "",
+              file: null,
+              provider: "CLOUDINARY",
+              providerUserId: "",
+            },
+          });
+        })
         .finally(() => setIsLoadingContactId(false));
     }
-  }, [isEditMode, contactId]);
+  }, [isEditMode, contactId, dispatch]);
 
   const { observerTarget, currentPage, loadMore, hasMore, reset, setHasMore } =
     usePagination();
@@ -116,9 +126,14 @@ export function useContact(contactId?: number) {
         if (data.email) formData.append("email", data.email);
         if (data.observation) formData.append("observation", data.observation);
         if (data.gender) formData.append("gender", data.gender.toUpperCase());
-        if (imageState.file) formData.append("file", imageState.file);
-        else if (imageState.image?.startsWith("http"))
+        if (imageState.file) {
+          formData.append("file", imageState.file);
+        } else if (imageState.image) {
           formData.append("imageUrl", imageState.image);
+        } else {
+          formData.append("imageUrl", "");
+        }
+
         if (data.packageIds?.length)
           data.packageIds.forEach((id) =>
             formData.append("packageIds", String(id)),

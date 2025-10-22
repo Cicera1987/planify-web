@@ -1,0 +1,185 @@
+.opening-hours-container {
+  width: 100%;
+  max-width: 372px;
+  margin: 0 auto;
+  padding: var(--space-12px);
+  box-sizing: border-box;
+}
+
+.opening-hours-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-12px);
+}
+
+.opening-hours-title {
+  font-size: var(--space-16px);
+  font-weight: 600;
+  color: var(--neutral-dark);
+}
+
+.opening-hours-trigger {
+  cursor: pointer;
+}
+
+.opening-hours-cards {
+  display: flex;
+  gap: var(--space-12px);
+  overflow-x: auto;
+  padding: var(--space-8px) 0;
+  scroll-behavior: smooth;
+}
+
+.opening-hours-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.opening-card {
+  flex-shrink: 0;
+  width: 212px;
+  min-height: 107px;
+  border: 1px solid var(--neutral-4);
+  border-radius: var(--space-12px);
+  padding: var(--space-12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-sizing: border-box;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.opening-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.opening-card-date {
+  font-size: var(--space-14px);
+  font-weight: 600;
+  color: var(--neutral-dark);
+  margin-bottom: var(--space-8px);
+}
+.opening-card-hours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8px);
+  align-items: center;
+}
+.opening-hour-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4px) var(--space-12px);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--primary-3);
+  border: 1px solid var(--primary-3);
+  border-radius: var(--space-12px);
+  user-select: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.opening-hour-tag--selected {
+  background-color: var(--primary-1);
+  border: 1px solid var(--primary-2);
+  transition: all 0.2s ease;
+}
+.opening-hour-extra {
+  font-size: var(--space-12px);
+  font-weight: 600;
+  color: var(--primary-3);
+  cursor: pointer;
+}
+/* === MODAL / POPUP === */
+.opening-hours-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.opening-hours-popup-content {
+  position: relative;
+  background: #fff;
+  border-radius: var(--space-12px);
+  padding: var(--space-16px);
+  height: auto;
+  max-height: 680px;
+  max-width: 379px;
+  width: 90%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.opening-hour-tag--selected:hover {
+  transform: none;
+}
+.opening-hours-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.opening-hours-close:hover {
+  transform: scale(1.2);
+}
+
+/* Animações suaves */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0.7;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .opening-card {
+    width: 212px;
+    min-height: 107px;
+  }
+
+  .opening-hour-tag {
+    min-width: 40px;
+    font-size: var(--space-12px);
+  }
+}
+
+@media (max-width: 480px) {
+  .opening-hours-container {
+    padding: 14px;
+  }
+
+  .opening-card {
+    width: 212px;
+    min-height: 107px;
+  }
+}

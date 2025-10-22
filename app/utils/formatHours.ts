@@ -1,4 +1,4 @@
-const formatHours = (time: string) => {
+const formatHour = (time: string) => {
   if (!time) return "";
   const [hours = "", minutes = ""] = time.split(":");
   const h = hours.padStart(2, "0").slice(0, 2);
@@ -21,4 +21,4 @@ const formatTimeInput = (value: string) => {
   return digits.slice(0, 2) + ":" + digits.slice(2, 4);
 };
 
-export { formatHours, formatTime, isValidTime, formatTimeInput };
+export { formatHour, formatTime, isValidTime, formatTimeInput };

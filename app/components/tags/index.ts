@@ -1,13 +1,12 @@
-import Default from './defaultTag';
-import WithCount from './tagWithCounter';
+import Default from "./defaultTag";
+import WithCount from "./tagWithCounter";
 
 const Tag = Object.assign(
-    {},
-    {
-        Default,
-        WithCount
-
-    },
+  {},
+  {
+    Default,
+    WithCount,
+  },
 );
 
 export default Tag;

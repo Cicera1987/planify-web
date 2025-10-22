@@ -1,9 +1,9 @@
 "use client";
 import { useContact } from "@/app/hooks/useContact";
-import { ScheduleContact } from "@/app/components/schedule";
 import BoxRegister from "@/app/components/content/BoxRegister";
+import { RegisterAttendance } from "@/app/components/registerAttendance";
 
-export default function ScheduleServiceDesktop({
+export default function RegisterAttendanceDesktop({
   contactId,
 }: {
   contactId?: number;
@@ -11,8 +11,8 @@ export default function ScheduleServiceDesktop({
   const { contactDataId } = useContact(contactId);
 
   return (
-    <BoxRegister title="Agendamento">
-      <ScheduleContact contactDataId={contactDataId} />
+    <BoxRegister title="Agendar atendimento">
+      <RegisterAttendance contactDataId={contactDataId} />
     </BoxRegister>
   );
 }

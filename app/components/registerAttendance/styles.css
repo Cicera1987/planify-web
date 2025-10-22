@@ -1,0 +1,120 @@
+.attendance-contact {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 337px;
+  height: 100vh;
+  padding: var(--space-24px);
+  box-sizing: border-box;
+  gap: var(--space-32px);
+  justify-content: space-around;
+  overflow-y: auto;
+}
+
+.session-attendance {
+  border-radius: var(--space-8px);
+}
+
+.session-client-attendance {
+  text-align: left;
+}
+
+.client-name-attendance {
+  font-size: var(--space-14px);
+  font-weight: 500;
+  color: var(--primary-3);
+}
+
+.client-title-attendance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--space-20px);
+  font-weight: 600;
+  color: var(--black);
+  padding: var(--space-20px) 0;
+}
+
+.client-info-attendance {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8px);
+  justify-content: flex-start;
+}
+
+.client-image-attendance {
+  width: 70px;
+  height: 70px;
+  border-radius: var(--space-8px);
+  object-fit: cover;
+  margin-left: var(--space-8px);
+}
+
+.client-description-attendance {
+  display: flex;
+  align-items: center;
+  font-size: var(--space-12px);
+  color: var(--black);
+  font-weight: normal;
+}
+
+.client-gender-attendance {
+  display: flex;
+  align-items: start;
+  padding: var(--space-8px);
+  font-size: 0.95rem;
+  color: var(--neutral-1);
+}
+
+.contact-title-attendance {
+  font-size: var(--space-14px);
+  font-weight: 600;
+  color: var(--black);
+  padding-right: var(--space-8px);
+}
+
+.attendance-footer {
+  display: flex;
+  width: 100%;
+  margin-top: auto;
+  justify-content: center;
+}
+
+.client-package-tag {
+  display: inline-block;
+  max-width: 100%;
+  color: var(--primary-3);
+  font-size: var(--space-12px);
+  font-weight: 500;
+  padding: 4px 12px;
+  border: 1px solid var(--primary-3);
+  border-radius: var(--space-8px);
+  margin-top: var(--space-8px);
+  white-space: nowrap;
+  text-align: center;
+}
+
+.client-package-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.chosen-info {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--space-12px);
+  color: var(--black);
+  justify-content: flex-start;
+}
+
+.chosen-info p {
+  margin: 0;
+  font-weight: 400;
+  color: var(--primary-3);
+}
+
+.chosen-info strong {
+  color: var(--black);
+  font-weight: 500;
+}

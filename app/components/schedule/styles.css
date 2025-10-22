@@ -38,6 +38,7 @@
   height: 70px;
   border-radius: var(--space-8px);
   object-fit: cover;
+  margin-left: var(--space-8px);
 }
 
 .client-phone-schedule {

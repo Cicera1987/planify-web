@@ -20,6 +20,7 @@ interface MultiSelectTagProps {
   required?: boolean;
   error?: string | boolean;
   isEditMode?: boolean;
+  showQuantity?: boolean;
 }
 
 export default function MultSelectTag({
@@ -31,6 +32,7 @@ export default function MultSelectTag({
   required = false,
   error,
   isEditMode = false,
+  showQuantity = true,
 }: MultiSelectTagProps) {
   const handleAdd = (item: ItemsTag) => {
     if (!item) return;
@@ -73,7 +75,7 @@ export default function MultSelectTag({
         <div className="mult-tags-container">
           {value.map((val) => {
             const opt = options.find((option) => option.value === val.id);
-            return (
+            return showQuantity ? (
               <TagWithCounter
                 key={val.id}
                 label={opt?.label || val.label || ""}
@@ -85,10 +87,19 @@ export default function MultSelectTag({
                   handleChangeQuantity(val.id, val.quantity - 1)
                 }
               />
+            ) : (
+              <div key={val.id} className="mult-tag">
+                {opt?.label || val.label || ""}
+                <span
+                  className="mult-tag-remove"
+                  onClick={() => handleRemove(val.id)}
+                >
+                  ×
+                </span>
+              </div>
             );
           })}
         </div>
-
         <div className="mult-select-row">
           <select
             className="mult-select-tag"

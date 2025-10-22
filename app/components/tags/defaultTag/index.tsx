@@ -14,17 +14,19 @@ interface TagProps<T extends TagItemBase> {
   items: T[];
   onEdit?: (item: T) => void;
   onDelete?: (id: number) => void;
+  onClick?: (id: number) => void;
   editingId?: number | null;
   formatItem?: (item: T) => string;
+  selectedId?: number | null;
 }
 
 export default function DefaultTag<T extends TagItemBase>({
   label,
   items,
-  onEdit,
   onDelete,
-  editingId,
-  formatItem
+  onClick,
+  formatItem,
+  selectedId,
 }: TagProps<T>) {
   return (
     <div className="tag-list-container">
@@ -34,20 +36,25 @@ export default function DefaultTag<T extends TagItemBase>({
           <p className="no-tags">Nenhum item cadastrado ainda</p>
         ) : (
           <div className="tag-list">
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className={`tag-item ${editingId === item.id ? "tag-item--active" : ""}`}
-              >
-                <span className="tag-text" onClick={() => onEdit?.(item)}>
-                  {formatItem ? formatItem(item) : item.name}
-                </span>
-                <Button.ButtonIcon
-                  onClick={() => onDelete?.(item.id)}
-                  icon={<Icon.CloseTag />}
-                />
-              </div>
-            ))}
+            {items.map((item) => {
+              const isSelected = selectedId === item.id;
+              return (
+                <div
+                  key={item.id}
+                  className={`tag-item ${isSelected ? "tag-item--selected" : ""}`}
+                >
+                  <span className="tag-text" onClick={() => onClick?.(item.id)}>
+                    {formatItem ? formatItem(item) : item.name}
+                  </span>
+                  {onDelete && (
+                    <Button.ButtonIcon
+                      onClick={() => onDelete(item.id)}
+                      icon={<Icon.CloseTag />}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

@@ -9,6 +9,7 @@ import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { SchedulingPopupStatus } from "@/app/services/schedulingService";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import { useEffect } from "react";
 
 export default function SchedulingDesktop() {
   const {
@@ -17,9 +18,14 @@ export default function SchedulingDesktop() {
     schedulings,
     popupItems,
     isLoading,
+    handleFetch
   } = useScheduling();
 
   const { openPopupId } = useSelector((state: RootState) => state.scheduling);
+
+  useEffect(() => {
+    handleFetch();
+  }, [handleFetch]);
 
   if (isLoading) {
     return (

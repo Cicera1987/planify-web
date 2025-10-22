@@ -13,6 +13,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   onClick?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
+  disabled?: boolean;
 }
 
 export default function ButtonVariant({
@@ -23,12 +24,14 @@ export default function ButtonVariant({
   onClick,
   type = "button",
   className = "",
+  disabled = false,
 }: ButtonProps) {
   return (
     <button
       type={type}
       onClick={onClick}
       className={`Button ${variant} ${className}`}
+      disabled={disabled}
     >
       {icon && <span className="Button-icon">{icon}</span>}
       {headerIcon && <span className="Button-headerIcon">{icon}</span>}

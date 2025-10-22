@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/store/store";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   fetchSchedulings,
   updateSchedulingStatus,
@@ -16,15 +16,18 @@ import Icon from "@/app/components/assets/icons";
 import { toast } from "react-toastify";
 
 export function useScheduling() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch < AppDispatch > ();
   const { schedulings, search, openPopupId, isLoading } = useSelector(
     (state: RootState) => state.scheduling,
   );
 
   const handleFetch = useCallback(() => {
-    if (!search.trim()) return;
-    dispatch(fetchSchedulings(search));
+    dispatch(fetchSchedulings(search.trim()));
   }, [dispatch, search]);
+
+  useEffect(() => {
+    handleFetch();
+  }, [handleFetch]);
 
   const handleStatusChange = useCallback(
     async (id: number, status: SchedulingPopupStatus) => {
@@ -34,11 +37,12 @@ export function useScheduling() {
         ).unwrap();
         toast.success("Status atualizado com sucesso");
         dispatch(setOpenPopupId(null));
+        handleFetch();
       } catch {
         toast.error("Erro ao atualizar status");
       }
     },
-    [dispatch],
+    [dispatch, handleFetch],
   );
 
   const handleTogglePopup = useCallback(
@@ -47,6 +51,7 @@ export function useScheduling() {
     },
     [dispatch, openPopupId],
   );
+
 
   const popupItems = useMemo(
     () =>

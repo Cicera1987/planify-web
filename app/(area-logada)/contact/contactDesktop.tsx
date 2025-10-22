@@ -14,16 +14,16 @@ export default function ContactDesktop({ contactId }: { contactId?: number }) {
     handleLocalImageChange,
   } = useContact(contactId);
 
-return (
-  <BoxRegister title="Meu Cliente">
-    <ContactForm
-      key={contactId}
-      onSubmit={handleSave}
-      loading={isLoading}
-      defaultValues={defaultValues}
-      buttonText={isEditMode ? "Editar" : "Enviar"}
-      onImageChange={handleLocalImageChange}
-    />
-  </BoxRegister>
-);
+  return (
+    <BoxRegister title="Meu Cliente">
+      <ContactForm
+        key={contactId}
+        onSubmit={handleSave}
+        loading={isLoading}
+        defaultValues={defaultValues}
+        buttonText={isEditMode ? "Editar" : "Enviar"}
+        onImageChange={handleLocalImageChange}
+      />
+    </BoxRegister>
+  );
 }

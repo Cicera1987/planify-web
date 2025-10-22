@@ -175,7 +175,9 @@ export default function PackagesContent() {
           control={control}
           rules={{
             validate: (value) =>
-              value && value.length > 0 ? true : "Selecione pelo menos um serviço",
+              value && value.length > 0
+                ? true
+                : "Selecione pelo menos um serviço",
           }}
           render={({ field, fieldState }) => (
             <Input.MultSelectTag

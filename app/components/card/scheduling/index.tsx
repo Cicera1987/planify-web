@@ -6,8 +6,8 @@ import avatar from "@/app/components/assets/images/avatar.png";
 import "./styles.css";
 import { Scheduling } from "@/app/services/schedulingService";
 import Icon from "../../assets/icons";
-import { formatDate } from "@/app/utils/formatDate";
-import { formatHours } from "@/app/utils/formatHours";
+import { formatDate } from "@/app/utils/formatDates";
+import { formatHour } from "@/app/utils/formatHours";
 import { formatPhone } from "@/app/utils/formatPhone";
 
 type DeepPartial<T> = {
@@ -30,14 +30,13 @@ export default function SchedulingCard({
   return (
     <div className="scheduling-card">
       <div className="scheduling-image">
-        <Image
+        <img
           src={
             data.contact?.imageUrl && data.contact.imageUrl.startsWith("http")
               ? data.contact.imageUrl
               : avatar.src
           }
           alt={contact?.name || "Avatar"}
-          fill
           className="scheduling-img"
         />
       </div>
@@ -57,14 +56,12 @@ export default function SchedulingCard({
 
           <div className="header-name">
             <p className="scheduling-title">
-              E-mail: <span className="scheduling-email">{contact?.email}</span>
-            </p>
-            <p className="scheduling-title">
               Horário:{" "}
               <span className="scheduling-text">
-                {formatHours(calendarTime?.time ?? "")}
+                {formatHour(calendarTime?.time ?? "")}
               </span>
             </p>
+            <p className="scheduling-status">{status}</p>
           </div>
 
           <div className="header-name">
@@ -74,7 +71,7 @@ export default function SchedulingCard({
                 {formatPhone(contact?.phone || "")}
               </span>
             </p>
-            <p className="scheduling-status">{status}</p>
+            
           </div>
         </div>
       </div>

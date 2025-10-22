@@ -41,7 +41,9 @@ export default function Header({
     "/notification": "Notificações",
     "/calendar": "Calendário",
     "/finance": "Financeiro",
-    "reports": "Relatórios",
+    "/reports": "Relatórios",
+    "/attendance": "Agendamento",
+
     "/": "Início",
   };
 
@@ -50,6 +52,7 @@ export default function Header({
     if (/^\/contact\/\d+\/edit$/.test(path)) return "Editar Cliente";
     if (/^\/scheduling\/\d+\/edit$/.test(path)) return "Editar agendamento";
     if (/^\/contact\/\d+\/schedule$/.test(path)) return "Agendamento";
+    if (/^\/contact\/\d+\/attendance$/.test(path)) return "Agendamento";
     if (/^\/jobs\/\d+\/edit$/.test(path)) return "Editar Serviço";
     if (/^\/package\/\d+\/edit$/.test(path)) return "Editar Pacote de serviço";
 

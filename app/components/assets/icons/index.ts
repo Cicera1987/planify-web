@@ -52,6 +52,7 @@ import DateIcon from "./dateIcon";
 import TimeIcon from "./timeIcon";
 import CloseTag from "./closeTag";
 import ArrowLeft from "./arrowLeft";
+import infoSchedule from "./infoSchedule";
 
 const Icon = Object.assign(
   {},
@@ -110,6 +111,7 @@ const Icon = Object.assign(
     TimeIcon,
     CloseTag,
     ArrowLeft,
+    infoSchedule,
   },
 );
 

@@ -121,7 +121,7 @@ h2 {
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-   display: none;
+  display: none;
 }
 
 .scroll-list {
@@ -153,4 +153,3 @@ h2 {
   background-color: var(--primary-2);
   border-radius: var(--space-8px);
 }
-

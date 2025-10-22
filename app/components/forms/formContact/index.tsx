@@ -48,8 +48,7 @@ export default function ContactForm({
 
   const { imageState } = useSelector((state: RootState) => state.scheduling);
 
-  const { optionsPackages: packageOptions } =
-    usePackages();
+  const { optionsPackages: packageOptions } = usePackages();
 
   const genderOptions = ["Masculino", "Feminino"];
 
@@ -135,17 +134,17 @@ export default function ContactForm({
           />
 
           {watch("isActive") && (
-              <Input.SelectInput
-                label="Pacote Mensal"
-                value={watch("packageIds")?.[0] ?? null}
-                onChange={(value) =>
-                  setValue("packageIds", value ? [Number(value)] : [])
-                }
-                options={packageOptions}
-                placeholder="Selecione..."
-                error={errors.packageIds?.message}
-              />
-            )}
+            <Input.SelectInput
+              label="Pacote Mensal"
+              value={watch("packageIds")?.[0] ?? null}
+              onChange={(value) =>
+                setValue("packageIds", value ? [Number(value)] : [])
+              }
+              options={packageOptions}
+              placeholder="Selecione..."
+              error={errors.packageIds?.message}
+            />
+          )}
         </div>
         <div className="contact-form-footer">
           <Button.ButtonVariant

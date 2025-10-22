@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   height: auto;
-  
+
   border-radius: var(--space-8px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   max-height: 200px;
@@ -52,4 +52,10 @@
 
 .tag-item--active .tag-text {
   font-weight: 500;
+}
+
+.tag-item--selected {
+  background-color: var(--primary-1);
+  border: 1px solid var(--primary-2);
+  transition: all 0.2s ease;
 }

@@ -7,9 +7,7 @@ interface UseInfiniteScrollOptions {
   enabled?: boolean;
 }
 
-export function usePagination(
-  options: UseInfiniteScrollOptions = {},
-) {
+export function usePagination(options: UseInfiniteScrollOptions = {}) {
   const { threshold = 300, enabled = true } = options;
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);

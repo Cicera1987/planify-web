@@ -3,6 +3,7 @@ import React from "react";
 import Icon from "../assets/icons";
 import Button from "../buttons";
 import "./styles.css";
+import { useRouter } from "next/navigation";
 
 interface ContactData {
   id: number;
@@ -20,6 +21,7 @@ interface ContactContainerProps {
 export const ScheduleContact: React.FC<ContactContainerProps> = ({
   contactDataId,
 }) => {
+  const router = useRouter();
   const openWhatsApp = () => {
     if (contactDataId?.phone) {
       window.open(`https://wa.me/${contactDataId.phone}`, "_blank");
@@ -64,11 +66,15 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
             type="button"
             variant="info"
             text="Informações"
+            onClick={() => router.push(`/contact/${contactDataId?.id}/edit`)}
           />
           <Button.ButtonVariant
             type="button"
             variant="filled"
             text="Agendamento"
+            onClick={() =>
+              router.push(`/contact/${contactDataId?.id}/attendance`)
+            }
           />
         </div>
 
@@ -92,7 +98,12 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
           <div className="position-data">
             <Icon.TimeIcon /> <span>22 de Dezembro</span>
           </div>
-          <Button.ButtonIcon icon={<Icon.Follow />} />
+          <Button.ButtonIcon
+            icon={<Icon.Follow />}
+            onClick={() =>
+              router.push(`/contact/${contactDataId?.id}/attendance`)
+            }
+          />
         </div>
 
         <div className="appointment-details">
