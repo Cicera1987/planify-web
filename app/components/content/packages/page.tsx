@@ -125,7 +125,7 @@ export default function PackagesContent() {
           if (pkg) handleEdit(pkg);
         }}
         onDelete={handleDelete}
-        editingId={editingPackage?.id}
+        selectedId={editingPackage?.id}
       />
 
       <form onSubmit={handleSubmit(onSubmit)} className="pck-form">

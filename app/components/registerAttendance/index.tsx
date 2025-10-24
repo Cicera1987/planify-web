@@ -76,13 +76,13 @@ export const RegisterAttendance: React.FC<RegisterAttendanceProps> = ({ contactD
   useEffect(() => {
     (async () => {
       try {
-        const [calendarData] = await Promise.all([getCalendar(), fetchJobs()])
-        dispatch(setCalendarList(calendarData))
+        const [calendarData] = await Promise.all([getCalendar(), fetchJobs()]);
+        dispatch(setCalendarList(calendarData));
       } catch {
-        toast.error("Erro ao carregar dados")
+        toast.error("Erro ao carregar dados");
       }
-    })()
-  }, [dispatch, fetchJobs])
+    })();
+  }, [dispatch, fetchJobs]);
 
   const onSubmit = async (data: { services: { id: number }[] }) => {
     if (!selectedTime) return toast.error("Selecione uma data e horário para o agendamento.")

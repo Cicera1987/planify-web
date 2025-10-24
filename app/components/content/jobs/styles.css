@@ -34,6 +34,7 @@
   flex-direction: column;
   gap: var(--space-16px);
   width: 100%;
+  height: 100vh;
   padding: var(--space-16px) var(--space-8px);
   font-size: var(--space-12px);
 }
@@ -47,4 +48,11 @@
 .form-number > * {
   flex: 1;
   min-width: 0;
+}
+
+.form-footer-spacer {
+  display: flex;
+  width: 100%;
+  margin-top: auto;
+  justify-content: center;
 }

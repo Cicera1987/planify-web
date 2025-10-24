@@ -12,7 +12,7 @@ import Tag from "../../tags";
 export default function JobsContent() {
   const { jobList, addJob, editJob, removeJob, fetchJobs } = useJobs();
 
-  const { formatCurrency, formatCurrencyInput, parseCurrency } = mask();
+  const { formatCurrency, parseCurrency } = mask();
 
   const [editingJob, setEditingJob] = useState<Job | null>(null);
 
@@ -43,8 +43,10 @@ export default function JobsContent() {
     if (editingJob) {
       await editJob(editingJob.id, parsedData);
       setEditingJob(null);
+      clearForm();
     } else {
       await addJob(parsedData);
+      reset();
     }
     reset();
   };
@@ -91,7 +93,7 @@ export default function JobsContent() {
           if (job) handleEdit(job);
         }}
         onDelete={handleDelete}
-        editingId={editingJob?.id}
+        selectedId={editingJob?.id} 
       />
 
       <form onSubmit={handleSubmit(onSubmit)} className="procedure-form">
@@ -124,9 +126,10 @@ export default function JobsContent() {
             {...register("price", { required: "Campo obrigatório" })}
             error={errors.price?.message}
             required
-            onChange={(e) =>
-              formatCurrencyInput<JobRequest>(e, setValue, "price")
-            }
+            onChange={(e) => {
+              const onlyNumbers = e.target.value.replace(/\D/g, "");
+              setValue("price", onlyNumbers);
+            }}
           />
 
           <Input.InputForm
@@ -147,11 +150,13 @@ export default function JobsContent() {
           {...register("description")}
         />
 
+<div className="form-footer-spacer">
         <Button.ButtonVariant
           type="submit"
           variant="filled"
           text={editingJob ? "Editar" : "Cadastrar"}
         />
+</div>
       </form>
     </div>
   );

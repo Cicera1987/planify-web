@@ -23,6 +23,7 @@ interface TagProps<T extends TagItemBase> {
 export default function DefaultTag<T extends TagItemBase>({
   label,
   items,
+  onEdit,
   onDelete,
   onClick,
   formatItem,
@@ -43,7 +44,7 @@ export default function DefaultTag<T extends TagItemBase>({
                   key={item.id}
                   className={`tag-item ${isSelected ? "tag-item--selected" : ""}`}
                 >
-                  <span className="tag-text" onClick={() => onClick?.(item.id)}>
+                  <span className="tag-text" onClick={()=> onEdit ? onEdit(item) : onClick?.(item.id)}>
                     {formatItem ? formatItem(item) : item.name}
                   </span>
                   {onDelete && (

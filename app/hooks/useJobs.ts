@@ -10,6 +10,7 @@ import {
   JobRequest,
 } from "@/app/services/jobService";
 import { setJobList } from "../store/features/jobsSlice";
+import { useCallback } from "react";
 
 export const useJobs = () => {
   const dispatch = useDispatch();
@@ -35,10 +36,10 @@ export const useJobs = () => {
     dispatch(setJobList(jobs));
   };
 
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     const jobs = await getAllJobs();
     dispatch(setJobList(jobs));
-  };
+  }, [dispatch]); 
 
   return { jobList, addJob, editJob, removeJob, loadJobs, fetchJobs };
 };

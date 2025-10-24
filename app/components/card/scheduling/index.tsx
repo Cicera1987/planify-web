@@ -42,9 +42,9 @@ export default function SchedulingCard({
       </div>
 
       <div className="scheduling-info">
-        <button className="scheduling-trigger" onClick={onTriggerClick}>
+        <div className="scheduling-trigger" onClick={onTriggerClick}>
           {triggerIcon}
-        </button>
+        </div>
 
         <div className="scheduling-text">
           <div className="header-name">
