@@ -61,7 +61,7 @@ export default function RegisterForm({
     if (phone) {
       setValue("phone", formatPhone(phone));
     }
-  }, [watch("phone"), setValue]);
+  },[watch("phone"), setValue]);
 
   return (
     <div className="use-page">

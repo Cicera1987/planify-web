@@ -9,6 +9,7 @@
   width: 100%;
   max-width: 676px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .scheduling-image {

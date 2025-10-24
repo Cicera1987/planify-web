@@ -1,5 +1,7 @@
 import { api } from "./api";
 import { Contact } from "./contactService";
+import { Job } from "./jobService";
+import { Package } from "./packagesService";
 
 export type SchedulingStatus =
   | "AGENDADO"
@@ -55,8 +57,8 @@ export interface Scheduling {
   contact: Contact;
   observation: string | null;
   createdAt: string | null;
-  packageId: number | null;
-  serviceId: number[];
+  packageInfo: Package | null; 
+  services: Job[];
   status: SchedulingStatus;
 }
 
@@ -74,6 +76,7 @@ export interface SchedulingStatusRequest {
 
 export const getActiveSchedulings = async (): Promise<Scheduling[]> => {
   const res = await api.get<Scheduling[]>("/scheduling/active");
+  console.log('res: ', res.data);
   return res.data;
 };
 

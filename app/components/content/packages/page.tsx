@@ -43,7 +43,6 @@ export default function PackagesContent() {
     },
   });
 
-  const services = watch("services") || [];
   const totalPrice = watch("totalPrice");
 
   const jobOptions = jobList.map((job) => ({
@@ -197,11 +196,13 @@ export default function PackagesContent() {
             />
           )}
         />
+        <div className="pck-form-footer-spacer" >
         <Button.ButtonVariant
           type="submit"
           variant="filled"
           text={editingPackage ? "Editar" : "Cadastrar"}
         />
+        </div>
       </form>
     </div>
   );

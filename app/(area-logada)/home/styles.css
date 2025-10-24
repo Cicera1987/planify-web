@@ -36,7 +36,7 @@
 
 .scheduling-mobile {
   display: flex;
-  height: 100%;
+  width: 100%;
   flex-direction: column;
   gap: var(--space-16px);
   padding: var(--space-16px);
@@ -57,10 +57,12 @@
 .mobile-cards-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   gap: var(--space-16px, 16px);
-  max-height: 40vh;
+  height: 100%;
+  max-height: 58vh;
   overflow-y: auto;
-  padding-right: var(--space-8px);
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--gray-300, #8fb5ef) transparent;

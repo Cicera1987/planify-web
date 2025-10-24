@@ -1,7 +1,6 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import Image from "next/image";
 import avatar from "@/app/components/assets/images/avatar.png";
 import "./styles.css";
 import { Scheduling } from "@/app/services/schedulingService";
@@ -18,17 +17,20 @@ interface SchedulingCardProps {
   triggerIcon: ReactNode;
   onTriggerClick?: () => void;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function SchedulingCard({
   data,
   triggerIcon,
   onTriggerClick,
-}: SchedulingCardProps) {
-  const { contact, calendarTime, calendarDay, status } = data;
+  className,
+  onClick,
+}: SchedulingCardProps & { onClick?: () => void }) {
+  const { contact, calendarTime, calendarDay, status, services } = data;
 
   return (
-    <div className="scheduling-card">
+    <div className={`scheduling-card ${className || ""}`} onClick={onClick}>
       <div className="scheduling-image">
         <img
           src={
@@ -42,7 +44,13 @@ export default function SchedulingCard({
       </div>
 
       <div className="scheduling-info">
-        <div className="scheduling-trigger" onClick={onTriggerClick}>
+        <div className="scheduling-trigger" 
+        onClick={(e)=>{
+          e.stopPropagation();
+          if(onTriggerClick){
+            onTriggerClick();
+          }
+        }}>
           {triggerIcon}
         </div>
 
@@ -71,7 +79,13 @@ export default function SchedulingCard({
                 {formatPhone(contact?.phone || "")}
               </span>
             </p>
-            
+            <p className="scheduling-title">
+              <span className="scheduling-text">
+                {services && services.length > 0
+                  ? services.map((srv) => srv?.name).join(", ")
+                  : ""}
+              </span>
+            </p>
           </div>
         </div>
       </div>

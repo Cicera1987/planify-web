@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Input from "../../inputs";
 import Button from "../../buttons";
@@ -149,14 +149,13 @@ export default function JobsContent() {
           placeholder="Faça uma breve descrição"
           {...register("description")}
         />
-
-<div className="form-footer-spacer">
+      <div className="form-footer-spacer">
         <Button.ButtonVariant
           type="submit"
           variant="filled"
           text={editingJob ? "Editar" : "Cadastrar"}
         />
-</div>
+      </div>
       </form>
     </div>
   );

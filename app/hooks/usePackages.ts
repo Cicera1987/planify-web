@@ -27,7 +27,7 @@ export function usePackages() {
 
   useEffect(() => {
     fetchPackages();
-  }, []);
+  },[]);
 
   const isLoading = async () => {
     const packages = await getAllPackages();

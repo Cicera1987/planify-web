@@ -47,3 +47,10 @@
   flex: 1;
   min-width: 0;
 }
+
+.pck-form-footer-spacer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--space-36px);
+}

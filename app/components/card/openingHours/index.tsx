@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useRef, useState, MouseEvent, ReactNode, ReactElement } from "react"
+import React, { useRef, useState, MouseEvent, ReactNode } from "react"
 import "./styles.css"
 import Icon from "../../assets/icons"
 import Button from "../../buttons"

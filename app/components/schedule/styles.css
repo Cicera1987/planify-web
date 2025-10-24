@@ -20,7 +20,7 @@
 }
 
 .client-name-schedule {
-  font-size: 1.5rem;
+  font-size: var(--space-24px);
   font-weight: 500;
   color: var(--neutral-1);
   padding: 0 var(--space-8px);
@@ -53,7 +53,7 @@
   display: flex;
   align-items: start;
   padding: var(--space-8px);
-  font-size: 0.95rem;
+  font-size: var(--space-16px);
   color: var(--neutral-1);
 }
 
@@ -68,7 +68,6 @@
   border-radius: var(--space-8px);
   display: flex;
   flex-direction: column;
-  gap: var(--space-12px);
   padding: var(--space-12px);
 }
 .appointment-header {
@@ -76,7 +75,7 @@
   align-items: center;
   justify-content: space-between;
   color: var(--neutral-1);
-  font-size: 1rem;
+  font-size: var(--space-16px);
 
   svg:hover {
     cursor: pointer;
@@ -91,10 +90,20 @@
   align-items: center;
   gap: var(--space-8px);
 }
+
+.position-data span {
+  font-size: var(--space-16px);
+  font-weight: 400;
+}
 .appointment-details {
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: var(--neutral-1);
-  font-size: 1rem;
+  font-size: var(--space-16px);
+}
+.appointment-item{
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12px);
 }

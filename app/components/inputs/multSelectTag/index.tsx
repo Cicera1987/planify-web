@@ -31,7 +31,6 @@ export default function MultSelectTag({
   placeholder = "Selecionar",
   required = false,
   error,
-  isEditMode = false,
   showQuantity = true,
 }: MultiSelectTagProps) {
   const handleAdd = (item: ItemsTag) => {

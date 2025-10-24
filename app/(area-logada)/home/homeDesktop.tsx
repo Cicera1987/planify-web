@@ -27,8 +27,8 @@ export default function HomeDesktop() {
     (state: RootState) => state.scheduling,
   );
   const router = useRouter();
-
   const listToRender = search.trim() ? schedulings : schedulings;
+
 
   if (isLoading) {
     return (
@@ -38,7 +38,7 @@ export default function HomeDesktop() {
     );
   }
   return (
-    <div className="main-container scrollbar-hide">
+    <div className="main-container scroll-box">
       <div className="flow-container">
         <div className="buttons-container">
           <Button.ButtonIcon
@@ -64,6 +64,7 @@ export default function HomeDesktop() {
             key={scheduling.id}
             data={scheduling}
             className="scheduling-card"
+            onClick={() => router.push(`/contact/${scheduling.contact.id}/schedule`)}
             triggerIcon={
               <StatusPopup
                 trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}

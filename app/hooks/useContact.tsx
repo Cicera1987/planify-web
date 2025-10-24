@@ -87,8 +87,7 @@ export function useContact(contactId?: number) {
       else if (action === "schedule")
         router.push(`/contact/${contact.id}/schedule`);
       else if (action === "delete") handleDelete(contact.id);
-    },
-    [router],
+    },[router],
   );
 
   const handleDelete = useCallback(

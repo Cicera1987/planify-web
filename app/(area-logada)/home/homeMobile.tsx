@@ -60,6 +60,7 @@ export default function HomeMobile() {
           <SchedulingCard
             key={scheduling.id}
             data={scheduling}
+            onClick={() => router.push(`/contact/${scheduling.contact.id}/schedule`)}
             triggerIcon={
               <StatusPopup
                 trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}

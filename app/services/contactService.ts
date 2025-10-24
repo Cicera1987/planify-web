@@ -46,6 +46,7 @@ export const getContacts = async (
 
 export const getContactById = async (id: number): Promise<Contact> => {
   const res = await api.get<Contact>(`/contacts/${id}`);
+  console.log('res: ', res.data);
   return res.data;
 };
 

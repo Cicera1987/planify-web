@@ -94,7 +94,6 @@
   color: var(--primary-3);
   cursor: pointer;
 }
-/* === MODAL / POPUP === */
 .opening-hours-popup {
   position: fixed;
   inset: 0;
@@ -175,7 +174,7 @@
 
 @media (max-width: 480px) {
   .opening-hours-container {
-    padding: 14px;
+    padding: 0 var(--space-8px);
   }
 
   .opening-card {
