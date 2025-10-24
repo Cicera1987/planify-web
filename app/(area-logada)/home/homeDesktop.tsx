@@ -63,7 +63,7 @@ export default function HomeDesktop() {
           <SchedulingCard
             key={scheduling.id}
             data={scheduling}
-            className="scheduling-card"
+            className="scheduling-card-home"
             onClick={() => router.push(`/contact/${scheduling.contact.id}/schedule`)}
             triggerIcon={
               <StatusPopup
