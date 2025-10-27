@@ -34,7 +34,7 @@ export default function DefaultTag<T extends TagItemBase>({
       {label && <h3 className="tag-list-label">{label}</h3>}
       <div className="scroll-list">
         {items.length === 0 ? (
-          <p className="no-tags">Nenhum item cadastrado ainda</p>
+          <p className="no-tags">Selecione o dia para ver horários disponíveis</p>
         ) : (
           <div className="tag-list">
             {items.map((item) => {

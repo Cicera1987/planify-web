@@ -24,7 +24,6 @@
   font-size: var(--space-12px);
   gap: var(--space-12px);
   width: 100%;
-  flex: 1;
 }
 
 .calendar-events {
