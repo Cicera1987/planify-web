@@ -9,6 +9,8 @@ import "./styles.css";
 import { usePackages } from "@/app/hooks/usePackages";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import Image from "next/image";
+import { externalImageLoader } from "@/app/utils/externalImageLoader";
 
 interface ContactFormInputs {
   name: string;
@@ -71,8 +73,9 @@ export default function ContactForm({
         <div className="contact-form-fields">
           <div className="image-preview-contact-container">
             {imageState.image || defaultValues?.imageUrl ? (
-              <img
-                src={imageState.image || defaultValues?.imageUrl}
+              <Image
+                loader={externalImageLoader}
+                src={imageState.image || defaultValues?.imageUrl || ""}
                 alt="Preview"
                 className="image-preview-contact"
               />

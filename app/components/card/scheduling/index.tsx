@@ -8,6 +8,8 @@ import Icon from "../../assets/icons";
 import { formatDate } from "@/app/utils/formatDates";
 import { formatHour } from "@/app/utils/formatHours";
 import { formatPhone } from "@/app/utils/formatPhone";
+import Image from "next/image";
+import { externalImageLoader } from "@/app/utils/externalImageLoader";
 
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
@@ -32,12 +34,15 @@ export default function SchedulingCard({
   return (
     <div className={`scheduling-card ${className || ""}`} onClick={onClick}>
       <div className="scheduling-image">
-        <img
+        <Image
+          loader={externalImageLoader}
           src={
             data.contact?.imageUrl && data.contact.imageUrl.startsWith("http")
               ? data.contact.imageUrl
               : avatar.src
           }
+          width={60}
+          height={60}
           alt={contact?.name || "Avatar"}
           className="scheduling-img"
         />

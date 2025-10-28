@@ -24,6 +24,7 @@ import CalendarContent from "../content/calendar/page"
 
 import "./styles.css"
 import Image from "next/image"
+import { externalImageLoader } from "@/app/utils/externalImageLoader"
 
 interface ItemsTag {
   id: string | number
@@ -123,6 +124,7 @@ export const RegisterAttendance: React.FC<RegisterAttendanceProps> = ({ contactD
         <div className="client-info-attendance">
           {contactDataId?.imageUrl && (
             <Image
+              loader={externalImageLoader}
               src={contactDataId.imageUrl || "/placeholder.svg"}
               alt={contactDataId.name}
               className="client-image-attendance"

@@ -9,6 +9,7 @@ import { formatDate } from "@/app/utils/formatDates";
 import { formatHour } from "@/app/utils/formatHours";
 import { Job } from "@/app/services/jobService";
 import Image from "next/image";
+import { externalImageLoader } from "@/app/utils/externalImageLoader";
 
 interface ContactData {
   id: number;
@@ -66,6 +67,7 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
         <div className="client-info-schedule">
           {contactDataId?.imageUrl && (
             <Image
+              loader={externalImageLoader}
               src={contactDataId.imageUrl}
               alt={contactDataId.name}
               className="client-image-schedule"
