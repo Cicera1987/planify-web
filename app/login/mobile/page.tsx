@@ -2,16 +2,19 @@
 import React from "react";
 import LoginForm from "@/app/components/forms/formLogin";
 import { useAuth } from "@/app/hooks/useAuth";
+import Image from "next/image";
 
 export default function MobileLogin() {
   const { login } = useAuth();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-      <img
+      <Image
         src="/images/logo.png"
         alt="Logo Planify"
         className="w-24 sm:w-28 mb-4"
+        width={80}
+        height={80}
       />
       <h1
         style={{ color: "var(--primary-3)" }}

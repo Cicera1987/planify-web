@@ -5,6 +5,7 @@ import "./styles.css";
 
 import LoginForm from "@/app/components/forms/formLogin";
 import { useAuth } from "@/app/hooks/useAuth";
+import Image from "next/image";
 
 export default function DesktopLogin() {
   const { login } = useAuth();
@@ -14,10 +15,12 @@ export default function DesktopLogin() {
       <div className="login-background-dark"></div>
       <div className="login-background-light">
         <div className="login-light-header">
-          <img
+          <Image
             src="/images/logo.png"
             alt="Logo Planify"
             className="login-logo"
+            width={40}
+            height={40}
           />
           <h1 className="login-app-title">Planify</h1>
         </div>

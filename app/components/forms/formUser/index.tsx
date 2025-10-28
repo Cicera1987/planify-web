@@ -56,12 +56,13 @@ export default function RegisterForm({
     if (defaultValues) reset(defaultValues);
   }, [defaultValues, reset]);
 
+  const phone = watch("phone");
   useEffect(() => {
-    const phone = watch("phone");
+
     if (phone) {
       setValue("phone", formatPhone(phone));
     }
-  },[watch("phone"), setValue]);
+  },[phone, setValue]);
 
   return (
     <div className="use-page">

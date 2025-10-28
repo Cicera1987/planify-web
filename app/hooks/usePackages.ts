@@ -27,6 +27,7 @@ export function usePackages() {
 
   useEffect(() => {
     fetchPackages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const isLoading = async () => {

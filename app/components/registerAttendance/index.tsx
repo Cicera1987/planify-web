@@ -23,6 +23,7 @@ import OpeningHours from "../card/openingHours"
 import CalendarContent from "../content/calendar/page"
 
 import "./styles.css"
+import Image from "next/image"
 
 interface ItemsTag {
   id: string | number
@@ -121,10 +122,12 @@ export const RegisterAttendance: React.FC<RegisterAttendanceProps> = ({ contactD
 
         <div className="client-info-attendance">
           {contactDataId?.imageUrl && (
-            <img
+            <Image
               src={contactDataId.imageUrl || "/placeholder.svg"}
               alt={contactDataId.name}
               className="client-image-attendance"
+              width={70}
+              height={70}
             />
           )}
           <div>

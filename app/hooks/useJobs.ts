@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 
 import {
-  Job,
   createJob,
   updateJob,
   deleteJob,

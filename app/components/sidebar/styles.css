@@ -4,37 +4,92 @@
   padding: var(--space-16px) 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-32px);
+  gap: var(--space-20px);
   font-family: var(--font-roboto);
   height: 100vh;
+  height: 100dvh;
+  left: 0;
+  top: 0;
+  z-index: 3;
 }
 
-.MenuSidebarScroll {
-  height: 100%;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.MenuSidebarScroll::-webkit-scrollbar {
-  display: none;
-}
 .MenuSidebar-title {
   margin-left: var(--space-44px);
   font-size: var(--space-32px);
   font-weight: var(--font-w-bold);
   color: var(--primary-3);
+  flex-shrink: 0;
+}
+
+.MenuSidebarScroll {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .MenuSidebar-routeButtons {
   display: flex;
   flex-direction: column;
   gap: var(--space-8px);
-  margin-bottom: var(--space-64px);
+  overflow-y: auto;
+  flex: 1;
+  padding-bottom: var(--space-12px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-2) transparent;
+}
+
+.MenuSidebar-routeButtons::-webkit-scrollbar {
+  width: 4px;
+}
+
+.MenuSidebar-routeButtons::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.MenuSidebar-routeButtons::-webkit-scrollbar-thumb {
+  background-color: var(--primary-2);
+  border-radius: var(--space-4px);
 }
 
 .MenuSidebar-actionButtons {
   display: flex;
   flex-direction: column;
   gap: var(--space-8px);
+  flex-shrink: 0;
+  border-top: 1px solid var(--neutral-4);
+  padding-top: var(--space-16px);
+}
+
+@media (max-width: 768px) {
+  .MenuSidebar {
+    width: 280px;
+    padding: var(--space-12px) 0;
+    gap: var(--space-16px);
+  }
+
+  .MenuSidebar-title {
+    margin-left: var(--space-24px);
+    font-size: var(--space-24px);
+  }
+
+  .MenuSidebar-routeButtons,
+  .MenuSidebar-actionButtons {
+    gap: var(--space-4px);
+  }
+
+  .MenuSidebar-actionButtons {
+    padding-top: var(--space-12px);
+  }
+}
+
+@media (max-width: 480px) {
+  .MenuSidebar {
+    width: 260px;
+  }
+
+  .MenuSidebar-title {
+    margin-left: var(--space-16px);
+  }
 }

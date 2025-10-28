@@ -8,6 +8,7 @@ import { useScheduling } from "@/app/hooks/useScheduling";
 import { formatDate } from "@/app/utils/formatDates";
 import { formatHour } from "@/app/utils/formatHours";
 import { Job } from "@/app/services/jobService";
+import Image from "next/image";
 
 interface ContactData {
   id: number;
@@ -64,10 +65,12 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
 
         <div className="client-info-schedule">
           {contactDataId?.imageUrl && (
-            <img
+            <Image
               src={contactDataId.imageUrl}
               alt={contactDataId.name}
               className="client-image-schedule"
+              width={70}
+              height={70}   
             />
           )}
           <span className="client-phone-schedule" onClick={openWhatsApp}>

@@ -11,6 +11,7 @@ import {
 import {
   SchedulingPopupStatus,
   SchedulingPopupStatusLabels,
+  deleteScheduling,
 } from "@/app/services/schedulingService";
 import Icon from "@/app/components/assets/icons";
 import { toast } from "react-toastify";
@@ -32,10 +33,14 @@ export function useScheduling() {
   const handleStatusChange = useCallback(
     async (id: number, status: SchedulingPopupStatus) => {
       try {
-        await dispatch(
-          updateSchedulingStatus({ id, newStatus: status }),
-        ).unwrap();
-        toast.success("Status atualizado com sucesso");
+        if (status === "CANCELADO") {
+          await deleteScheduling(id);
+          toast.info("Atendimento cancelado e removido");
+        } else {
+          await dispatch(updateSchedulingStatus({ id, newStatus: status })).unwrap();
+          toast.success("Status atualizado com sucesso");
+        }
+
         dispatch(setOpenPopupId(null));
         handleFetch();
       } catch {
@@ -52,6 +57,12 @@ export function useScheduling() {
     [dispatch, openPopupId],
   );
 
+  const filteredSchedulings = useMemo(() => {
+    return schedulings.filter((s) => {
+      const status = s.status?.toUpperCase();
+      return status === "AGENDADO" || status === "CONFIRMADO";
+    });
+  }, [schedulings]);
 
   const popupItems = useMemo(
     () =>
@@ -78,7 +89,7 @@ export function useScheduling() {
   );
 
   return {
-    schedulings,
+    schedulings: filteredSchedulings,
     isLoading,
     handleFetch,
     handleStatusChange,

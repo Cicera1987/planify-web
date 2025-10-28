@@ -19,6 +19,8 @@ import {
 } from "@/app/store/features/contactsSlice";
 import { usePagination } from "./usePaginatiojn";
 import { AppDispatch, RootState } from "../store/store";
+
+
 export function useContact(contactId?: number) {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
@@ -36,6 +38,8 @@ export function useContact(contactId?: number) {
   const [contactDataId, setContactDataId] = useState<contactApi.Contact | null>(
     null,
   );
+
+  const [localFile, setLocalFile] = useState < File | null > (null);
 
   useEffect(() => {
     if (isEditMode && contactId) {
@@ -120,23 +124,27 @@ export function useContact(contactId?: number) {
     async (data: contactApi.ContactFormInputs) => {
       try {
         const formData = new FormData();
-        formData.append("name", data.name);
+        const name = data.name.slice(0, 255);
+        const email = data.email?.slice(0, 255);
+        const observation = data.observation?.slice(0, 255);
+        const gender = data.gender?.toUpperCase().slice(0, 10);
+
+        formData.append("name", name);
         formData.append("phone", data.phone.replace(/\D/g, ""));
-        if (data.email) formData.append("email", data.email);
-        if (data.observation) formData.append("observation", data.observation);
-        if (data.gender) formData.append("gender", data.gender.toUpperCase());
-        if (imageState.file) {
-          formData.append("file", imageState.file);
+        if (email) formData.append("email", email);
+        if (observation) formData.append("observation", observation);
+        if (gender) formData.append("gender", gender);
+
+        if (localFile) {
+          formData.append("file", localFile);
         } else if (imageState.image) {
           formData.append("imageUrl", imageState.image);
         } else {
           formData.append("imageUrl", "");
         }
 
-        if (data.packageIds?.length)
-          data.packageIds.forEach((id) =>
-            formData.append("packageIds", String(id)),
-          );
+        const packageIds = data.packageIds || [];
+        packageIds.forEach((id) => formData.append("packageIds", String(id)));
 
         if (isEditMode && contactId) {
           await contactApi.updateContact(contactId, formData);
@@ -147,21 +155,23 @@ export function useContact(contactId?: number) {
         }
 
         router.push("/clients");
+
         dispatch({
           type: "scheduling/setImageState",
           payload: {
             image: "",
-            file: null,
             provider: "CLOUDINARY",
             providerUserId: "",
           },
         });
+
         dispatch(clearContacts());
         reset();
         fetchAndSetHasMore(0);
+        setLocalFile(null);
       } catch {
         toast.error(
-          isEditMode ? "Erro ao atualizar contato" : "Erro ao criar contato",
+          isEditMode ? "Erro ao atualizar contato" : "Erro ao criar contato"
         );
       }
     },
@@ -173,29 +183,29 @@ export function useContact(contactId?: number) {
       dispatch,
       reset,
       fetchAndSetHasMore,
-    ],
+      localFile,
+    ]
   );
 
-  const handleLocalImageChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        dispatch({
-          type: "scheduling/setImageState",
-          payload: {
-            image: reader.result as string,
-            file,
-            provider: "CLOUDINARY",
-            providerUserId: "",
-          },
-        });
-      };
-      reader.readAsDataURL(file);
-    },
-    [dispatch],
-  );
+  const handleLocalImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      dispatch({
+        type: "scheduling/setImageState",
+        payload: {
+          image: reader.result as string,
+          provider: "CLOUDINARY",
+          providerUserId: "",
+        },
+      });
+    };
+    setLocalFile(file);
+    reader.readAsDataURL(file);
+  };
+
 
   const defaultValues = useMemo(() => {
     if (isEditMode && contactDataId) {
@@ -232,6 +242,30 @@ export function useContact(contactId?: number) {
       icon: <Icon.InactivateUser />,
     },
   ];
+
+  useEffect(() => {
+    if (!observerTarget.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !isLoadingRedux) {
+          loadMore(); 
+        }
+      },
+      {
+        root: null,
+        rootMargin: "200px",
+        threshold: 0,
+      }
+    );
+
+    observer.observe(observerTarget.current);
+
+    return () => {
+      if (observerTarget.current) observer.unobserve(observerTarget.current);
+    };
+  }, [observerTarget, hasMore, isLoadingRedux, loadMore]);
+
 
   return {
     handleSave,

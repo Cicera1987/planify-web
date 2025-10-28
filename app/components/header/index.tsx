@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import "./styles.css";
 import Icon from "../assets/icons";
 import { useIsMobile } from "@/app/hooks/useMobile";
+import Image from "next/image";
+import { externalImageLoader } from "@/app/utils/externalImageLoader";
 
 interface HeaderProps {
   label?: string;
@@ -77,9 +79,12 @@ export default function Header({
           <div className={isMobile ? "" : "header-right"}>
             {!isMobile && nome && <span className="header-hello">{nome}</span>}
             {fotoUrl && (
-              <img
+              <Image
+                loader={externalImageLoader}
                 src={fotoUrl || "/images/avatar.png"}
                 alt="Avatar"
+                width={50}
+                height={50}
                 className="header-avatar"
               />
             )}

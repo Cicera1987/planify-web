@@ -131,7 +131,10 @@ export default function CalendarContent({
 
       <CustomDatePicker
         selectedDates={selectedDates}
-        setSelectedDates={setSelectedDates}
+        setSelectedDates={(dates) => {
+          const formatted = dates.map((d) => d.split("T")[0]);
+          setSelectedDates(formatted);
+        }}
       />
       {mode === "register" && (
         <form onSubmit={handleSubmit(onSubmit)} className="calendar-form">

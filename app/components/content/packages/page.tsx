@@ -111,7 +111,7 @@ export default function PackagesContent() {
       setValue("totalPrice", totalPrice.toFixed(2));
     }
     fetchJobs();
-  }, [editingPackage]);
+  },[editingPackage]);
 
   return (
     <div className="pck-container">
