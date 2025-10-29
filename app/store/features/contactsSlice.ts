@@ -26,9 +26,9 @@ export const fetchContacts = createAsyncThunk(
   "contacts/fetchContacts",
   async ({ page, search }: { page: number; search?: string }) => {
     if (search && search.trim()) {
-      return await contactApi.searchContacts(search, page, 10);
+      return await contactApi.searchContacts(search, page, 30);
     }
-    return await contactApi.getContacts(page, 10);
+    return await contactApi.getContacts(page, 30);
   },
 );
 

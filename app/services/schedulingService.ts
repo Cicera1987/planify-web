@@ -76,7 +76,6 @@ export interface SchedulingStatusRequest {
 
 export const getActiveSchedulings = async (): Promise<Scheduling[]> => {
   const res = await api.get<Scheduling[]>("/scheduling/active");
-  console.log('res: ', res.data);
   return res.data;
 };
 

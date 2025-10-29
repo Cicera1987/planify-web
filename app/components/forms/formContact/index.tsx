@@ -78,6 +78,8 @@ export default function ContactForm({
                 src={imageState.image || defaultValues?.imageUrl || ""}
                 alt="Preview"
                 className="image-preview-contact"
+                width={100}
+                height={100}
               />
             ) : (
               <div className="image-placeholder-contact">Foto</div>

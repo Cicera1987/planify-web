@@ -17,8 +17,8 @@ import {
   fetchContacts,
   clearContacts,
 } from "@/app/store/features/contactsSlice";
-import { usePagination } from "./usePaginatiojn";
 import { AppDispatch, RootState } from "../store/store";
+import { usePagination } from "./usePagination";
 
 
 export function useContact(contactId?: number) {
@@ -242,31 +242,7 @@ export function useContact(contactId?: number) {
       icon: <Icon.InactivateUser />,
     },
   ];
-
-  useEffect(() => {
-    if (!observerTarget.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoadingRedux) {
-          loadMore(); 
-        }
-      },
-      {
-        root: null,
-        rootMargin: "200px",
-        threshold: 0,
-      }
-    );
-
-    observer.observe(observerTarget.current);
-
-    return () => {
-      if (observerTarget.current) observer.unobserve(observerTarget.current);
-    };
-  }, [observerTarget, hasMore, isLoadingRedux, loadMore]);
-
-
+  
   return {
     handleSave,
     handleLocalImageChange,
