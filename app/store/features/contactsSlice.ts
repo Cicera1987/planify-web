@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import * as contactApi from "@/app/services/contactService";
 import { Contact } from "@/app/services/contactService";
-
 interface ContactState {
   currentContact: Contact | null;
   list: Contact[];
@@ -10,6 +9,7 @@ interface ContactState {
   page: number;
   totalElements: number;
   search: string;
+  openPopupId?: number | null;
 }
 
 const initialState: ContactState = {
@@ -20,6 +20,7 @@ const initialState: ContactState = {
   page: 0,
   totalElements: 0,
   search: "",
+  openPopupId: null,
 };
 
 export const fetchContacts = createAsyncThunk(
@@ -43,7 +44,10 @@ const contactsSlice = createSlice({
       state.list = action.payload;
     },
     setSearch: (state, action: PayloadAction<string>) => {
-      state.search = action.payload;
+      state.search = action.payload
+    },
+    setOpenPopupId: (state, action: PayloadAction<number | null>) => {
+      state.openPopupId = action.payload;
     },
     clearContacts: (state) => {
       state.currentContact = null;

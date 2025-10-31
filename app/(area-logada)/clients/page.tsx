@@ -6,27 +6,27 @@ import ClientsDesktop from "./clientsDesktop";
 import ClientsMobile from "./clientsMobile";
 import { useRouter } from "next/navigation";
 import { useContact } from "@/app/hooks/useContact";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { setSearch } from "@/app/store/features/schedulingSlice";
+import { setSearch } from "@/app/store/features/contactsSlice";
+
 
 export default function Clients() {
   const { handleDelete } = useContact();
-
-  const { search } = useSelector((state: RootState) => state.scheduling);
-
+  const dispatch = useDispatch();
   const router = useRouter();
+  const { search } = useSelector((state: RootState) => state.contacts);
 
   return (
     <>
       <LayoutPrivate
         pageTitle={
-          <SearchBar
+           <SearchBar
             searchValue={search}
-            onSearchChange={setSearch}
+            onSearchChange={(value) => dispatch(setSearch(value))}
             onButtonClick={() => router.push("/contact")}
             placeholder="Pesquisar..."
-          />
+        />
         }
         desktopContent={<ClientsDesktop onDelete={handleDelete} />}
         mobileContent={<ClientsMobile onDelete={handleDelete} />}

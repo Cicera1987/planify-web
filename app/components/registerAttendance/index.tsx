@@ -25,6 +25,7 @@ import CalendarContent from "../content/calendar/page"
 import "./styles.css"
 import Image from "next/image"
 import { externalImageLoader } from "@/app/utils/externalImageLoader"
+import { useRouter } from "next/navigation"
 
 interface ItemsTag {
   id: string | number
@@ -49,7 +50,8 @@ interface RegisterAttendanceProps {
 }
 
 export const RegisterAttendance: React.FC<RegisterAttendanceProps> = ({ contactDataId }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const router = useRouter();
   const calendarDays = useSelector((state: RootState) => state.calendar.list)
   const { packages } = usePackages()
   const { fetchJobs, jobList } = useJobs()
@@ -110,6 +112,7 @@ export const RegisterAttendance: React.FC<RegisterAttendanceProps> = ({ contactD
       })
 
       toast.success("Agendamento criado com sucesso!")
+      router.push(`/contact/${contactDataId?.id}/schedule`)
     } catch (err) {
       console.error(err)
       toast.error("Erro ao criar agendamento. Tente novamente.")

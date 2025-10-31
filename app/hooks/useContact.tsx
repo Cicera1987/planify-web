@@ -27,10 +27,10 @@ export function useContact(contactId?: number) {
   const alertRef = useRef<AlertRef>(null);
   const isEditMode = Boolean(contactId);
 
-  const { search, openPopupId, imageState } = useSelector(
+  const { openPopupId, imageState } = useSelector(
     (state: RootState) => state.scheduling,
   );
-  const { list: contacts, isLoading: isLoadingRedux } = useSelector(
+  const { list: contacts, isLoading: isLoadingRedux, search} = useSelector(
     (state: RootState) => state.contacts,
   );
 

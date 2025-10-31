@@ -4,11 +4,13 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 interface CalendarState {
   currentDay: CalendarDay | null
   list: (CalendarDay & { isSelected?: boolean })[]
+  openPopupId: number | null
 }
 
 const initialState: CalendarState = {
   currentDay: null,
   list: [],
+  openPopupId: null,
 }
 
 const calendarSlice = createSlice({
@@ -48,6 +50,9 @@ const calendarSlice = createSlice({
         day.times = day.times.filter((t) => t.id !== action.payload.timeId)
       }
     },
+    setOpenPopupId: (state, action: PayloadAction<number | null>) => {
+      state.openPopupId = action.payload
+    }
   },
 })
 

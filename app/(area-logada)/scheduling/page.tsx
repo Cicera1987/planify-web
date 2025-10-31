@@ -5,12 +5,13 @@ import LayoutPrivate from "../layout/layoutPrivate";
 import SchedulingDesktop from "./schedulingDesktop";
 import SchedulingMobile from "./schedulingMobile";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { setSearch } from "@/app/store/features/contactsSlice";
+import { setSearch } from "@/app/store/features/schedulingSlice";
 
 export default function Sheduling() {
   const { search } = useSelector((state: RootState) => state.scheduling);
+  const dispatch = useDispatch();
 
   const router = useRouter();
   return (
@@ -18,7 +19,7 @@ export default function Sheduling() {
       pageTitle={
         <SearchBar
           searchValue={search}
-          onSearchChange={setSearch}
+          onSearchChange={(value) => dispatch(setSearch(value))}
           onButtonClick={() => router.push("/clients")}
           placeholder="Pesquisar..."
         />

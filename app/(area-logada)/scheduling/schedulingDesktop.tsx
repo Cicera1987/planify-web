@@ -21,7 +21,9 @@ export default function SchedulingDesktop() {
     handleFetch
   } = useScheduling();
 
-  const { openPopupId } = useSelector((state: RootState) => state.scheduling);
+  const { openPopupId, search } = useSelector((state: RootState) => state.scheduling);
+
+  const listToRender = search.trim() ? schedulings : schedulings;
 
   useEffect(() => {
     handleFetch();
@@ -46,7 +48,7 @@ export default function SchedulingDesktop() {
   return (
     <div className="main-desktop-scheduling">
       <div className="cards-container-scheduling">
-        {schedulings.map((scheduling) => (
+        {listToRender.map((scheduling) => (
           <SchedulingCard
             key={scheduling.id}
             data={scheduling}
