@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import "./styles.css";
 import Input from "../../inputs";
 import Button from "../../buttons";
+import Icon from "../../assets/icons";
 
 interface LoginFormProps {
   onSubmit: (data: LoginFormInputs) => void;
@@ -28,6 +29,10 @@ export default function LoginForm({
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();
+
+  const handleGoogle = () =>{
+    window.location.href = `${process.env.NEXT_PUBLIC_BASE_API}/oauth2/authorization/google`
+  }
 
   return (
     <div className="login-page">
@@ -66,6 +71,13 @@ export default function LoginForm({
         )}
 
         <Button.ButtonVariant text="Entrar" variant="filled" type="submit" />
+        <Button.ButtonVariant 
+          icon={<Icon.Google/>} 
+          text="Entrar com o Google" 
+          variant="icon_info" 
+          type="button" 
+          onClick={handleGoogle}
+        />
       </form>
     </div>
   );

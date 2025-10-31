@@ -59,17 +59,11 @@
   font-weight: var(--font-w-regular);
   font-size: 14px;
 }
-.Button.text span {
-  color: var(--primary-4);
-  font-weight: var(--font-w-regular);
-  font-size: 14px;
-}
-
 .Button.filled {
   background-color: var(--primary-3);
   border: 1px solid var(--primary-3);
   border-radius: var(--space-8px);
-  padding: var(--space-16px) var(--space-12px);
+  padding: var(--space-12px);
 
   span {
     color: var(--neutral-6);
@@ -84,6 +78,28 @@
   span {
     color: var(--neutral-6);
   }
+}
+.Button.icon_info {
+  position: relative;
+  border: 1px solid var(--neutral-2);
+  background-color: transparent;
+  border-radius: var(--space-24px);
+  width: 100%;
+  height: 48px;
+  padding: 0 var(--space-8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8px);
+  cursor: pointer;
+}
+
+.Button.icon_info .Button-icon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 640px) {

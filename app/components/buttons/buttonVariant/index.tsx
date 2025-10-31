@@ -3,7 +3,7 @@
 import React, { ReactNode, MouseEventHandler } from "react";
 import "./styles.css";
 
-type ButtonVariant = "icon" | "headerIcon" | "text" | "filled" | "info";
+type ButtonVariant = "icon" | "headerIcon" | "text" | "filled" | "info" | "icon_info";
 
 interface ButtonProps {
   text?: string;
