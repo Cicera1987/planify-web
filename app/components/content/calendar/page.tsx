@@ -34,6 +34,7 @@ interface CalendarContentProps {
   onSelectTime?: (time: { date: string; time: string }) => void;
   selectedTime?: { date: string; time: string } | null;
   setSelectedTime?: (t: { date: string; time: string } | null) => void;
+  available?: Boolean;
 }
 
 export default function CalendarContent({
@@ -64,6 +65,7 @@ export default function CalendarContent({
     }
     loadCalendar();
   }, [dispatch]);
+
 
   const handleDeleteTime = async (dayId: number, timeId: number) => {
     if (mode !== "register") return;
@@ -118,6 +120,7 @@ export default function CalendarContent({
           dayId: days.id,
           timeId: time.id!,
           date,
+          available: time.available,
         })) || []
       );
     });
@@ -170,23 +173,23 @@ export default function CalendarContent({
             formatItem={(item) => formatHour(item.name)}
             selectedId={selectedTagId}
             onClick={(id) => {
+              const item = getTagItems().find((i) => i.id === id);
+              if (!item || item.available === false) return;
+
               setSelectedTagId(id);
 
               if (mode === "schedule" && onSelectTime) {
-                const item = getTagItems().find((i) => i.id === id);
-                if (item) {
-                  const payload = { date: item.date, time: item.name };
-                  onSelectTime?.(payload);
-                  setSelectedTime?.(payload);
-                }
+                const payload = { date: item.date, time: item.name };
+                onSelectTime(payload);
+                setSelectedTime?.(payload);
               }
             }}
             onDelete={
               mode === "register"
                 ? (id) => {
-                    const item = getTagItems().find((i) => i.id === id);
-                    if (item) handleDeleteTime(item.dayId, item.timeId);
-                  }
+                  const item = getTagItems().find((i) => i.id === id);
+                  if (item) handleDeleteTime(item.dayId, item.timeId);
+                }
                 : undefined
             }
           />

@@ -12,6 +12,7 @@ export default function ButtonIcon({
   alt = "button icon",
   className = "",
   active = false,
+  disabled = false,
 }: {
   label?: string;
   icon?: ReactNode;
@@ -22,6 +23,7 @@ export default function ButtonIcon({
   height?: number;
   className?: string;
   active?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <div
@@ -30,6 +32,7 @@ export default function ButtonIcon({
       <button
         className="flex items-center justify-center bg-none border-none cursor-pointer p-0 w-full"
         onClick={onClick}
+        disabled={disabled}
       >
         {icon}
         {image && (

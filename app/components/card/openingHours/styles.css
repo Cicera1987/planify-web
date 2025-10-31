@@ -41,7 +41,7 @@
   min-height: 107px;
   border: 1px solid var(--neutral-4);
   border-radius: var(--space-12px);
-  padding: var(--space-12px);
+  padding: var(--space-8px);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -123,6 +123,7 @@
 .opening-hour-tag--selected:hover {
   transform: none;
 }
+
 .opening-hours-close {
   position: absolute;
   top: 8px;
@@ -137,7 +138,14 @@
   transform: scale(1.2);
 }
 
-/* Animações suaves */
+.opening-hours--unavailable {
+  background-color: var(--primary-1);
+  border: 1px solid var(--primary-2);
+  cursor: not-allowed;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

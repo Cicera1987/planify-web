@@ -11,13 +11,14 @@ interface HourCard {
   day: number
   month: string
   year: number
-  hours: string[]
+  hours: { time: string; available: boolean } [];
   fullDate: string
 }
 
 interface SelectedTime {
   date: string
   time: string
+  available?: boolean
 }
 
 interface TriggerContentProps {
@@ -132,19 +133,28 @@ export default function OpeningHours({
                 {card.dayOfWeek}. {card.day} {card.month}
               </p>
 
-              <div className="opening-card-hours">
-                {visibleHours.map((hour) => (
-                  <span
-                    key={hour}
-                    className={`opening-hour-tag ${isHourSelected(card, hour) ? "opening-hour-tag--selected" : ""}`}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleSelectHour(card, hour)
-                    }}
-                  >
-                    {hour}
-                  </span>
-                ))}
+              <div className="opening-card-hours scroll-list-tag">
+                {visibleHours.map((hourObj) => {
+                  const hour = typeof hourObj === "string" ? hourObj : hourObj.time;
+                  const available = typeof hourObj === "string" ? true : hourObj.available;
+
+                  return (
+                    <span
+                      key={hour}
+                      className={`opening-hour-tag 
+                      ${!available ? "opening-hours--unavailable" : ""} 
+                      ${isHourSelected(card, hour) ? "opening-hour-tag--selected" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!available) return; 
+                        handleSelectHour(card, hour);
+                      }}
+                    >
+                      {hour}
+                    </span>
+                  );
+                })}
+
 
                 {card.hours.length > 3 && (
                   <span className="opening-hour-extra" onClick={(e) => toggleExpand(card.fullDate, e)}>

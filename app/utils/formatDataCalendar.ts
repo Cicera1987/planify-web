@@ -5,7 +5,7 @@ export interface CardHour {
   day: number
   month: string
   year: number
-  hours: string[]
+  hours: { time: string; available: boolean } [];
   fullDate: string
 }
 
@@ -32,7 +32,10 @@ export const formatCalendarDaysToCardHours = (calendarDays: CalendarDay[]): Card
         day: date.getDate(),
         month: monthName,
         year: date.getFullYear(),
-        hours: days.times.map((hour) => hour.time.slice(0, 5)),
+        hours: days.times.map(hour => ({
+          time: hour.time.slice(0, 5),
+          available: hour.available,
+        })),
         fullDate: `${days.localDate}T00:00:00`,
       }
     })

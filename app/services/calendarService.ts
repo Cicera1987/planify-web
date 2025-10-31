@@ -3,6 +3,7 @@ import { api } from "./api";
 export interface CalendarTime {
   id: number;
   time: string;
+  available: boolean;
 }
 
 export interface CalendarTimeWithDayId {

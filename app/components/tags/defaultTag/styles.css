@@ -67,3 +67,11 @@
   justify-content: center;
   font-size: var(--space-16px);
 }
+
+.tag-item--unavailable {
+  background-color: var(--primary-1);
+  border: 1px solid var(--primary-2);
+  cursor: not-allowed;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}

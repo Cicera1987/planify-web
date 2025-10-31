@@ -123,6 +123,20 @@ h2 {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+.scroll-list-tag {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 110px;
+}
+
+.scroll-list-tag::-webkit-scrollbar {
+  width: 2px;
+}
+
+.scroll-list-tag::-webkit-scrollbar-thumb {
+  background-color: var(--primary-2);
+  border-radius: var(--space-4px);
+}
 
 .scroll-list {
   flex: 1;
