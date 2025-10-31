@@ -14,7 +14,8 @@ import { RootState } from "@/app/store/store";
 export default function ClientsDesktop({}: {
   onDelete?: (contactId: number) => void;
 }) {
-  const { openPopupId, search } = useSelector((state: RootState) => state.contacts);
+  const { search } = useSelector((state: RootState) => state.contacts);
+  const { openPopupId } = useSelector((state: RootState) => state.scheduling);
   
   const {
     handleTogglePopup,

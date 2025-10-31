@@ -122,27 +122,34 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
           onClick={openEmail}
         />
       </div>
-      <div className="session session-appointments">
-        <div className="appointment-header">
-          <div className="position-data">
-            <Icon.TimeIcon />
-            <span>{dates.join(", ")}</span>
-          </div>
-          <Button.ButtonIcon
-            icon={<Icon.Follow />}
-            onClick={() =>
-              router.push(`/contact/${contactDataId?.id}/attendance`)
-            }
-          />
-        </div>
+      <div className="appointment-item">
+        {(contactSchedulings.length > 0
+          ? contactSchedulings
+          : [{ id: "empty", date: "", hour: "", services: "" }]
+        ).map((scheduling) => (
+          <div key={scheduling.id} className="session session-appointments">
+            <div className="appointment-header">
+              <div className="position-data">
+                <Icon.TimeIcon />
+                <span>{scheduling.date || ""}</span>
+              </div>
+              <Button.ButtonIcon
+                icon={<Icon.Follow />}
+                onClick={() =>
+                  router.push(`/contact/${contactDataId?.id}/attendance`)
+                }
+              />
+            </div>
 
-        <div className="appointment-details">
-          <div className="position-data">
-            <Icon.DateIcon />
-            <span>{hours.join(", ")}</span>
+            <div className="appointment-details">
+              <div className="position-data">
+                <Icon.DateIcon />
+                <span>{scheduling.hour || ""}</span>
+              </div>
+              <div>{scheduling.services || ""}</div>
+            </div>
           </div>
-          <div>{services.join(", ")}</div>
-        </div>
+        ))}
       </div>
     </div>
   );
