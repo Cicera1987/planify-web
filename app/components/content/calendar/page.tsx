@@ -34,7 +34,7 @@ interface CalendarContentProps {
   onSelectTime?: (time: { date: string; time: string }) => void;
   selectedTime?: { date: string; time: string } | null;
   setSelectedTime?: (t: { date: string; time: string } | null) => void;
-  available?: Boolean;
+  available?: boolean;
 }
 
 export default function CalendarContent({

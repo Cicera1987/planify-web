@@ -10,6 +10,8 @@ import { useRegister } from "@/app/hooks/useRegister";
 import Icon from "../../assets/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import Image from "next/image";
+import { externalImageLoader } from "@/app/utils/externalImageLoader";
 
 interface RegisterFormProps {
   onSubmit: (data: RegisterFormInputs) => void;
@@ -70,10 +72,13 @@ export default function RegisterForm({
         <div className="form-fields">
           <div className="image-preview-container">
             {imageState.image || defaultValues?.imageUrl ? (
-              <img
-                src={imageState.image || defaultValues?.imageUrl}
+              <Image
+                loader={externalImageLoader}
+                src={imageState.image || defaultValues?.imageUrl || ""}
                 alt="Preview"
                 className="image-preview"
+                width={100}
+                height={100}
               />
             ) : (
               <div className="image-placeholder">Foto</div>

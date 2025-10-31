@@ -48,6 +48,19 @@ export function useRegister({
         .catch((err) => console.error("Erro ao buscar usuário:", err));
     }
   }, [isEditMode, userId, dispatch]);
+  
+  useEffect(() => {
+    if (!isEditMode) {
+      dispatch(
+        setImageState({
+          image: "",
+          file: undefined,
+          provider: "CLOUDINARY",
+          providerUserId: "",
+        }),
+      )
+    }
+  }, [isEditMode, dispatch])
 
   const handleRegister = async (data: RegisterFormInputs) => {
     dispatch(setIsLoading(true));

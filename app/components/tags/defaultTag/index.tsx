@@ -51,6 +51,7 @@ export default function DefaultTag<T extends TagItemBase>({
                   aria-disabled={item.available === false}
                   onClick={() => {
                     if (item.available === false) return;
+                    // @typescript-eslint/no-unused-expressions
                     onEdit ? onEdit(item) : onClick?.(item.id);
                   }}           
                 >

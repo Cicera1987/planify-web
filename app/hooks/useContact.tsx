@@ -42,6 +42,22 @@ export function useContact(contactId?: number) {
   const [localFile, setLocalFile] = useState < File | null > (null);
 
   useEffect(() => {
+    if (!isEditMode) {
+      dispatch({
+        type: "scheduling/setImageState",
+        payload: {
+          image: "",
+          file: null,
+          provider: "CLOUDINARY",
+          providerUserId: "",
+        },
+      })
+      setLocalFile(null)
+      setContactDataId(null)
+    }
+  }, [isEditMode, dispatch])
+
+  useEffect(() => {
     if (isEditMode && contactId) {
       setIsLoadingContactId(true);
       contactApi

@@ -80,7 +80,7 @@ export default function JobsContent() {
       const price = Number(editingJob.price);
       setValue("price", price.toFixed(2));
     }
-  }, [editingJob]);
+  },[editingJob]);
 
   return (
     <div className="jobs-container">

@@ -6,6 +6,8 @@ import "./styles.css";
 import Icon from "../../assets/icons";
 import { formatPhone } from "@/app/utils/formatPhone";
 import { Contact } from "@/app/services/contactService";
+import Image from "next/image";
+import { externalImageLoader } from "@/app/utils/externalImageLoader";
 
 interface ClientCardProps {
   data: Contact;
@@ -21,12 +23,15 @@ export default function ClientCard({
   return (
     <div className="client-card">
       <div className="client-image">
-        <img
+        <Image
+          loader={externalImageLoader}
           src={
             data.imageUrl && data.imageUrl.startsWith("http")
               ? data.imageUrl
               : avatar.src
           }
+          width={60}
+          height={60}
           alt={data.name}
           className="client-img"
         />

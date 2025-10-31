@@ -13,6 +13,7 @@ import Image from "next/image";
 import { externalImageLoader } from "@/app/utils/externalImageLoader";
 
 interface ContactFormInputs {
+  id?: number;
   name: string;
   phone: string;
   email?: string;
@@ -72,7 +73,7 @@ export default function ContactForm({
       <form onSubmit={handleSubmit(onSubmit)} className="contact-form">
         <div className="contact-form-fields">
           <div className="image-preview-contact-container">
-            {imageState.image || defaultValues?.imageUrl ? (
+            {(imageState.image || (defaultValues?.imageUrl && defaultValues?.id))? (
               <Image
                 loader={externalImageLoader}
                 src={imageState.image || defaultValues?.imageUrl || ""}
