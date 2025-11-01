@@ -81,9 +81,9 @@
 }
 .Button.icon_info {
   position: relative;
-  border: 1px solid var(--neutral-2);
-  background-color: transparent;
-  border-radius: var(--space-24px);
+  border: 1px solid var(--neutral-4);
+  background-color: var(--background-color-light);
+  border-radius: var(--space-12px);
   width: 100%;
   height: 48px;
   padding: 0 var(--space-8px);
@@ -92,6 +92,7 @@
   justify-content: center;
   gap: var(--space-8px);
   cursor: pointer;
+  color: var(--primary-3);
 }
 
 .Button.icon_info .Button-icon {
