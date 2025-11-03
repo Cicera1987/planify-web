@@ -38,6 +38,14 @@ export const SchedulingPopupStatusLabels: Record<
   CANCELADO: "Cancelar atendimento",
 };
 
+export interface PaginatedResponse<T> {
+  content: T[]
+  pageNumber: number
+  pageSize: number
+  totalElements: number
+  totalPages: number
+  apiVersion?: string
+}
 interface CalendarDay {
   id: number;
   userId: number;
@@ -74,21 +82,33 @@ export interface SchedulingStatusRequest {
   newStatus: SchedulingStatus;
 }
 
-export const getActiveSchedulings = async (): Promise<Scheduling[]> => {
-  const res = await api.get<Scheduling[]>("/scheduling/active");
+export const getActiveSchedulings = async (
+  page: number = 0,
+  size: number = 10
+): Promise<PaginatedResponse<Scheduling>> => {
+  const res = await api.get<PaginatedResponse<Scheduling>>(
+    `/scheduling/active?page=${page}&size=${size}`
+  );
   return res.data;
 };
 
-export const getSchedulingHistory = async (): Promise<Scheduling[]> => {
-  const res = await api.get<Scheduling[]>("/scheduling/history");
+export const getSchedulingHistory = async (
+  page: number = 0,
+  size: number = 10
+): Promise<PaginatedResponse<Scheduling>> => {
+  const res = await api.get<PaginatedResponse<Scheduling>>(
+    `/scheduling/history?page=${page}&size=${size}`
+  );
   return res.data;
 };
 
 export const searchSchedulingsByContactName = async (
   name: string,
-): Promise<Scheduling[]> => {
-  const res = await api.get<Scheduling[]>(
-    `/scheduling/search?name=${encodeURIComponent(name)}`,
+  page: number = 0,
+  size: number = 10
+): Promise<PaginatedResponse<Scheduling>> => {
+  const res = await api.get<PaginatedResponse<Scheduling>>(
+    `/scheduling/search?name=${encodeURIComponent(name)}&page=${page}&size=${size}`
   );
   return res.data;
 };

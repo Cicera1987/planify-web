@@ -13,6 +13,7 @@ import SchedulingCard from "@/app/components/card/scheduling";
 import { SchedulingPopupStatus } from "@/app/services/schedulingService";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 
 export default function HomeDesktop() {
   const {
@@ -21,13 +22,15 @@ export default function HomeDesktop() {
     schedulings,
     popupItems,
     isLoading,
-  } = useScheduling();
+    observerTarget,
+    hasMore
+  } = useScheduling({ showHistory: false });
 
   const { search, openPopupId } = useSelector(
     (state: RootState) => state.scheduling,
   );
   const router = useRouter();
-  const listToRender = search.trim() ? schedulings : schedulings;
+  const listToRender =  schedulings;
 
 
   if (isLoading) {
@@ -83,6 +86,11 @@ export default function HomeDesktop() {
             }
           />
         ))}
+        <InfiniteScrollLoader
+          observerTarget={observerTarget}
+          isFetching={isLoading}
+          hasMore={hasMore}
+        />
       </div>
     </div>
   );

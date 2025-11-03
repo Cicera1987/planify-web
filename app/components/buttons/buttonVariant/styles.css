@@ -25,6 +25,10 @@
   background-color: transparent;
   padding: var(--space-4px);
   gap: var(--space-8px);
+
+  span {
+    color: var(--neutral-1);
+  }
 }
 
 .Button.headerIcon {

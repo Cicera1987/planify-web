@@ -2,9 +2,8 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/store/store";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import {
-  fetchSchedulings,
   updateSchedulingStatus,
   setOpenPopupId,
 } from "@/app/store/features/schedulingSlice";
@@ -12,23 +11,45 @@ import {
   SchedulingPopupStatus,
   SchedulingPopupStatusLabels,
   deleteScheduling,
+  searchSchedulingsByContactName,
+  getActiveSchedulings,
+  getSchedulingHistory,
+  Scheduling
 } from "@/app/services/schedulingService";
+import { useInfiniteScroll } from "@/app/hooks/useInfiniteScroll";
 import Icon from "@/app/components/assets/icons";
 import { toast } from "react-toastify";
 
-export function useScheduling() {
+export function useScheduling({showHistory = false }: { showHistory?: boolean } = {}) {
   const dispatch = useDispatch < AppDispatch > ();
-  const { schedulings, search, openPopupId, isLoading } = useSelector(
-    (state: RootState) => state.scheduling,
+  const { search, openPopupId } = useSelector(
+    (state: RootState) => state.scheduling
   );
 
-  const handleFetch = useCallback(() => {
-    dispatch(fetchSchedulings(search.trim()));
-  }, [dispatch, search]);
+  const observerTarget = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    handleFetch();
-  }, [handleFetch]);
+  const {
+    data: schedulings,
+    isFetching,
+    hasMore,
+  } = useInfiniteScroll<Scheduling>({
+    fetchFn: useCallback(
+      async (page: number) => {
+   
+        let response;
+
+        if (search.trim()) {
+          response = await searchSchedulingsByContactName(search, page);
+        } else if (showHistory) {
+          response = await getSchedulingHistory(page);
+        } else {
+          response = await getActiveSchedulings(page);
+        }
+        return response.content;
+      },
+      [search, showHistory]
+      ),
+    });
 
   const handleStatusChange = useCallback(
     async (id: number, status: SchedulingPopupStatus) => {
@@ -37,29 +58,32 @@ export function useScheduling() {
           await deleteScheduling(id);
           toast.info("Atendimento cancelado e removido");
         } else {
-          await dispatch(updateSchedulingStatus({ id, newStatus: status })).unwrap();
+          await dispatch(
+            updateSchedulingStatus({ id, newStatus: status })
+          ).unwrap();
           toast.success("Status atualizado com sucesso");
         }
 
         dispatch(setOpenPopupId(null));
-        handleFetch();
       } catch {
         toast.error("Erro ao atualizar status");
       }
     },
-    [dispatch, handleFetch],
+    [dispatch]
   );
 
   const handleTogglePopup = useCallback(
     (id: number) => {
       dispatch(setOpenPopupId(openPopupId === id ? null : id));
     },
-    [dispatch, openPopupId],
+    [dispatch, openPopupId]
   );
 
   const filteredSchedulings = useMemo(() => {
-    return schedulings.filter((s) => {
-      const status = s.status?.toUpperCase();
+    const list = Array.isArray(schedulings) ? schedulings : [];
+
+    return list.filter((sts) => {
+      const status = sts.status?.toUpperCase();
       return status === "AGENDADO" || status === "CONFIRMADO";
     });
   }, [schedulings]);
@@ -85,16 +109,17 @@ export function useScheduling() {
           icon,
         };
       }),
-    [],
+    []
   );
 
   return {
     schedulings: filteredSchedulings,
-    isLoading,
-    handleFetch,
+    isLoading: isFetching,
     handleStatusChange,
     handleTogglePopup,
     popupItems,
     openPopupId,
+    observerTarget,
+    hasMore,
   };
 }

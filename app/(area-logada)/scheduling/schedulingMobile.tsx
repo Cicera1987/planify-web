@@ -9,6 +9,7 @@ import SchedulingCard from "@/app/components/card/scheduling";
 import { SchedulingPopupStatus } from "@/app/services/schedulingService";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 
 export default function SchedulingMobile() {
   const {
@@ -17,6 +18,8 @@ export default function SchedulingMobile() {
     schedulings,
     popupItems,
     isLoading,
+    observerTarget,
+    hasMore
   } = useScheduling();
 
   const { openPopupId } = useSelector((state: RootState) => state.scheduling);
@@ -61,6 +64,11 @@ export default function SchedulingMobile() {
           }
         />
       ))}
+      <InfiniteScrollLoader
+        observerTarget={observerTarget}
+        isFetching={isLoading}
+        hasMore={hasMore}
+      />
     </div>
   );
 }

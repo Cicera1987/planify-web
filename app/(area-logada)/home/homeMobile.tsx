@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { SchedulingPopupStatus } from "@/app/services/schedulingService";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 
 export default function HomeMobile() {
   const {
@@ -22,6 +23,8 @@ export default function HomeMobile() {
     popupItems,
     schedulings,
     isLoading,
+    observerTarget,
+    hasMore
   } = useScheduling();
 
   const { openPopupId } = useSelector((state: RootState) => state.scheduling);
@@ -79,6 +82,11 @@ export default function HomeMobile() {
             }
           />
         ))}
+        <InfiniteScrollLoader
+          observerTarget={observerTarget}
+          isFetching={isLoading}
+          hasMore={hasMore}
+        />
       </div>
     </div>
   );

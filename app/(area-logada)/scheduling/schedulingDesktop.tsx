@@ -9,7 +9,7 @@ import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { SchedulingPopupStatus } from "@/app/services/schedulingService";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import { useEffect } from "react";
+import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScrollLoader";
 
 export default function SchedulingDesktop() {
   const {
@@ -18,16 +18,12 @@ export default function SchedulingDesktop() {
     schedulings,
     popupItems,
     isLoading,
-    handleFetch
-  } = useScheduling();
+    observerTarget,
+    hasMore
+  } = useScheduling({ showHistory: false });
 
-  const { openPopupId, search } = useSelector((state: RootState) => state.scheduling);
-
-  const listToRender = search.trim() ? schedulings : schedulings;
-
-  useEffect(() => {
-    handleFetch();
-  }, [handleFetch]);
+  const { openPopupId } = useSelector((state: RootState) => state.scheduling);
+  const listToRender = schedulings;
 
   if (isLoading) {
     return (
@@ -46,7 +42,7 @@ export default function SchedulingDesktop() {
   }
 
   return (
-    <div className="main-desktop-scheduling">
+    <div className="main-desktop-scheduling scroll-box">
       <div className="cards-container-scheduling">
         {listToRender.map((scheduling) => (
           <SchedulingCard
@@ -70,6 +66,11 @@ export default function SchedulingDesktop() {
             }
           />
         ))}
+        <InfiniteScrollLoader
+          observerTarget={observerTarget}
+          isFetching={isLoading}
+          hasMore={hasMore}
+        />
       </div>
     </div>
   );

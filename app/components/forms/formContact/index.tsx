@@ -122,7 +122,6 @@ export default function ContactForm({
             value={watch("gender")?.toLowerCase() || ""}
             onChange={(value) => setValue("gender", value)}
             placeholder="Selecione ou digite..."
-            required
             error={errors.gender?.message}
           />
           <Input.InputForm

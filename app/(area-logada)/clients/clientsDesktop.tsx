@@ -14,7 +14,7 @@ import { RootState } from "@/app/store/store";
 export default function ClientsDesktop({}: {
   onDelete?: (contactId: number) => void;
 }) {
-  const { search } = useSelector((state: RootState) => state.contacts);
+
   const { openPopupId } = useSelector((state: RootState) => state.scheduling);
   
   const {
@@ -28,7 +28,7 @@ export default function ClientsDesktop({}: {
     alertRef,
   } = useContact();
 
-  const listToRender = search.trim() ? contacts : contacts;
+  const listToRender = contacts ;
 
   if (isLoading) {
     return (
@@ -39,7 +39,7 @@ export default function ClientsDesktop({}: {
   }
 
   return (
-    <div className="main-desktop-contact">
+    <div className="main-desktop-contact scroll-box">
       <div className="cards-container">
         {listToRender?.map((contact) => (
           <ClientCard

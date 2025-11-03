@@ -13,13 +13,9 @@ import Icon from "../components/assets/icons";
 import * as contactApi from "../services/contactService";
 import { AlertRef } from "../components/modals/alert";
 
-import {
-  fetchContacts,
-  clearContacts,
-} from "@/app/store/features/contactsSlice";
 import { AppDispatch, RootState } from "../store/store";
-import { usePagination } from "./usePagination";
 
+import { useInfiniteScroll } from "./useInfiniteScroll";
 
 export function useContact(contactId?: number) {
   const router = useRouter();
@@ -30,16 +26,32 @@ export function useContact(contactId?: number) {
   const { openPopupId, imageState } = useSelector(
     (state: RootState) => state.scheduling,
   );
-  const { list: contacts, isLoading: isLoadingRedux, search} = useSelector(
-    (state: RootState) => state.contacts,
-  );
 
   const [isLoadingContactId, setIsLoadingContactId] = useState(false);
   const [contactDataId, setContactDataId] = useState<contactApi.Contact | null>(
     null,
   );
-
+  const { search } = useSelector((state: RootState) => state.contacts);
   const [localFile, setLocalFile] = useState < File | null > (null);
+
+  const {
+    data: contacts,
+    isFetching,
+    hasMore,
+    observerTarget,
+  } = useInfiniteScroll <contactApi.Contact>({
+    fetchFn: useCallback(
+      async (page: number) => {
+        if (search.trim()) {
+          const response = await contactApi.searchContacts(search, page);
+          return response.content;
+        }
+        const response = await contactApi.getContacts(page);
+        return response.content;
+      },
+      [search]
+    ),
+  });
 
   useEffect(() => {
     if (!isEditMode) {
@@ -78,28 +90,6 @@ export function useContact(contactId?: number) {
     }
   }, [isEditMode, contactId, dispatch]);
 
-  const { observerTarget, currentPage, loadMore, hasMore, reset, setHasMore } =
-    usePagination();
-
-  const fetchAndSetHasMore = useCallback(
-    async (page: number) => {
-      const action = await dispatch(fetchContacts({ page, search }));
-      if (fetchContacts.fulfilled.match(action)) {
-        setHasMore(action.payload.content.length > 0);
-      }
-    },
-    [dispatch, search, setHasMore],
-  );
-
-  useEffect(() => {
-    fetchAndSetHasMore(currentPage);
-  }, [currentPage, fetchAndSetHasMore]);
-
-  useEffect(() => {
-    dispatch(clearContacts());
-    reset();
-    fetchAndSetHasMore(0);
-  }, [search, dispatch, reset, fetchAndSetHasMore]);
 
   const handleSelect = useCallback(
     (action: string, contact: contactApi.Contact) => {
@@ -123,18 +113,17 @@ export function useContact(contactId?: number) {
         onConfirm: async () => {
           try {
             await contactApi.deleteContact(id);
-            dispatch(clearContacts());
-            reset();
-            fetchAndSetHasMore(0);
             toast.success("Contato inativado com sucesso");
+            
           } catch {
             toast.error("Erro ao inativar contato");
           }
         },
       });
     },
-    [dispatch, reset, fetchAndSetHasMore],
+    [dispatch]
   );
+
 
   const handleSave = useCallback(
     async (data: contactApi.ContactFormInputs) => {
@@ -171,37 +160,16 @@ export function useContact(contactId?: number) {
         }
 
         router.push("/clients");
-
-        dispatch({
-          type: "scheduling/setImageState",
-          payload: {
-            image: "",
-            provider: "CLOUDINARY",
-            providerUserId: "",
-          },
-        });
-
-        dispatch(clearContacts());
-        reset();
-        fetchAndSetHasMore(0);
-        setLocalFile(null);
+        
       } catch {
         toast.error(
           isEditMode ? "Erro ao atualizar contato" : "Erro ao criar contato"
         );
       }
     },
-    [
-      isEditMode,
-      contactId,
-      router,
-      imageState,
-      dispatch,
-      reset,
-      fetchAndSetHasMore,
-      localFile,
-    ]
+    [isEditMode, contactId, router, imageState, dispatch, localFile]
   );
+
 
   const handleLocalImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -262,18 +230,17 @@ export function useContact(contactId?: number) {
   return {
     handleSave,
     handleLocalImageChange,
-    isLoading: isLoadingRedux || isLoadingContactId,
+    isLoading: isFetching || isLoadingContactId,
     isEditMode,
     defaultValues,
     contacts,
     handleTogglePopup,
     handleSelect,
     items: itemsContacts,
-    observerTarget,
     handleDelete,
     alertRef,
     contactDataId,
-    loadMore,
+    observerTarget,
     hasMore,
   };
 }

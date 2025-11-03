@@ -42,10 +42,6 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
           : "",
     }));
 
-  const dates = contactSchedulings.map((s) => s.date);
-  const hours = contactSchedulings.map((s) => s.hour);
-  const services = contactSchedulings.map((s) => s.services);
-
   const openWhatsApp = () => {
     if (contactDataId?.phone) {
       window.open(`https://wa.me/${contactDataId.phone}`, "_blank");
@@ -60,7 +56,6 @@ export const ScheduleContact: React.FC<ContactContainerProps> = ({
 
   return (
     <div className="schedule-contact scrollbar-hide">
-      {/* --- Bloco do cliente --- */}
       <div className="session session-client">
         <p className="client-name-schedule">{contactDataId?.name}</p>
 
