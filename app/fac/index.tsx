@@ -1,3 +1,8 @@
 export const FAC = () => {
-  return <div>FAC</div>;
+
+  return(
+    <div>
+      <h1>Pagina de FAC</h1>
+    </div>
+  )
 };
