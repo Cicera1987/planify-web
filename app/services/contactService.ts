@@ -34,7 +34,7 @@ export interface PageResponse<T> {
   apiVersion?: string
 }
 
-export const getContacts = async (page = 0, size = 10): Promise<PageResponse<Contact>> => {
+export const getContacts = async (page = 0, size = 30): Promise<PageResponse<Contact>> => {
   const res = await api.get<PageResponse<Contact>>(`/contacts?page=${page}&size=${size}`)
   return res.data
 }
@@ -44,7 +44,7 @@ export const getContactById = async (id: number): Promise<Contact> => {
   return res.data
 }
 
-export const searchContacts = async (name: string, page = 0, size = 10): Promise<PageResponse<Contact>> => {
+export const searchContacts = async (name: string, page = 0, size = 30): Promise<PageResponse<Contact>> => {
   const res = await api.get<PageResponse<Contact>>(
     `/contacts/search?name=${encodeURIComponent(name)}&page=${page}&size=${size}`,
   )
