@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { Package } from "../services/packagesService";
+import { deletePackage, Package } from "../services/packagesService";
 import { getAllPackages } from "../services/packagesService"; // função Axios que vamos criar
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { setPackageList } from "../store/features/packagesSlice";
+import { setPackageList, removePackage } from "../store/features/packagesSlice";
+import { toast } from "react-toastify";
 
 interface PackageOption {
   value: number;
@@ -40,6 +41,5 @@ export function usePackages() {
       value: pack.id,
       label: pack.name,
     })) || [];
-
   return { optionsPackages, refetch: fetchPackages, packages, isLoading };
 }

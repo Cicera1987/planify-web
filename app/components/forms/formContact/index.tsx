@@ -53,6 +53,9 @@ export default function ContactForm({
 
   const { optionsPackages: packageOptions } = usePackages();
 
+  const data = watch();
+  console.log('data: ', data);
+
   const genderOptions = ["Masculino", "Feminino"];
 
   useEffect(() => {
@@ -134,7 +137,12 @@ export default function ContactForm({
           <Input.CheckboxInput
             label="Pacote Mensal"
             checked={watch("isActive") || !!watch("packageIds")?.length}
-            onChange={(val) => setValue("isActive", val)}
+            onChange={(val) => {
+              setValue("isActive", val);
+              if (!val) {
+                setValue("packageIds", []);
+              }
+            }}
             error={errors.isActive?.message}
           />
 
@@ -142,9 +150,10 @@ export default function ContactForm({
             <Input.SelectInput
               label="Pacote Mensal"
               value={watch("packageIds")?.[0] ?? null}
-              onChange={(value) =>
+              onChange={(value) => {
                 setValue("packageIds", value ? [Number(value)] : [])
-              }
+                if(value) setValue("isActive", true);
+              }}
               options={packageOptions}
               placeholder="Selecione..."
               error={errors.packageIds?.message}

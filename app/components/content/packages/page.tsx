@@ -17,11 +17,14 @@ import {
 } from "@/app/services/packagesService";
 import "./styles.css";
 import Tag from "../../tags";
+import { useDispatch } from "react-redux";
+import { removePackage } from "@/app/store/features/packagesSlice";
 
 export default function PackagesContent() {
   const { packages, refetch } = usePackages();
   const { jobList, fetchJobs } = useJobs();
   const { formatCurrency, formatCurrencyInput, parseCurrency } = mask();
+  const dispatch = useDispatch();
 
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
 
@@ -99,9 +102,13 @@ export default function PackagesContent() {
   };
 
   const handleDelete = async (id: number) => {
-    await deletePackage(id);
-    if (editingPackage?.id === id) clearForm();
-    refetch();
+    try {
+      await deletePackage(id);
+      if (editingPackage?.id === id) clearForm();
+      dispatch(removePackage(id));
+    } catch (err) {
+      console.error("Erro ao deletar pacote:", err);
+    }
   };
 
   useEffect(() => {

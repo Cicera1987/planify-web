@@ -113,9 +113,9 @@ export const RegisterAttendance: React.FC<RegisterAttendanceProps> = ({ contactD
 
       toast.success("Agendamento criado com sucesso!")
       router.push(`/contact/${contactDataId?.id}/schedule`)
-    } catch (err) {
+    } catch (err:any) {
       console.error(err)
-      toast.error("Erro ao criar agendamento. Tente novamente.")
+      toast.error(err.message)
     }
   }
 
