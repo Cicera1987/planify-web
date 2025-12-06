@@ -12,7 +12,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/firebase-messaging-sw.js")
-        .then(() => console.log("SW registrado"))
+        .then(() => console.log("SW registrado com sucesso!"))
         .catch((err) => console.error("Erro ao registrar SW:", err));
     }
   }, []);

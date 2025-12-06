@@ -2,11 +2,32 @@ import MenuSidebar from "./menu";
 import Icon from "../assets/icons";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/app/hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllNotifications } from "@/app/store/features/notificationsSlice";
+import { AppDispatch, RootState } from "@/app/store/store";
+import { useEffect } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { logout } = useAuth();
+  const dispatch = useDispatch < AppDispatch > ();
+  
+  const unreadCount = useSelector((state: RootState) =>
+    Object.values(state.notifications.notificationsByContact)
+      .flat()
+      .filter(n => !n.read).length
+  );
+
+  useEffect(() => {
+    dispatch(fetchAllNotifications());
+
+    const interval = setInterval(() => {
+      dispatch(fetchAllNotifications());
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [dispatch]);
 
   const routeButtons = [
     {
@@ -54,7 +75,7 @@ export default function Sidebar() {
     {
       id: "notification",
       path: "/notification",
-      icon: <Icon.Notification />,
+      icon: <Icon.Notification hasUnread={unreadCount > 0 } />,
       label: "Notificações",
     },
     {

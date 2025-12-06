@@ -19,6 +19,7 @@ import {
 import { useInfiniteScroll } from "@/app/hooks/useInfiniteScroll";
 import Icon from "@/app/components/assets/icons";
 import { toast } from "react-toastify";
+import { fetchAllNotifications } from "../store/features/notificationsSlice";
 
 export function useScheduling({showHistory = false }: { showHistory?: boolean } = {}) {
   const dispatch = useDispatch < AppDispatch > ();
@@ -32,6 +33,7 @@ export function useScheduling({showHistory = false }: { showHistory?: boolean } 
     data: schedulings,
     isFetching,
     hasMore,
+    reset
   } = useInfiniteScroll<Scheduling>({
     fetchFn: useCallback(
       async (page: number) => {
@@ -65,11 +67,13 @@ export function useScheduling({showHistory = false }: { showHistory?: boolean } 
         }
 
         dispatch(setOpenPopupId(null));
+        reset();
+        dispatch(fetchAllNotifications());
       } catch {
         toast.error("Erro ao atualizar status");
       }
     },
-    [dispatch]
+    [dispatch, reset, openPopupId]
   );
 
   const handleTogglePopup = useCallback(

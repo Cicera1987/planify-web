@@ -8,6 +8,7 @@ import jobsReducer from "./features/jobsSlice";
 import packagesReducer from "./features/packagesSlice";
 import schedulingReducer from "./features/schedulingSlice";
 import calendarReducer from "./features/calendarSlice";
+import notificationReducer from "./features/notificationsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     packages: packagesReducer,
     scheduling: schedulingReducer,
     calendar: calendarReducer,
+    notifications:notificationReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
