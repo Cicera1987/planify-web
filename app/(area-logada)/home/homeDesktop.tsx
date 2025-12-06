@@ -30,7 +30,10 @@ export default function HomeDesktop() {
     (state: RootState) => state.scheduling,
   );
   const router = useRouter();
-  const listToRender =  schedulings;
+  const listToRender = schedulings.filter(
+    scheduling => scheduling.contact.name
+      .toLowerCase()
+      .includes(search.toLowerCase()));
 
 
   if (isLoading) {

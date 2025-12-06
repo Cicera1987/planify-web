@@ -21,23 +21,23 @@ import Icon from "@/app/components/assets/icons";
 import { toast } from "react-toastify";
 import { fetchAllNotifications } from "../store/features/notificationsSlice";
 
-export function useScheduling({showHistory = false }: { showHistory?: boolean } = {}) {
+export function useScheduling({ showHistory = false }: { showHistory?: boolean } = {}) {
   const dispatch = useDispatch < AppDispatch > ();
   const { search, openPopupId } = useSelector(
     (state: RootState) => state.scheduling
   );
 
-  const observerTarget = useRef<HTMLDivElement>(null);
+  const observerTarget = useRef < HTMLDivElement > (null);
 
   const {
     data: schedulings,
     isFetching,
     hasMore,
     reset
-  } = useInfiniteScroll<Scheduling>({
+  } = useInfiniteScroll < Scheduling > ({
     fetchFn: useCallback(
       async (page: number) => {
-   
+
         let response;
 
         if (search.trim()) {
@@ -50,8 +50,8 @@ export function useScheduling({showHistory = false }: { showHistory?: boolean } 
         return response.content;
       },
       [search, showHistory]
-      ),
-    });
+    ),
+  });
 
   const handleStatusChange = useCallback(
     async (id: number, status: SchedulingPopupStatus) => {
@@ -67,8 +67,8 @@ export function useScheduling({showHistory = false }: { showHistory?: boolean } 
         }
 
         dispatch(setOpenPopupId(null));
-        reset();
         dispatch(fetchAllNotifications());
+        reset();
       } catch {
         toast.error("Erro ao atualizar status");
       }

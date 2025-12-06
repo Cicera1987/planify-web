@@ -8,12 +8,15 @@ import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScroll
 import { StatusPopup } from "@/app/components/popup/statusPopup";
 import { useContact } from "@/app/hooks/useContact";
 import { RootState } from "@/app/store/store";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
 export default function ClientsMobile({}: {
   onDelete?: (contactId: number) => void;
 }) {
   const { openPopupId } = useSelector((state: RootState) => state.scheduling);
+
+  const router = useRouter();
 
   const {
     handleTogglePopup,
@@ -35,12 +38,13 @@ export default function ClientsMobile({}: {
   }
 
   return (
-    <div className="main-mobile-contact">
+    <div className="main-mobile-contact cursor-pointer">
       {contacts?.map((contact) => (
         <ClientCard
           key={contact.id}
           data={contact}
           triggerIcon={
+            <div onClick={(e) => e.stopPropagation()}>
             <StatusPopup
               trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}
               items={items}
@@ -48,8 +52,10 @@ export default function ClientsMobile({}: {
               isOpen={openPopupId === contact.id}
               onClose={() => handleTogglePopup(contact.id)}
               data={contact}
-            />
+              />
+            </div>
           }
+          onClick={() => router.push(`/contact/${contact.id}/schedule`)} 
         />
       ))}
       <InfiniteScrollLoader

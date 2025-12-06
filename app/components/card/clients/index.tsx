@@ -13,15 +13,21 @@ interface ClientCardProps {
   data: Contact;
   triggerIcon: ReactNode;
   onTriggerClick?: () => void;
+  onClick?: () => void;
+  className?: string;
 }
 
 export default function ClientCard({
   data,
   triggerIcon,
   onTriggerClick,
+  onClick,
+  className,
 }: ClientCardProps) {
   return (
-    <div className="client-card">
+    <div className={`client-card ${className || ""}`}
+      onClick={onClick}
+    >
       <div className="client-image">
         <Image
           loader={externalImageLoader}

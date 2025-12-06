@@ -8,6 +8,8 @@ import {
   logout as logoutAction,
 } from "../store/features/authSlice";
 import { api } from "../services/api";
+import { toast } from "react-toastify";
+import { error } from "console";
 
 export function useAuth() {
   const router = useRouter();
@@ -45,6 +47,10 @@ export function useAuth() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error("Login falhou:", err);
+        toast.error(
+          err?.response?.data?.message ||
+          "Erro ao fazer login. Verifique suas credenciais."
+        );
         setApiError(
           err?.response?.data?.message ||
             "Erro ao fazer login. Tente novamente.",

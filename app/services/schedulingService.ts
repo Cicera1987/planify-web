@@ -66,6 +66,7 @@ export interface Scheduling {
   observation: string | null;
   createdAt: string | null;
   packageInfo: Package | null; 
+  clientPackageInfo?: Package | null;
   services: Job[];
   status: SchedulingStatus;
 }
@@ -74,10 +75,10 @@ export interface SchedulingRequest {
   contactId: number;
   serviceId: number[];
   packageId?: number;
+  clientPackageId?: number;
   calendarDayId: number;
   calendarTimeId: number;
 }
-
 export interface SchedulingStatusRequest {
   newStatus: SchedulingStatus;
 }

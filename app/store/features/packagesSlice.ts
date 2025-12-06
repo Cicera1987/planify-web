@@ -25,9 +25,12 @@ const packagesSlice = createSlice({
       state.currentPackage = null;
       state.list = [];
     },
+    removePackage: (state, action: PayloadAction<number>) => {
+      state.list = state.list.filter((pkg) => pkg.id !== action.payload);
+    },
   },
 });
 
-export const { setCurrentPackage, setPackageList, clearPackages } =
+export const { setCurrentPackage, setPackageList, clearPackages, removePackage } =
   packagesSlice.actions;
 export default packagesSlice.reducer;
