@@ -21,9 +21,19 @@ const runtimeCaching = [
   },
 ];
 
+const pwaConfig = {
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable:
+    process.env.NEXT_RUNTIME === "edge" ||
+    process.env.NODE_ENV === "development",
+  runtimeCaching,
+  sw: "sw.js",
+};
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   images: {
     remotePatterns: [
@@ -38,16 +48,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "static.vecteezy.com", pathname: "/**" },
       { protocol: "https", hostname: "encrypted-tbn0.gstatic.com", pathname: "/**" },
     ],
-  },
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-    disable:
-      process.env.NEXT_RUNTIME === "edge" ||
-      process.env.NODE_ENV === "development",
-    runtimeCaching,
-    sw: "sw.js",
   },
 };
 
