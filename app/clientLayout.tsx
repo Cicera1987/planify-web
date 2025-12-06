@@ -1,12 +1,22 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
+  
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/firebase-messaging-sw.js")
+        .then(() => console.log("SW registrado"))
+        .catch((err) => console.error("Erro ao registrar SW:", err));
+    }
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Provider store={store}>
