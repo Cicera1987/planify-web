@@ -10,12 +10,14 @@ import { InfiniteScrollLoader } from "@/app/components/pagination/infiniteScroll
 import AlertModal from "@/app/components/modals/alert";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
+import { useRouter } from "next/navigation";
 
 export default function ClientsDesktop({}: {
   onDelete?: (contactId: number) => void;
 }) {
 
   const { openPopupId } = useSelector((state: RootState) => state.scheduling);
+  const router = useRouter();
   
   const {
     handleTogglePopup,
@@ -37,15 +39,16 @@ export default function ClientsDesktop({}: {
       </div>
     );
   }
-
   return (
     <div className="main-desktop-contact scroll-box">
       <div className="cards-container">
         {listToRender?.map((contact) => (
           <ClientCard
+            className="cursor-pointer"
             key={contact.id}
             data={contact}
             triggerIcon={
+               <div onClick={(e) => e.stopPropagation()}>
               <StatusPopup
                 trigger={<Button.ButtonIcon icon={<Icon.OptionsIcon />} />}
                 items={items}
@@ -54,7 +57,9 @@ export default function ClientsDesktop({}: {
                 onClose={() => handleTogglePopup(contact.id)}
                 data={contact}
               />
+            </div>
             }
+            onClick={() => router.push(`/contact/${contact.id}/schedule`)}
           />
         ))}
         <InfiniteScrollLoader
