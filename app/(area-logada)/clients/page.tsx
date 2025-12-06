@@ -9,13 +9,15 @@ import { useContact } from "@/app/hooks/useContact";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { setSearch } from "@/app/store/features/contactsSlice";
+import { useEffect } from "react";
 
 
 export default function Clients() {
-  const { handleDelete } = useContact();
+  const { handleDelete} = useContact();
   const dispatch = useDispatch();
   const router = useRouter();
   const { search } = useSelector((state: RootState) => state.contacts);
+
 
   return (
     <>

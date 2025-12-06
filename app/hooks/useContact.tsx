@@ -39,6 +39,7 @@ export function useContact(contactId?: number) {
     isFetching,
     hasMore,
     observerTarget,
+    reset
   } = useInfiniteScroll <contactApi.Contact>({
     fetchFn: useCallback(
       async (page: number) => {
@@ -51,8 +52,12 @@ export function useContact(contactId?: number) {
       },
       [search]
     ),
-  });
-
+    });
+  
+  useEffect(() => {
+    reset()
+  }, [search, reset])
+  
   useEffect(() => {
     if (!isEditMode) {
       dispatch({
@@ -114,7 +119,7 @@ export function useContact(contactId?: number) {
           try {
             await contactApi.deleteContact(id);
             toast.success("Contato inativado com sucesso");
-            
+            reset()
           } catch {
             toast.error("Erro ao inativar contato");
           }

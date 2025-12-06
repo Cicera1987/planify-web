@@ -19,11 +19,12 @@ export default function SchedulingDesktop() {
     popupItems,
     isLoading,
     observerTarget,
-    hasMore
+    hasMore,
   } = useScheduling({ showHistory: false });
 
+  const { search } = useSelector((state: RootState) => state.scheduling);
   const { openPopupId } = useSelector((state: RootState) => state.scheduling);
-  const listToRender = schedulings;
+  const listToRender = schedulings.filter(scheduling => scheduling.contact.name.toLowerCase().includes(search.toLowerCase()));
 
   if (isLoading) {
     return (

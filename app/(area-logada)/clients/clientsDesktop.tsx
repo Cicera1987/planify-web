@@ -16,7 +16,7 @@ export default function ClientsDesktop({}: {
   onDelete?: (contactId: number) => void;
 }) {
 
-  const { openPopupId } = useSelector((state: RootState) => state.scheduling);
+  const { openPopupId, search } = useSelector((state: RootState) => state.scheduling);
   const router = useRouter();
   
   const {
@@ -28,9 +28,12 @@ export default function ClientsDesktop({}: {
     hasMore,
     observerTarget,
     alertRef,
+
   } = useContact();
 
-  const listToRender = contacts ;
+  const listToRender = contacts?.filter(contact =>
+    contact.name?.toLowerCase().includes(search.toLowerCase())
+  );
 
   if (isLoading) {
     return (
