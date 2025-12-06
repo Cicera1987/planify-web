@@ -1,12 +1,15 @@
 const formatDate = (isoDate: string | null) => {
   if (!isoDate) return "Data desconhecida";
-  const date = new Date(isoDate);
+
+  const [y, m, d] = isoDate.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
 
   return date.toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "short",
   });
 };
+
 const formatFullDate = (
   day: number,
   month: string,
