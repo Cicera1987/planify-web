@@ -20,22 +20,23 @@ import { useInfiniteScroll } from "@/app/hooks/useInfiniteScroll";
 import Icon from "@/app/components/assets/icons";
 import { toast } from "react-toastify";
 
-export function useScheduling({showHistory = false }: { showHistory?: boolean } = {}) {
+export function useScheduling({ showHistory = false }: { showHistory?: boolean } = {}) {
   const dispatch = useDispatch < AppDispatch > ();
   const { search, openPopupId } = useSelector(
     (state: RootState) => state.scheduling
   );
 
-  const observerTarget = useRef<HTMLDivElement>(null);
+  const observerTarget = useRef < HTMLDivElement > (null);
 
   const {
     data: schedulings,
     isFetching,
     hasMore,
-  } = useInfiniteScroll<Scheduling>({
+    reset
+  } = useInfiniteScroll < Scheduling > ({
     fetchFn: useCallback(
       async (page: number) => {
-   
+
         let response;
 
         if (search.trim()) {
@@ -48,8 +49,8 @@ export function useScheduling({showHistory = false }: { showHistory?: boolean } 
         return response.content;
       },
       [search, showHistory]
-      ),
-    });
+    ),
+  });
 
   const handleStatusChange = useCallback(
     async (id: number, status: SchedulingPopupStatus) => {
@@ -65,11 +66,12 @@ export function useScheduling({showHistory = false }: { showHistory?: boolean } 
         }
 
         dispatch(setOpenPopupId(null));
+        reset();
       } catch {
         toast.error("Erro ao atualizar status");
       }
     },
-    [dispatch]
+    [dispatch, reset, openPopupId]
   );
 
   const handleTogglePopup = useCallback(
