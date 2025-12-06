@@ -41,10 +41,11 @@ export const removeAllByContact = createAsyncThunk(
 export const readContactNotifications = createAsyncThunk(
   "notifications/readContact",
   async (contactId: number, { getState }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const state = getState() as any;
     const list = state.notifications.notificationsByContact[contactId] || [];
 
-    await Promise.all(list.filter(n => !n.read).map(n => markNotificationAsRead(n.id)));
+    await Promise.all(list.filter((notn: Notifications) => !notn.read).map((notif: Notifications) => markNotificationAsRead(notif.id)));
 
     return { contactId };
   }

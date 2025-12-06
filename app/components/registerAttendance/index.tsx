@@ -113,6 +113,7 @@ export const RegisterAttendance: React.FC<RegisterAttendanceProps> = ({ contactD
 
       toast.success("Agendamento criado com sucesso!")
       router.push(`/contact/${contactDataId?.id}/schedule`)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err:any) {
       console.error(err)
       toast.error(err.message)
