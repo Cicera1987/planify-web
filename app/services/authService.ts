@@ -53,13 +53,16 @@ export const uploadImage = async (file: File): Promise<string> => {
 export const register = async (userData: Register): Promise<void> => {
   const formData = new FormData();
 
+  // Convertendo tudo para FormData
   Object.entries(userData).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
-      formData.append(key, value as string);
+      formData.append(key, value.toString());
     }
   });
 
-  await api.post("/auth/register", { ...formData, active: true });
+  await api.post("/auth/register", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
 
 
