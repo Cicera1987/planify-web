@@ -31,7 +31,7 @@ export default function LoginForm({
   } = useForm<LoginFormInputs>();
 
   const handleGoogle = () =>{
-    window.location.href = `${process.env.NEXT_PUBLIC_BASE_API}/oauth2/authorization/google`
+    window.location.href = `${process.env.NEXT_PUBLIC_BASE_API}/oauth2/authorization/google`;
   }
 
   return (
@@ -71,6 +71,7 @@ export default function LoginForm({
         )}
 
         <Button.ButtonVariant text="Entrar" variant="filled" type="submit" />
+
         <Button.ButtonVariant 
           icon={<Icon.Google/>} 
           text="Entrar com o Google" 
