@@ -47,9 +47,21 @@ export const uploadImage = async (file: File): Promise<string> => {
   return typeof response.data === "string" ? response.data : "";
 };
 
+// export const register = async (userData: Register): Promise<void> => {
+//   await api.post("/auth/register", { ...userData, active: true });
+// };
 export const register = async (userData: Register): Promise<void> => {
-  await api.post("/auth/register", { ...userData, active: true });
+  const formData = new FormData();
+
+  Object.entries(userData).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      formData.append(key, value as string);
+    }
+  });
+
+  await api.post("/auth/register", { ...formData, active: true });
 };
+
 
 export const update = async (
   userId: string | number,

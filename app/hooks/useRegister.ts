@@ -79,7 +79,6 @@ export function useRegister({
         speciality: data.speciality || "",
         email: data.email,
         active: true,
-        position: "PROFESSIONAL",
         ...(imageUrl && { imageUrl }),
         provider: imageState.provider || "CLOUDINARY",
         providerUserId: imageState.providerUserId || "",
@@ -97,7 +96,7 @@ export function useRegister({
           speciality: payload.speciality,
           imageUrl: payload.imageUrl,
           active: payload.active,
-          position: payload.position || currentUser?.position || "PROFESSIONAL",
+          position: currentUser?.position || "PROFESSIONAL",
         });
       } else {
         await register(payload);
