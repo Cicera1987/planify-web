@@ -53,9 +53,6 @@ export default function ContactForm({
 
   const { optionsPackages: packageOptions } = usePackages();
 
-  const data = watch();
-  console.log('data: ', data);
-
   const genderOptions = ["Masculino", "Feminino"];
 
   useEffect(() => {

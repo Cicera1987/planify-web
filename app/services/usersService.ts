@@ -18,6 +18,8 @@ export interface User {
   position: "ADMIN" | "PROFESSIONAL" | "CLIENT";
   imageUrl?: string;
   active: boolean;
+  provider?: "CLOUDINARY" | "GOOGLE" | "WHATSAPP";
+  providerUserId?: string;
 }
 
 export const getAllUsers = async (

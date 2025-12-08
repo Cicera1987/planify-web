@@ -39,32 +39,20 @@ export const logout = async (): Promise<void> => {
 export const uploadImage = async (file: File): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
+  console.log('file: ', file);
 
   const response = await api.post("/upload", formData, {
     headers: { "Content-Type": "multipart/form-data" },
+    
   });
+  console.log('response upload: ', response.data.url);
 
-  return typeof response.data === "string" ? response.data : "";
+  return response.data.url;
 };
 
-// export const register = async (userData: Register): Promise<void> => {
-//   await api.post("/auth/register", { ...userData, active: true });
-// };
 export const register = async (userData: Register): Promise<void> => {
-  const formData = new FormData();
-
-  // Convertendo tudo para FormData
-  Object.entries(userData).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      formData.append(key, value.toString());
-    }
-  });
-
-  await api.post("/auth/register", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+  await api.post("/auth/register", { ...userData, active: true });
 };
-
 
 export const update = async (
   userId: string | number,

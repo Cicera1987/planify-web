@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "./styles.css";
 import Input from "../../inputs";
@@ -29,8 +29,8 @@ export interface RegisterFormInputs {
   password: string;
   username: string;
   confirmPassword: string;
-  phone?: string;
-  speciality?: string;
+  phone: string;
+  speciality: string;
 }
 
 export default function RegisterForm({
@@ -50,7 +50,7 @@ export default function RegisterForm({
   } = useForm<RegisterFormInputs>({
     defaultValues,
   });
-  const { handleLocalImageChange } = useRegister();
+  const { handleLocalImageRegister } = useRegister();
 
   const { imageState } = useSelector((state: RootState) => state.scheduling);
 
@@ -59,6 +59,7 @@ export default function RegisterForm({
   }, [defaultValues, reset]);
 
   const phone = watch("phone");
+
   useEffect(() => {
 
     if (phone) {
@@ -88,7 +89,7 @@ export default function RegisterForm({
           <input
             type="file"
             accept="image/*"
-            onChange={handleLocalImageChange}
+            onChange={handleLocalImageRegister}
             className="file-input"
           />
 
