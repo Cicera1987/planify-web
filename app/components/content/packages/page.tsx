@@ -23,7 +23,7 @@ import { removePackage } from "@/app/store/features/packagesSlice";
 export default function PackagesContent() {
   const { packages, refetch } = usePackages();
   const { jobList, fetchJobs } = useJobs();
-  const { formatCurrency, formatCurrencyInput, parseCurrency } = mask();
+  const { formatCurrency, parseCurrency } = mask();
   const dispatch = useDispatch();
 
   const [editingPackage, setEditingPackage] = useState<Package | null>(null);
@@ -162,9 +162,10 @@ export default function PackagesContent() {
             {...register("totalPrice", { required: "Campo obrigatório" })}
             error={errors.totalPrice?.message}
             required
-            onChange={(e) =>
-              formatCurrencyInput<PackageRequest>(e, setValue, "totalPrice")
-            }
+            onChange={(e) => {
+              const onlyNumbers = e.target.value.replace(/\D/g, "");
+              setValue("totalPrice", onlyNumbers);
+            }}
           />
 
           <Input.InputForm
