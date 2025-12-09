@@ -44,7 +44,7 @@ export const uploadImage = async (file: File): Promise<string> => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
-  return typeof response.data === "string" ? response.data : "";
+  return response.data.url;
 };
 
 export const register = async (userData: Register): Promise<void> => {
