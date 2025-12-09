@@ -125,7 +125,7 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
     }
   };
 
-  const handleLocalImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleLocalImageRegister = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -175,7 +175,7 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
 
   return {
     handleRegister,
-    handleLocalImageChange,
+    handleLocalImageRegister,
     handleExternalImage,
     isLoading,
     isEditMode,
