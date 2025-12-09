@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useMemo, useEffect } from "react";
+import { ChangeEvent, useMemo, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { RegisterFormInputs } from "../components/forms/formUser";
 import { useRouter } from "next/navigation";
@@ -11,23 +11,23 @@ import {
   Register,
   register,
   update,
+  uploadImage,
 } from "../services/authService";
-import { uploadImage } from "../services/authService";
 import { getUserById } from "../services/usersService";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { setImageState, setIsLoading } from "../store/features/schedulingSlice";
 import { setCurrentUser } from "../store/features/usersSlice";
 
-export function useRegister({
-  isEditMode = false,
-}: { isEditMode?: boolean } = {}) {
+export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {}) {
   const dispatch = useDispatch();
   const router = useRouter();
   const { token } = useAuth();
 
+  const [localFile, setLocalFile] = useState<File | null>(null);
+
   const { imageState, isLoading } = useSelector(
-    (state: RootState) => state.scheduling,
+    (state: RootState) => state.scheduling
   );
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
@@ -48,27 +48,26 @@ export function useRegister({
         .catch((err) => console.error("Erro ao buscar usuário:", err));
     }
   }, [isEditMode, userId, dispatch]);
-  
+
   useEffect(() => {
     if (!isEditMode) {
       dispatch(
         setImageState({
           image: "",
-          file: undefined,
           provider: "CLOUDINARY",
           providerUserId: "",
-        }),
-      )
+        })
+      );
     }
-  }, [isEditMode, dispatch])
+  }, [isEditMode, dispatch]);
 
   const handleRegister = async (data: RegisterFormInputs) => {
     dispatch(setIsLoading(true));
     try {
       let imageUrl = "";
 
-      if (imageState.file) {
-        imageUrl = await uploadImage(imageState.file);
+      if (localFile) {
+        imageUrl = await uploadImage(localFile);
       } else if (imageState.image && imageState.image.startsWith("http")) {
         imageUrl = imageState.image;
       }
@@ -88,16 +87,19 @@ export function useRegister({
       if (isEditMode && userId) {
         await update(userId, payload);
         toast.success("Cadastro atualizado com sucesso");
-        setCurrentUser({
-          id: userId,
-          username: payload.username,
-          phone: payload.phone,
-          email: payload.email || "",
-          speciality: payload.speciality,
-          imageUrl: payload.imageUrl,
-          active: payload.active,
-          position: currentUser?.position || "PROFESSIONAL",
-        });
+
+        dispatch(
+          setCurrentUser({
+            id: userId,
+            username: payload.username,
+            phone: payload.phone,
+            email: payload.email || "",
+            speciality: payload.speciality,
+            imageUrl: payload.imageUrl,
+            active: payload.active,
+            position: currentUser?.position || "PROFESSIONAL",
+          })
+        );
       } else {
         await register(payload);
         toast.success("Usuário cadastrado com sucesso");
@@ -107,14 +109,15 @@ export function useRegister({
       dispatch(
         setImageState({
           image: "",
-          file: undefined,
           provider: "CLOUDINARY",
           providerUserId: "",
-        }),
+        })
       );
+
+      setLocalFile(null);
     } catch (err) {
       toast.error(
-        isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário",
+        isEditMode ? "Erro ao atualizar usuário" : "Erro ao cadastrar usuário"
       );
       console.error(err);
     } finally {
@@ -126,15 +129,16 @@ export function useRegister({
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setLocalFile(file);
+
     const reader = new FileReader();
     reader.onloadend = () => {
       dispatch(
         setImageState({
           image: reader.result as string,
-          file,
           provider: "CLOUDINARY",
           providerUserId: "",
-        }),
+        })
       );
     };
     reader.readAsDataURL(file);
@@ -143,10 +147,15 @@ export function useRegister({
   const handleExternalImage = (
     url: string,
     provider: "GOOGLE" | "WHATSAPP",
-    providerUserId: string,
+    providerUserId: string
   ) => {
+    setLocalFile(null); 
     dispatch(
-      setImageState({ image: url, file: undefined, provider, providerUserId }),
+      setImageState({
+        image: url,
+        provider,
+        providerUserId,
+      })
     );
   };
 
