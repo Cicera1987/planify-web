@@ -11,8 +11,8 @@ import {
   Register,
   register,
   update,
+  uploadImage,
 } from "../services/authService";
-import { uploadImage } from "../services/authService";
 import { getUserById } from "../services/usersService";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
@@ -24,9 +24,12 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
   const router = useRouter();
   const { token } = useAuth();
 
-  const { imageState, isLoading } = useSelector((state: RootState) => state.scheduling);
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const [localFile, setLocalFile] = useState<File | null>(null);
+
+  const { imageState, isLoading } = useSelector(
+    (state: RootState) => state.scheduling
+  );
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
 
   let userId: number | null = null;
   if (token) {
@@ -55,7 +58,6 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
           providerUserId: "",
         })
       );
-      setLocalFile(null);
     }
   }, [isEditMode, dispatch]);
 
@@ -81,11 +83,11 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
         providerUserId: imageState.providerUserId || "",
         ...(!isEditMode && { password: data.password }),
       };
-      console.log("payload: ", payload);
 
       if (isEditMode && userId) {
         await update(userId, payload);
         toast.success("Cadastro atualizado com sucesso");
+
         dispatch(
           setCurrentUser({
             id: userId,
@@ -111,6 +113,7 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
           providerUserId: "",
         })
       );
+
       setLocalFile(null);
     } catch (err) {
       toast.error(
@@ -122,11 +125,12 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
     }
   };
 
-  const handleLocalImageRegister = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleLocalImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setLocalFile(file);
+
     const reader = new FileReader();
     reader.onloadend = () => {
       dispatch(
@@ -147,7 +151,11 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
   ) => {
     setLocalFile(null);
     dispatch(
-      setImageState({ image: url, provider, providerUserId })
+      setImageState({
+        image: url,
+        provider,
+        providerUserId,
+      })
     );
   };
 
@@ -165,28 +173,12 @@ export function useRegister({ isEditMode = false }: { isEditMode?: boolean } = {
     return {};
   }, [isEditMode, currentUser]);
 
-  
-  useEffect(() => {
-    if (currentUser?.imageUrl) {
-      dispatch(
-        setImageState({
-          image: currentUser.imageUrl,
-          file: null,
-          provider: currentUser.provider || "CLOUDINARY",
-          providerUserId: currentUser.providerUserId || "",
-        })
-      );
-    }
-  }, [currentUser, dispatch]);
-
-
   return {
     handleRegister,
-    handleLocalImageRegister,
+    handleLocalImageChange,
     handleExternalImage,
     isLoading,
     isEditMode,
     defaultValues,
-    imageState,
   };
 }
