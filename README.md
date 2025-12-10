@@ -78,7 +78,9 @@ Hospedado em Vercel:
 
 🔗 Acesse: https://planify-appointments.vercel.app/
 
-## Como USar
+## Como Usar
+
+```bash
 - Ao Acessar a aplicação Web
 - Acessar com a conta sua google, caso não tenha, cadastre seu perfil em (Cadastrar)
 
@@ -92,20 +94,22 @@ Hospedado em Vercel:
 ### Fazer um agendamento para usar suas funcinalidades
 - Em "Início" clicar em Agenda ou clicar em Agenda no "Sidebar"
 - Clicar no botão "+"
+
 - Escolher um "Cliente" para fazer um agendamento
-  └── Você pode clicar no ":" e escolher uma opção no Popup "Editar Contato", "Agendar Atendiemnto" ou "inativar Contato"
-  └── Porém se você clicar no cliente você vai navegar para a tela de detalhes para poder agendar um atendimento
-  └── Tela de Detalhes, você pode clicar em "Agendamento" ou "->"
-  └── Navegando para a próxima tela você pode escolher um horário no carrocel de horários os quais você ja liberou no seu calendário,
+└── Você pode clicar no ":" e escolher uma opção no Popup "Editar Contato", "Agendar Atendiemnto" ou "inativar Contato"
+└── Porém se você clicar no cliente você vai navegar para a tela de detalhes para poder agendar um atendimento
+└── Tela de Detalhes, você pode clicar em "Agendamento" ou "->"
+└── Navegando para a próxima tela você pode escolher um horário no carrocel de horários os quais você ja liberou no seu calendário,
       ou você tambem pode clicar no ícone de calendário e escolher por lá também.
-  └── Selecionar um serviço
-  └── Clicar em "Agendar" . Assim você vai navegar de volta a tela de detalhes e o horário já vai estar agendado.
-  └── Você pode voltar atravéz da Arrow "<", ou pode clicar direto em "Agenda" ou "Início" e verá a lista de agendamentos
-  └── A Agenda é ordenada por data e hora "CRESCENTE" por dia e hora.
-  └── Finalizar, Cancelar ou confirmar um agendamento. Em "Agenda" clicar no ":" e no popup escolha um status.
+└── Selecionar um serviço
+└── Clicar em "Agendar" . Assim você vai navegar de volta a tela de detalhes e o horário já vai estar agendado.
+└── Você pode voltar atravéz da Arrow "<", ou pode clicar direto em "Agenda" ou "Início" e verá a lista de agendamentos
+└── A Agenda é ordenada por data e hora "CRESCENTE" por dia e hora.
+└── Finalizar, Cancelar ou confirmar um agendamento. Em "Agenda" clicar no ":" e no popup escolha um status.
+
 - Notificações - Toda e qualquer movimentação feita com a agenda o profissional recebe uma notificação via Push
   └── O Profissional pode clicar em "Notificações" e verficar suas notificações
-
+```
 
 ## Para mais detalhes de deploy:
 https://nextjs.org/docs/app/building-your-application/deploying
