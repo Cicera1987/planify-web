@@ -15,8 +15,11 @@ export default function NotFound() {
         <Icon.ToGoBack /> Voltar
       </button>
       <h1 className="text-3xl font-bold text-gray-800">
-        404 - Página Não Encontrada
+        Pagina em desenvolvimento
       </h1>
+      <p className="mt-4 text-gray-600">
+        Em breve teremos novidades.
+      </p>
     </div>
   );
 }
